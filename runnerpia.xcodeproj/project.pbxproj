@@ -14,6 +14,7 @@
 		88C189E52A02985C00A240BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88C189E42A02985C00A240BD /* Assets.xcassets */; };
 		88C189E82A02985C00A240BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88C189E62A02985C00A240BD /* LaunchScreen.storyboard */; };
 		C811CD3E2A029A2E00F92530 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C811CD3D2A029A2E00F92530 /* SnapKit */; };
+		C9AD72772A031EAA005B9B5B /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AD72762A031EAA005B9B5B /* Marker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		88C189E42A02985C00A240BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88C189E72A02985C00A240BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88C189E92A02985C00A240BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9AD72762A031EAA005B9B5B /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +60,7 @@
 		88C189DA2A02985900A240BD /* runnerpia */ = {
 			isa = PBXGroup;
 			children = (
-				88C189F12A0298EC00A240BD /* Models */,
+				C9AD72752A031EA0005B9B5B /* Models */,
 				88C189F02A0298E500A240BD /* Views */,
 				88C189EF2A0298DF00A240BD /* Controllers */,
 				88C189DB2A02985900A240BD /* AppDelegate.swift */,
@@ -86,9 +88,10 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		88C189F12A0298EC00A240BD /* Models */ = {
+		C9AD72752A031EA0005B9B5B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C9AD72762A031EAA005B9B5B /* Marker.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
+				C9AD72772A031EAA005B9B5B /* Marker.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
 			);
