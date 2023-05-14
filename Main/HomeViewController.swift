@@ -13,14 +13,17 @@ final class HomeViewController: UIViewController {
     
     var homeView = HomeView()
     
-    
+    private var searchController = UISearchController(searchResultsController: nil)
+
     // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        configureNavigationBar()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureNavigation()
-        configureDelegate()
         configureUI()
         
     }
@@ -37,13 +40,24 @@ final class HomeViewController: UIViewController {
     private func configureUI() {
     }
     
-    private func configureNavigation() {
-        navigationController?.navigationBar.tintColor = .mainBlue
+    private func configureNavigationBar() {
+        let logoImage = UIImage(named: "logo")
+        let logoImageView = UIImageView(image: logoImage)
+        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.frame = CGRect(x: 0, y: 0, width: 79, height: 24)
+        let logoBarButton = UIBarButtonItem(customView: logoImageView)
+        navigationItem.leftBarButtonItem = logoBarButton
+        
+        // ⚠️ 서치 버튼 누른 후 행동 추가해야 함
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil)
+        searchButton.tintColor = .black
+        navigationItem.rightBarButtonItem = searchButton
+        
+        searchController.searchBar.placeholder = "Search"
+        searchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
     }
     
-    private func configureDelegate() {
-        //        signInView.delegate = self
-    }
     
-    // MARK: - Layout Extension
+    
 }

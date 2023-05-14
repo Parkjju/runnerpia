@@ -14,4 +14,5 @@ extension UIColor {
 
     static let mainBlue = UIColor(red: 0, green: 0.515, blue: 0.887, alpha: 1)
     static let lightBlue = UIColor(red: 0.512, green: 0.707, blue: 1, alpha: 1)
+    static let mainViewGrey = UIColor(red: 0.962, green: 0.962, blue: 0.962, alpha: 1)
 }

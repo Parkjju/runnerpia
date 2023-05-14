@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainViewManager {
     
@@ -29,7 +30,7 @@ class MainViewManager {
         
         setTapBarController()
         
-        // 로그인메서드
+        // 로그인메서드 추가
     }
 
     
@@ -41,25 +42,30 @@ class MainViewManager {
         let tabBarViewController = UITabBarController()
         
         let vc1 = UINavigationController(rootViewController: RouteViewController())
-        let vc2 = UINavigationController(rootViewController: MyPageViewController())
+        let vc2 = UINavigationController(rootViewController: HomeViewController())
+        let vc3 = UINavigationController(rootViewController: MyPageViewController())
         
-        tabBarViewController.setViewControllers([vc1, vc2], animated: false)
+        tabBarViewController.setViewControllers([vc1, vc2, vc3], animated: false)
         tabBarViewController.modalPresentationStyle = .fullScreen
         tabBarViewController.tabBar.backgroundColor = .white
         tabBarViewController.tabBar.tintColor = .black
+        tabBarViewController.tabBar.frame.size.height = 80
         
         guard let items = tabBarViewController.tabBar.items else { return }
         items[0].image = UIImage(named: "Route")
         items[0].selectedImage = UIImage(named: "Route")
         items[0].title = "경로 따라가기"
-        items[1].image = UIImage(named: "Mypage")
-        items[1].selectedImage = UIImage(named: "Mypage")
-        items[1].title = "마이"
+        items[1].image = UIImage(named: "home")
+        items[1].selectedImage = UIImage(named: "home")
+        items[2].image = UIImage(named: "Mypage")
+        items[2].selectedImage = UIImage(named: "Mypage")
+        items[2].title = "마이"
         
-        tabBarViewController.selectedIndex = 0
+        tabBarViewController.selectedIndex = 1
         tabBarViewController.tabBar.backgroundColor = .white
         rootViewController = tabBarViewController
     }
+    
 
 
 
