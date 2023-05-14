@@ -13,11 +13,19 @@
 		88C189E32A02985A00A240BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88C189E12A02985A00A240BD /* Main.storyboard */; };
 		88C189E52A02985C00A240BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88C189E42A02985C00A240BD /* Assets.xcassets */; };
 		88C189E82A02985C00A240BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88C189E62A02985C00A240BD /* LaunchScreen.storyboard */; };
+		9382DC40BD2B210BBD0A8319 /* Pods_runnerpia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */; };
 		C811CD3E2A029A2E00F92530 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C811CD3D2A029A2E00F92530 /* SnapKit */; };
-		C9AD72772A031EAA005B9B5B /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AD72762A031EAA005B9B5B /* Marker.swift */; };
+		C817305E2A109F1600E6BE03 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817305D2A109F1600E6BE03 /* UIColor.swift */; };
+		C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B42A10BBB100A4E12A /* HomeViewController.swift */; };
+		C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B62A10BBB900A4E12A /* HomeView.swift */; };
+		C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */; };
+		C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */; };
+		C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */; };
+		C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		197A93498D86022DC04A50A8 /* Pods-runnerpia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnerpia.debug.xcconfig"; path = "Target Support Files/Pods-runnerpia/Pods-runnerpia.debug.xcconfig"; sourceTree = "<group>"; };
 		88C189D82A02985900A240BD /* runnerpia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = runnerpia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88C189DB2A02985900A240BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88C189DD2A02985A00A240BD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,7 +34,15 @@
 		88C189E42A02985C00A240BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88C189E72A02985C00A240BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88C189E92A02985C00A240BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9AD72762A031EAA005B9B5B /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
+		C817305D2A109F1600E6BE03 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		C86646B42A10BBB100A4E12A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Main/HomeViewController.swift; sourceTree = SOURCE_ROOT; };
+		C86646B62A10BBB900A4E12A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = Main/HomeView.swift; sourceTree = SOURCE_ROOT; };
+		C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutProtocols.swift; sourceTree = "<group>"; };
+		C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewManager.swift; sourceTree = "<group>"; };
+		C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MypageViewController.swift; path = Main/MypageViewController.swift; sourceTree = SOURCE_ROOT; };
+		C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RouteViewController.swift; path = Main/RouteViewController.swift; sourceTree = SOURCE_ROOT; };
+		FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_runnerpia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnerpia.release.xcconfig"; path = "Target Support Files/Pods-runnerpia/Pods-runnerpia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +51,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				C811CD3E2A029A2E00F92530 /* SnapKit in Frameworks */,
+				9382DC40BD2B210BBD0A8319 /* Pods_runnerpia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		190C7E819C8C74EAF0756442 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				197A93498D86022DC04A50A8 /* Pods-runnerpia.debug.xcconfig */,
+				FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		88C189CF2A02985900A240BD = {
 			isa = PBXGroup;
 			children = (
 				88C189DA2A02985900A240BD /* runnerpia */,
 				88C189D92A02985900A240BD /* Products */,
+				190C7E819C8C74EAF0756442 /* Pods */,
+				91A1069E20FF833924BF05FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,12 +88,14 @@
 		88C189DA2A02985900A240BD /* runnerpia */ = {
 			isa = PBXGroup;
 			children = (
-				C9AD72752A031EA0005B9B5B /* Models */,
-				88C189F02A0298E500A240BD /* Views */,
-				88C189EF2A0298DF00A240BD /* Controllers */,
 				88C189DB2A02985900A240BD /* AppDelegate.swift */,
 				88C189DD2A02985A00A240BD /* SceneDelegate.swift */,
+				88C189F12A0298EC00A240BD /* Models */,
+				88C189F02A0298E500A240BD /* Views */,
+				88C189EF2A0298DF00A240BD /* Controllers */,
 				88C189DF2A02985A00A240BD /* ViewController.swift */,
+				C86646BA2A10BCFC00A4E12A /* Managers */,
+				C817305C2A109C1B00E6BE03 /* Extensions */,
 				88C189E12A02985A00A240BD /* Main.storyboard */,
 				88C189E42A02985C00A240BD /* Assets.xcassets */,
 				88C189E62A02985C00A240BD /* LaunchScreen.storyboard */,
@@ -77,6 +107,7 @@
 		88C189EF2A0298DF00A240BD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C9AD727D2A10675E005B9B5B /* Main */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -84,6 +115,7 @@
 		88C189F02A0298E500A240BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C9AD727F2A106769005B9B5B /* Main */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -96,6 +128,67 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		91A1069E20FF833924BF05FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C817305C2A109C1B00E6BE03 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C817305D2A109F1600E6BE03 /* UIColor.swift */,
+				C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C86646BA2A10BCFC00A4E12A /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		C9AD727D2A10675E005B9B5B /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C9AD727E2A106764005B9B5B /* Route */,
+				C86646B42A10BBB100A4E12A /* HomeViewController.swift */,
+				C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		C9AD727E2A106764005B9B5B /* Route */ = {
+			isa = PBXGroup;
+			children = (
+				C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */,
+			);
+			path = Route;
+			sourceTree = "<group>";
+		};
+		C9AD727F2A106769005B9B5B /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C9AD72802A10676D005B9B5B /* Route */,
+				C86646B62A10BBB900A4E12A /* HomeView.swift */,
+			);
+			name = Main;
+			path = runnerpia/Views/Main;
+			sourceTree = "<group>";
+		};
+		C9AD72802A10676D005B9B5B /* Route */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Route;
+			path = ../runnerpia/Views/Main/Route;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +196,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88C189EC2A02985C00A240BD /* Build configuration list for PBXNativeTarget "runnerpia" */;
 			buildPhases = (
+				665E24223C39B9FCB4431C9E /* [CP] Check Pods Manifest.lock */,
 				88C189D42A02985900A240BD /* Sources */,
 				88C189D52A02985900A240BD /* Frameworks */,
 				88C189D62A02985900A240BD /* Resources */,
+				8D3B4DCFD963D0BEFCA94FC2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -168,15 +263,63 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		665E24223C39B9FCB4431C9E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-runnerpia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D3B4DCFD963D0BEFCA94FC2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-runnerpia/Pods-runnerpia-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-runnerpia/Pods-runnerpia-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-runnerpia/Pods-runnerpia-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		88C189D42A02985900A240BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */,
+				C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */,
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
-				C9AD72772A031EAA005B9B5B /* Marker.swift in Sources */,
+				C817305E2A109F1600E6BE03 /* UIColor.swift in Sources */,
+				C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */,
+				C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
+				C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */,
+				C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +461,7 @@
 		};
 		88C189ED2A02985C00A240BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 197A93498D86022DC04A50A8 /* Pods-runnerpia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -350,6 +494,7 @@
 		};
 		88C189EE2A02985C00A240BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
