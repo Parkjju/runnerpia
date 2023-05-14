@@ -55,8 +55,8 @@ class MainViewManager {
         items[0].image = UIImage(named: "Route")
         items[0].selectedImage = UIImage(named: "Route")
         items[0].title = "경로 따라가기"
-        items[1].image = UIImage(named: "home")
-        items[1].selectedImage = UIImage(named: "home")
+        items[1].image = UIImage(named: "homeButton")
+        items[1].selectedImage = UIImage(named: "homeButton")
         items[2].image = UIImage(named: "Mypage")
         items[2].selectedImage = UIImage(named: "Mypage")
         items[2].title = "마이"
