@@ -49,7 +49,6 @@ class MainViewManager {
         tabBarViewController.modalPresentationStyle = .fullScreen
         tabBarViewController.tabBar.backgroundColor = .white
         tabBarViewController.tabBar.tintColor = .black
-        tabBarViewController.tabBar.frame.size.height = 80
         
         guard let items = tabBarViewController.tabBar.items else { return }
         items[0].image = UIImage(named: "Route")
@@ -60,6 +59,7 @@ class MainViewManager {
         items[2].image = UIImage(named: "Mypage")
         items[2].selectedImage = UIImage(named: "Mypage")
         items[2].title = "마이"
+        
         
         tabBarViewController.selectedIndex = 1
         tabBarViewController.tabBar.backgroundColor = .white
