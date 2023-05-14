@@ -15,6 +15,7 @@
 		88C189E82A02985C00A240BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88C189E62A02985C00A240BD /* LaunchScreen.storyboard */; };
 		9382DC40BD2B210BBD0A8319 /* Pods_runnerpia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */; };
 		C811CD3E2A029A2E00F92530 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C811CD3D2A029A2E00F92530 /* SnapKit */; };
+		C817305E2A109F1600E6BE03 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817305D2A109F1600E6BE03 /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		88C189E42A02985C00A240BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88C189E72A02985C00A240BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88C189E92A02985C00A240BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C817305D2A109F1600E6BE03 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_runnerpia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnerpia.release.xcconfig"; path = "Target Support Files/Pods-runnerpia/Pods-runnerpia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -50,7 +52,6 @@
 				197A93498D86022DC04A50A8 /* Pods-runnerpia.debug.xcconfig */,
 				FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -75,12 +76,13 @@
 		88C189DA2A02985900A240BD /* runnerpia */ = {
 			isa = PBXGroup;
 			children = (
+				88C189DB2A02985900A240BD /* AppDelegate.swift */,
+				88C189DD2A02985A00A240BD /* SceneDelegate.swift */,
 				88C189F12A0298EC00A240BD /* Models */,
 				88C189F02A0298E500A240BD /* Views */,
 				88C189EF2A0298DF00A240BD /* Controllers */,
-				88C189DB2A02985900A240BD /* AppDelegate.swift */,
-				88C189DD2A02985A00A240BD /* SceneDelegate.swift */,
 				88C189DF2A02985A00A240BD /* ViewController.swift */,
+				C817305C2A109C1B00E6BE03 /* Extensions */,
 				88C189E12A02985A00A240BD /* Main.storyboard */,
 				88C189E42A02985C00A240BD /* Assets.xcassets */,
 				88C189E62A02985C00A240BD /* LaunchScreen.storyboard */,
@@ -118,6 +120,14 @@
 				FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C817305C2A109C1B00E6BE03 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C817305D2A109F1600E6BE03 /* UIColor.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C9AD727D2A10675E005B9B5B /* Main */ = {
@@ -274,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
+				C817305E2A109F1600E6BE03 /* UIColor.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
 			);
