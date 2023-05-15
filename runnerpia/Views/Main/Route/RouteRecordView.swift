@@ -151,11 +151,18 @@ class RouteRecordView: UIView {
     var timer = Timer()
     
     var pushTime: TimeInterval = 0
+    var elapsedSeconds: TimeInterval = 0
+    var elapsedMinutes: TimeInterval = 0
     
     var feedbackGenerator: UINotificationFeedbackGenerator?
     
     var isRecordPaused: Bool?
     var isRecordStarted: Bool = false
+    
+    var previousLocation: CLLocation?
+    var accumulatedDistance = 0
+    var accumulatedMeter = 0
+    var accumulatedKilometer = 0
     
     // MARK: - LifeCycles
     override init(frame: CGRect) {
@@ -199,14 +206,19 @@ class RouteRecordView: UIView {
             self.feedbackGenerator?.notificationOccurred(.success)
             playButton.removeTarget(nil, action: nil, for: .allEvents)
             setupRecordingUI()
+            
             isRecordStarted = true
             pushTime = 0
+            
+            timer.invalidate()
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateElapsedLabels), userInfo: nil, repeats: true)
         }else if(pushTime == 2 && isRecordStarted){
             self.feedbackGenerator?.notificationOccurred(.success)
             print("record stop...")
         }
     }
     
+    // 레코드 이후 두개로 쪼개진 재생 - 멈춤버튼 중 재생버튼에 해당되는 부분
     @objc func playButtonDuringRecordTouchUpHandler(){
         isRecordPaused = false
         
@@ -214,8 +226,11 @@ class RouteRecordView: UIView {
         stopButton.isHidden = true
         
         playButton.isHidden = false
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateElapsedLabels), userInfo: nil, repeats: true)
     }
     
+    // 기존 플레이버튼이 레코드 상태에 따라 다른 역할을 하게되었을때 호출되는 셀렉터 함수
     @objc func playButtonTouchUpHandlerDuringRecord(){
         guard let isPaused = self.isRecordPaused else {
             self.isRecordPaused = false
@@ -229,6 +244,8 @@ class RouteRecordView: UIView {
             
             self.playButtonDuringRecord.isHidden = false
             self.stopButton.isHidden = false
+            
+            timer.invalidate()
         }else{
             self.playButton.isHidden = false
             
@@ -246,6 +263,23 @@ class RouteRecordView: UIView {
         timer.fire()
 
         animateButton(isReset: false)
+    }
+    
+    // 누적 시간 및 이동거리 계산 셀렉터 함수 - 내부에서 레이블 업데이트 로직과 거리 업데이트 로직이 함께 실행됨
+    @objc func updateElapsedLabels(){
+        // MARK: 시간 레이블 업데이트
+        let elapsedTimeLabel = elapsedTimeSection.subviews.first as! UILabel
+        elapsedSeconds += 1
+        
+        if(elapsedSeconds >= 60){
+            elapsedMinutes += 1
+            elapsedSeconds = 0
+        }
+        
+        let minuteString = Int(elapsedMinutes / 10) == 0 ? "0\(Int(elapsedMinutes))" : "\(Int(elapsedMinutes))"
+        let secondString = Int(elapsedSeconds / 10) == 0 ? "0\(Int(elapsedSeconds))" : "\(Int(elapsedSeconds))"
+        
+        elapsedTimeLabel.text = "\(minuteString):\(secondString)"
     }
     
     // MARK: Helpers
@@ -399,5 +433,28 @@ extension RouteRecordView: CLLocationManagerDelegate{
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locations.first!.coordinate.latitude, lng: locations.first!.coordinate.longitude))
         map.moveCamera(cameraUpdate)
         
+        // MARK: 거리 레이블 업데이트
+        let elapsedDistanceLabel = movedDistanceSection.subviews.first as! UILabel
+        guard let previous = previousLocation else {
+            previousLocation = locationManager.location
+            return
+        }
+        accumulatedDistance += Int(locationManager.location!.distance(from: previous))
+        
+        if(accumulatedDistance / 10 >= 1){
+            accumulatedMeter += 1
+            accumulatedDistance = accumulatedDistance % 10
+        }
+        if(accumulatedMeter / 100 >= 1){
+            accumulatedKilometer += 1
+            accumulatedMeter = 0
+        }
+        
+        let meterString = Int(accumulatedMeter / 10) == 0 ? "0\(accumulatedMeter)" : "\(accumulatedMeter)"
+        let kilometerString = Int(accumulatedKilometer / 10) == 0 ? "0\(accumulatedKilometer)" : "\(accumulatedKilometer)"
+        
+        elapsedDistanceLabel.text = "\(kilometerString):\(meterString)km"
+        
+        previousLocation = locationManager.location
     }
 }
