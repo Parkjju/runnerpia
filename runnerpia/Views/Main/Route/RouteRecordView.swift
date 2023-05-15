@@ -430,31 +430,46 @@ extension RouteRecordView: LayoutProtocol{
 
 extension RouteRecordView: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        
+        
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locations.first!.coordinate.latitude, lng: locations.first!.coordinate.longitude))
         map.moveCamera(cameraUpdate)
         
-        // MARK: 거리 레이블 업데이트
-        let elapsedDistanceLabel = movedDistanceSection.subviews.first as! UILabel
-        guard let previous = previousLocation else {
-            previousLocation = locationManager.location
+        guard let isRecordPaused else {
             return
         }
-        accumulatedDistance += Int(locationManager.location!.distance(from: previous))
         
-        if(accumulatedDistance / 10 >= 1){
-            accumulatedMeter += 1
-            accumulatedDistance = accumulatedDistance % 10
+        // 사용자가 멈춰있는데 좌표값에 변화가 있는게 감지가 된 경우 - 경로 트래킹 재시작
+        if(isRecordPaused){
+            // 셀렉터 호출시 자동으로 paused값은 변화함
+            self.perform(#selector(playButtonDuringRecordTouchUpHandler))
+        }else{
+            // MARK: 거리 레이블 업데이트
+            let elapsedDistanceLabel = movedDistanceSection.subviews.first as! UILabel
+            guard let previous = previousLocation else {
+                previousLocation = locationManager.location
+                return
+            }
+            accumulatedDistance += Int(locationManager.location!.distance(from: previous))
+            
+            if(accumulatedDistance / 10 >= 1){
+                accumulatedMeter += 1
+                accumulatedDistance = accumulatedDistance % 10
+            }
+            if(accumulatedMeter / 100 >= 1){
+                accumulatedKilometer += 1
+                accumulatedMeter = 0
+            }
+            
+            let meterString = Int(accumulatedMeter / 10) == 0 ? "0\(accumulatedMeter)" : "\(accumulatedMeter)"
+            let kilometerString = Int(accumulatedKilometer / 10) == 0 ? "0\(accumulatedKilometer)" : "\(accumulatedKilometer)"
+            
+            elapsedDistanceLabel.text = "\(kilometerString):\(meterString)km"
+            
+            previousLocation = locationManager.location
         }
-        if(accumulatedMeter / 100 >= 1){
-            accumulatedKilometer += 1
-            accumulatedMeter = 0
-        }
         
-        let meterString = Int(accumulatedMeter / 10) == 0 ? "0\(accumulatedMeter)" : "\(accumulatedMeter)"
-        let kilometerString = Int(accumulatedKilometer / 10) == 0 ? "0\(accumulatedKilometer)" : "\(accumulatedKilometer)"
         
-        elapsedDistanceLabel.text = "\(kilometerString):\(meterString)km"
-        
-        previousLocation = locationManager.location
     }
 }
