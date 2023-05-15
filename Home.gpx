@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<gpx version="1.0" creator="Home">
+    <wpt lat="37.2785" lon="127.1451">
+        <time>2023-05-15T14:44:00Z</time>
+        <name>Home</name>
+    </wpt>
+    <wpt lat="37.2785" lon="127.1440">
+        <time>2023-05-15T14:44:10Z</time>
+        <name>Home</name>
+    </wpt>
+    <wpt lat="37.2770" lon="127.1440">
+        <time>2023-05-15T14:44:30Z</time>
+        <name>Home</name>
+    </wpt>
+</gpx>
