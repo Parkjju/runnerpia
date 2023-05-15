@@ -117,6 +117,37 @@ class RouteRecordView: UIView {
         return sv
     }()
     
+    let playButtonDuringRecord: UIButton = {
+        let btn = UIButton(type:.system)
+        
+        btn.backgroundColor = hexStringToUIColor(hex: "#21A345")
+        btn.layer.cornerRadius = 45
+        btn.clipsToBounds = true
+        
+        if let playImage = UIImage(systemName: "play.fill")?.withTintColor(.white,renderingMode: .alwaysOriginal){
+            let scaledImage = playImage.scalePreservingAspectRatio(targetSize: CGSize(width: 35, height: 35)).withTintColor(.white, renderingMode: .alwaysOriginal)
+            btn.setImage(scaledImage, for: .normal)
+        }
+        
+        btn.addTarget(self, action: #selector(playButtonDuringRecordTouchUpHandler), for:.touchUpInside)
+        return btn
+    }()
+    
+    let stopButton: UIButton = {
+        let btn = UIButton(type:.system)
+        
+        btn.backgroundColor = hexStringToUIColor(hex: "#FF645A")
+        btn.layer.cornerRadius = 45
+        btn.clipsToBounds = true
+        
+        if let playImage = UIImage(systemName: "stop.fill")?.withTintColor(.white,renderingMode: .alwaysOriginal){
+            let scaledImage = playImage.scalePreservingAspectRatio(targetSize: CGSize(width: 35, height: 35)).withTintColor(.white, renderingMode: .alwaysOriginal)
+            btn.setImage(scaledImage, for: .normal)
+        }
+
+        return btn
+    }()
+    
     var timer = Timer()
     
     var pushTime: TimeInterval = 0
@@ -124,6 +155,7 @@ class RouteRecordView: UIView {
     var feedbackGenerator: UINotificationFeedbackGenerator?
     
     var isRecordPaused: Bool?
+    var isRecordStarted: Bool = false
     
     // MARK: - LifeCycles
     override init(frame: CGRect) {
@@ -161,13 +193,59 @@ class RouteRecordView: UIView {
     
     // 버튼을 3초보다 더 누르고 있는 경우 타이머 초기화 및 뷰 이동
     @objc func addSecondToPushTime(){
-        
         pushTime += timer.timeInterval
         
-        if(pushTime == 2){
+        if(pushTime == 2 && !isRecordStarted){
             self.feedbackGenerator?.notificationOccurred(.success)
+            playButton.removeTarget(nil, action: nil, for: .allEvents)
             setupRecordingUI()
+            isRecordStarted = true
+            pushTime = 0
+        }else if(pushTime == 2 && isRecordStarted){
+            self.feedbackGenerator?.notificationOccurred(.success)
+            print("record stop...")
         }
+    }
+    
+    @objc func playButtonDuringRecordTouchUpHandler(){
+        isRecordPaused = false
+        
+        playButtonDuringRecord.isHidden = true
+        stopButton.isHidden = true
+        
+        playButton.isHidden = false
+    }
+    
+    @objc func playButtonTouchUpHandlerDuringRecord(){
+        guard let isPaused = self.isRecordPaused else {
+            self.isRecordPaused = false
+            return
+        }
+        
+        self.isRecordPaused = !isPaused
+        
+        if(self.isRecordPaused!){
+            self.playButton.isHidden = true
+            
+            self.playButtonDuringRecord.isHidden = false
+            self.stopButton.isHidden = false
+        }else{
+            self.playButton.isHidden = false
+            
+            self.playButtonDuringRecord.isHidden = true
+            self.stopButton.isHidden = true
+        }
+    }
+    
+    @objc func stopButtonTouchDownHandler(){
+        timer.invalidate()
+        
+        pushTime = 0
+
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addSecondToPushTime), userInfo: nil, repeats: true)
+        timer.fire()
+
+        animateButton(isReset: false)
     }
     
     // MARK: Helpers
@@ -224,28 +302,44 @@ class RouteRecordView: UIView {
             $0.leading.equalTo(playSection.snp.centerX).offset(0)
             $0.height.equalTo(100)
         }
+        
+        playButtonDuringRecord.snp.makeConstraints{
+            $0.centerX.equalTo(elapsedTimeSection.snp.centerX)
+            $0.centerY.equalTo(playSection.snp.centerY).offset(30)
+            $0.height.height.equalTo(90)
+            $0.width.equalTo(90)
+        }
+        
+        stopButton.snp.makeConstraints {
+            $0.centerX.equalTo(movedDistanceSection.snp.centerX)
+            $0.centerY.equalTo(playSection.snp.centerY).offset(30)
+            $0.height.height.equalTo(90)
+            $0.width.equalTo(90)
+        }
     }
     
     // 버튼 애니메이션 함수화
     // isReset true: 버튼 너비 높이 90고정 / false: 버튼 너비 높이 120
+    // 레코딩 시작된 이후에는 playButton이 아닌 stopButton 레이아웃을 조정해야함.
     func animateButton(isReset: Bool){
-        
+        let animateTarget = isRecordStarted ? stopButton : playButton
+
         if(isReset){
             UIView.animate(withDuration: 0.1) {
-                self.playButton.snp.updateConstraints {
+                animateTarget.snp.updateConstraints {
                     $0.width.equalTo(90)
                     $0.height.equalTo(90)
                 }
-                self.playButton.layer.cornerRadius = 45
+                animateTarget.layer.cornerRadius = 45
                 self.layoutIfNeeded()
             }
         }else{
             UIView.animate(withDuration: 0.3) {
-                self.playButton.snp.updateConstraints {
-                    $0.width.equalTo(120)
-                    $0.height.equalTo(120)
+                animateTarget.snp.updateConstraints {
+                    $0.width.equalTo(self.isRecordStarted ? 100 : 120)
+                    $0.height.equalTo(self.isRecordStarted ? 100 : 120)
                 }
-                self.playButton.layer.cornerRadius = 60
+                animateTarget.layer.cornerRadius = self.isRecordStarted ? 50 : 60
                 
                 self.layoutIfNeeded()
             }
@@ -254,14 +348,9 @@ class RouteRecordView: UIView {
     
     // 버튼 일시정지 이벤트 함수 - touchUpInside 동일 이벤트에 대해 서로 다른 셀렉터 등록을 위한 함수
     func setRecordButtonPausedSelector(){
-        playButton.addAction(for: .touchUpInside) {
-            guard var isPaused = self.isRecordPaused else {
-                self.isRecordPaused = false
-                return
-            }
-            
-            self.isRecordPaused = !isPaused
-        }
+        playButton.addTarget(self, action: #selector(playButtonTouchUpHandlerDuringRecord), for: .touchUpInside)
+        stopButton.addTarget(self, action: #selector(stopButtonTouchDownHandler), for:.touchDown)
+        stopButton.addTarget(self, action: #selector(playButtonTouchUpHandler), for:.touchUpInside)
     }
 
 }
@@ -269,7 +358,10 @@ class RouteRecordView: UIView {
 extension RouteRecordView: LayoutProtocol{
     func setSubViews() {
         [map,playSection].forEach{ self.addSubview($0) }
-        [playSectionTitle, playButton].forEach{ self.addSubview($0) }
+        [playSectionTitle, playButton, playButtonDuringRecord, stopButton].forEach{ self.addSubview($0) }
+        
+        playButtonDuringRecord.isHidden = true
+        stopButton.isHidden = true
     }
     
     func setLayout() {
@@ -288,13 +380,13 @@ extension RouteRecordView: LayoutProtocol{
         }
         
         playSectionTitle.snp.makeConstraints {
-            $0.top.equalTo(playSection.snp.top).offset(20)
+            $0.top.equalTo(playSection.snp.top).offset(40)
             $0.centerX.equalToSuperview()
         }
         
         playButton.snp.makeConstraints{
             $0.centerX.equalTo(playSection.snp.centerX)
-            $0.centerY.equalTo(playSection.snp.centerY).offset(20)
+            $0.centerY.equalTo(playSection.snp.centerY).offset(30)
             $0.height.equalTo(90)
             $0.width.equalTo(90)
         }
