@@ -13,6 +13,8 @@ class RouteRecordView: UIView {
     
     // MARK: Properties
     let locationManager = CLLocationManager()
+    let pathOverlay = NMFPath()
+    var pathCoordinates:[NMGLatLng] = []
     
     let map: NMFMapView = {
         let map = NMFMapView()
@@ -463,11 +465,18 @@ extension RouteRecordView: CLLocationManagerDelegate{
             }
             
             let meterString = Int(accumulatedMeter / 10) == 0 ? "0\(accumulatedMeter)" : "\(accumulatedMeter)"
-            let kilometerString = Int(accumulatedKilometer / 10) == 0 ? "0\(accumulatedKilometer)" : "\(accumulatedKilometer)"
+            let kilometerString = "\(accumulatedKilometer)"
             
             elapsedDistanceLabel.text = "\(kilometerString):\(meterString)km"
             
             previousLocation = locationManager.location
+            pathCoordinates.append(NMGLatLng(lat: locationManager.location!.coordinate.latitude, lng: locationManager.location!.coordinate.longitude))
+        
+            pathOverlay.path = NMGLineString(points: pathCoordinates)
+            pathOverlay.color = hexStringToUIColor(hex: "#21A345")
+            pathOverlay.outlineColor = .clear
+            pathOverlay.width = 10
+            pathOverlay.mapView = map
         }
         
         
