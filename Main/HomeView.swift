@@ -12,6 +12,9 @@ class HomeView: UIView {
     
     // MARK: - Properties
     
+    let mainImageHeightRatio: CGFloat = 109 / 335
+    
+    // ------ mainImage
     private lazy var mainImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "mainImage")
@@ -48,13 +51,59 @@ class HomeView: UIView {
         return stackView
     }()
     
+    // ------ recondeButton
     private let recodeButton: UIButton = {
         let button = UIButton()
-        button.contentMode = .scaleAspectFill
-        button.setImage(UIImage(named: "recodeButton"), for: .normal)
+        button.backgroundColor = .mainBlue
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 20
+        button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
     
+    private lazy var recodeFirstLabelButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.setTitle("러너피아로 지금 달려볼까요?", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        button.titleLabel?.textAlignment = .left
+        button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    private lazy var recodePlusButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "plusButton"), for: .normal)
+        button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    private lazy var recodeSecondLabelButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("누르면 기록이 시작돼요", for: .normal)
+        button.titleLabel?.textAlignment = .left
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    private lazy var recodeButtonStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [recodeFirstLabelButton, recodePlusButton, recodeSecondLabelButton])
+        stackView.axis = .vertical
+        stackView.spacing = 100
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.isUserInteractionEnabled = false
+        return stackView
+    }()
+    
+    
+    // ------ captionButton
     private lazy var captionButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
@@ -105,11 +154,7 @@ class HomeView: UIView {
         return imageView
     }()
     
-    // MARK: - Selectors
-    @objc private func captionButtonTapped(_ sender: UIButton) {
-        print("captionButton Tapped")
-    }
-
+    
     
     // MARK: - LifeCycles
     
@@ -125,8 +170,19 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Selectors
+    
+    @objc private func recodeButtonTapped(_ sender: UIButton) {
+        print("recodeButton Tapped")
+    }
+    
+    @objc private func captionButtonTapped(_ sender: UIButton) {
+        print("captionButton Tapped")
+    }
+    
     
     // MARK: - Helpers
+    
     private func configureUI() {
         backgroundColor = .mainViewGrey
     }
@@ -140,16 +196,17 @@ class HomeView: UIView {
 extension HomeView: LayoutProtocol {
     
     func setSubViews() {
-        [mainImage, mainLabelStackView, recodeButton, exclamationMarkImage, captionLabelStackView, nextButton, captionButton]
+        [mainImage, mainLabelStackView, recodeButton, recodeButtonStackView, exclamationMarkImage, captionLabelStackView, nextButton, captionButton]
             .forEach { self.addSubview($0) }
     }
     
     func setLayout() {
         mainImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(335)
-            $0.height.equalTo(109)
-            $0.top.equalTo(self.snp.top).offset(130)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(17.78)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(mainImage.snp.width).multipliedBy(mainImageHeightRatio)
         }
         
         mainLabelStackView.snp.makeConstraints {
@@ -159,19 +216,26 @@ extension HomeView: LayoutProtocol {
         }
         
         recodeButton.snp.makeConstraints {
-            $0.width.equalTo(335)
-            $0.height.equalTo(364)
             $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(mainImage.snp.bottom).offset(19.03)
+            $0.bottom.equalToSuperview().offset(-209)
+        }
+        
+        recodeButtonStackView.snp.makeConstraints {
+            $0.centerX.equalTo(recodeButton.snp.centerX)
+            $0.top.equalTo(recodeButton.snp.top).offset(29)
+            $0.leading.equalTo(recodeButton.snp.leading).offset(44)
+            $0.trailing.equalTo(recodeButton.snp.trailing).offset(-44)
         }
         
         captionButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(335)
-            $0.height.equalTo(78)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(recodeButton.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().offset(-30)
+            $0.bottom.equalToSuperview().offset(-121)
         }
         
         exclamationMarkImage.snp.makeConstraints {
@@ -180,7 +244,7 @@ extension HomeView: LayoutProtocol {
             $0.leading.equalTo(captionButton.snp.leading).offset(20)
             $0.top.equalTo(captionButton.snp.top).offset(30)
         }
-
+        
         captionLabelStackView.snp.makeConstraints {
             $0.centerX.equalTo(captionButton.snp.centerX)
             $0.top.equalTo(captionButton.snp.top).offset(18)
