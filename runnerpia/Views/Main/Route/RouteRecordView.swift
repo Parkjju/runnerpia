@@ -53,11 +53,77 @@ class RouteRecordView: UIView {
         return btn
     }()
     
+    let elapsedTimeSection: UIStackView = {
+        let sv = UIStackView()
+        
+        sv.axis = .vertical
+        sv.distribution = .fillProportionally
+        
+        let elapsedTimeLabel = UILabel()
+        elapsedTimeLabel.text = "00:00"
+        elapsedTimeLabel.font = UIFont.boldSystemFont(ofSize: 34)
+        elapsedTimeLabel.textColor = .black
+        elapsedTimeLabel.textAlignment = .center
+        
+        let elapsedTimeTitle = UILabel()
+        elapsedTimeTitle.text = "시간"
+        elapsedTimeTitle.font = UIFont.boldSystemFont(ofSize: 18)
+        elapsedTimeTitle.textColor = .black
+        elapsedTimeTitle.textAlignment = .center
+        
+        [elapsedTimeLabel, elapsedTimeTitle].forEach{ sv.addSubview($0) }
+        
+        elapsedTimeLabel.snp.makeConstraints {
+            $0.centerX.equalTo(sv.snp.centerX)
+        }
+        
+        elapsedTimeTitle.snp.makeConstraints {
+            $0.centerX.equalTo(sv.snp.centerX)
+            $0.top.equalTo(elapsedTimeLabel.snp.bottom).offset(5)
+        }
+
+        return sv
+    }()
+    
+    let movedDistanceSection: UIStackView = {
+        let sv = UIStackView()
+        
+        sv.axis = .vertical
+        sv.distribution = .fillProportionally
+        
+        let movedDistanceLabel = UILabel()
+        movedDistanceLabel.text = "0.00km"
+        movedDistanceLabel.font = UIFont.boldSystemFont(ofSize: 34)
+        movedDistanceLabel.textColor = .black
+        movedDistanceLabel.textAlignment = .center
+        
+        let movedDistanceTitle = UILabel()
+        movedDistanceTitle.text = "거리"
+        movedDistanceTitle.font = UIFont.boldSystemFont(ofSize: 18)
+        movedDistanceTitle.textColor = .black
+        movedDistanceTitle.textAlignment = .center
+        
+        [movedDistanceLabel, movedDistanceTitle].forEach{ sv.addSubview($0) }
+        
+        movedDistanceLabel.snp.makeConstraints {
+            $0.centerX.equalTo(sv.snp.centerX)
+        }
+        
+        movedDistanceTitle.snp.makeConstraints {
+            $0.centerX.equalTo(sv.snp.centerX)
+            $0.top.equalTo(movedDistanceLabel.snp.bottom).offset(5)
+        }
+        
+        return sv
+    }()
+    
     var timer = Timer()
     
     var pushTime: TimeInterval = 0
     
     var feedbackGenerator: UINotificationFeedbackGenerator?
+    
+    var isRecordPaused: Bool?
     
     // MARK: - LifeCycles
     override init(frame: CGRect) {
@@ -80,16 +146,7 @@ class RouteRecordView: UIView {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addSecondToPushTime), userInfo: nil, repeats: true)
         timer.fire()
         
-        UIView.animate(withDuration: 0.3) {
-            self.playButton.snp.updateConstraints {
-                $0.width.equalTo(120)
-                $0.height.equalTo(120)
-            }
-            self.playButton.layer.cornerRadius = 60
-            
-            
-            self.layoutIfNeeded()
-        }
+        animateButton(isReset: false)
     }
     
     
@@ -99,16 +156,7 @@ class RouteRecordView: UIView {
         pushTime = 0
         
         // 버튼 UI 초기화
-        UIView.animate(withDuration: 0.1) {
-            self.playButton.snp.updateConstraints {
-                $0.width.equalTo(90)
-                $0.height.equalTo(90)
-            }
-            self.playButton.layer.cornerRadius = 45
-            
-            self.layoutIfNeeded()
-        }
-        
+        animateButton(isReset: true)
     }
     
     // 버튼을 3초보다 더 누르고 있는 경우 타이머 초기화 및 뷰 이동
@@ -117,10 +165,9 @@ class RouteRecordView: UIView {
         pushTime += timer.timeInterval
         
         if(pushTime == 2){
-            print("ended")
             self.feedbackGenerator?.notificationOccurred(.success)
+            setupRecordingUI()
         }
-        print("hi")
     }
     
     // MARK: Helpers
@@ -137,6 +184,84 @@ class RouteRecordView: UIView {
     func setupGenerator(){
         self.feedbackGenerator = UINotificationFeedbackGenerator()
         self.feedbackGenerator?.prepare()
+    }
+    
+    // 버튼 2초 유지 후 교체되는 UI설정
+    func setupRecordingUI(){
+        animateButton(isReset: true)
+        
+        playButton.backgroundColor = hexStringToUIColor(hex: "#737373")
+        
+        playSectionTitle.isHidden = true
+        
+        if let pauseImage = UIImage(systemName: "pause.fill") {
+            let scaledImage = pauseImage.scalePreservingAspectRatio(targetSize: CGSize(width: 30, height: 34)).withTintColor(.white, renderingMode: .alwaysOriginal)
+            playButton.setImage(scaledImage, for: .normal)
+        }
+        
+        setLayoutAfterRecord()
+        updateLayoutAfterRecord()
+        
+        setRecordButtonPausedSelector()
+    }
+    
+    // 경로 기록 시작 후 섹션UI 레이아웃 업데이트
+    func setLayoutAfterRecord(){
+        [elapsedTimeSection, movedDistanceSection].forEach{ playSection.addSubview($0) }
+    }
+    
+    func updateLayoutAfterRecord(){
+        elapsedTimeSection.snp.makeConstraints {
+            $0.top.equalTo(playSection.snp.top).offset(30)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalTo(playSection.snp.centerX).offset(0)
+            $0.height.equalTo(100)
+        }
+        
+        movedDistanceSection.snp.makeConstraints {
+            $0.top.equalTo(playSection.snp.top).offset(30)
+            $0.trailing.equalToSuperview()
+            $0.leading.equalTo(playSection.snp.centerX).offset(0)
+            $0.height.equalTo(100)
+        }
+    }
+    
+    // 버튼 애니메이션 함수화
+    // isReset true: 버튼 너비 높이 90고정 / false: 버튼 너비 높이 120
+    func animateButton(isReset: Bool){
+        
+        if(isReset){
+            UIView.animate(withDuration: 0.1) {
+                self.playButton.snp.updateConstraints {
+                    $0.width.equalTo(90)
+                    $0.height.equalTo(90)
+                }
+                self.playButton.layer.cornerRadius = 45
+                self.layoutIfNeeded()
+            }
+        }else{
+            UIView.animate(withDuration: 0.3) {
+                self.playButton.snp.updateConstraints {
+                    $0.width.equalTo(120)
+                    $0.height.equalTo(120)
+                }
+                self.playButton.layer.cornerRadius = 60
+                
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    // 버튼 일시정지 이벤트 함수 - touchUpInside 동일 이벤트에 대해 서로 다른 셀렉터 등록을 위한 함수
+    func setRecordButtonPausedSelector(){
+        playButton.addAction(for: .touchUpInside) {
+            guard var isPaused = self.isRecordPaused else {
+                self.isRecordPaused = false
+                return
+            }
+            
+            self.isRecordPaused = !isPaused
+        }
     }
 
 }
@@ -169,7 +294,7 @@ extension RouteRecordView: LayoutProtocol{
         
         playButton.snp.makeConstraints{
             $0.centerX.equalTo(playSection.snp.centerX)
-            $0.centerY.equalTo(playSection.snp.centerY)
+            $0.centerY.equalTo(playSection.snp.centerY).offset(20)
             $0.height.equalTo(90)
             $0.width.equalTo(90)
         }
