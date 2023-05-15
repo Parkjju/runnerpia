@@ -44,12 +44,20 @@ class RouteRecordView: UIView {
         btn.clipsToBounds = true
         
         if let playImage = UIImage(systemName: "play.fill")?.withTintColor(.white,renderingMode: .alwaysOriginal){
-            
-            btn.setImage(playImage, for: .normal)
+            let scaledImage = playImage.scalePreservingAspectRatio(targetSize: CGSize(width: 35, height: 35)).withTintColor(.white, renderingMode: .alwaysOriginal)
+            btn.setImage(scaledImage, for: .normal)
         }
+        
+        btn.addTarget(self, action: #selector(playButtonTouchDownHandler), for: .touchDown)
+        btn.addTarget(self, action: #selector(playButtonTouchUpHandler), for:.touchUpInside)
         return btn
     }()
     
+    var timer = Timer()
+    
+    var pushTime: TimeInterval = 0
+    
+    var feedbackGenerator: UINotificationFeedbackGenerator?
     
     // MARK: - LifeCycles
     override init(frame: CGRect) {
@@ -58,10 +66,61 @@ class RouteRecordView: UIView {
         configureUI()
         setSubViews()
         setLayout()
+        setupGenerator()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Selectors
+    @objc func playButtonTouchDownHandler(){
+        timer.invalidate()
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addSecondToPushTime), userInfo: nil, repeats: true)
+        timer.fire()
+        
+        UIView.animate(withDuration: 0.3) {
+            self.playButton.snp.updateConstraints {
+                $0.width.equalTo(120)
+                $0.height.equalTo(120)
+            }
+            self.playButton.layer.cornerRadius = 60
+            
+            
+            self.layoutIfNeeded()
+        }
+    }
+    
+    
+    // 버튼을 3초보다 덜 누르고 있을때 타이머 초기화 및 뷰 그대로 유지
+    @objc func playButtonTouchUpHandler(){
+        timer.invalidate()
+        pushTime = 0
+        
+        // 버튼 UI 초기화
+        UIView.animate(withDuration: 0.1) {
+            self.playButton.snp.updateConstraints {
+                $0.width.equalTo(90)
+                $0.height.equalTo(90)
+            }
+            self.playButton.layer.cornerRadius = 45
+            
+            self.layoutIfNeeded()
+        }
+        
+    }
+    
+    // 버튼을 3초보다 더 누르고 있는 경우 타이머 초기화 및 뷰 이동
+    @objc func addSecondToPushTime(){
+        
+        pushTime += timer.timeInterval
+        
+        if(pushTime == 2){
+            print("ended")
+            self.feedbackGenerator?.notificationOccurred(.success)
+        }
+        print("hi")
     }
     
     // MARK: Helpers
@@ -73,6 +132,11 @@ class RouteRecordView: UIView {
         locationManager.requestAlwaysAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
+    }
+    
+    func setupGenerator(){
+        self.feedbackGenerator = UINotificationFeedbackGenerator()
+        self.feedbackGenerator?.prepare()
     }
 
 }
