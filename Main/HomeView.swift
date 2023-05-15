@@ -76,7 +76,9 @@ class HomeView: UIView {
     private lazy var recodePlusButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "plusButton"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         return button
     }()
     
@@ -99,6 +101,7 @@ class HomeView: UIView {
         stackView.alignment = .center
         stackView.distribution = .fillEqually
         stackView.isUserInteractionEnabled = false
+        
         return stackView
     }()
     
@@ -154,7 +157,7 @@ class HomeView: UIView {
         return imageView
     }()
     
-    
+
     
     // MARK: - LifeCycles
     
@@ -187,7 +190,6 @@ class HomeView: UIView {
         backgroundColor = .mainViewGrey
     }
     
-    
 }
 
 
@@ -203,7 +205,7 @@ extension HomeView: LayoutProtocol {
     func setLayout() {
         mainImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(17.78)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(mainImage.snp.width).multipliedBy(mainImageHeightRatio)
@@ -211,6 +213,7 @@ extension HomeView: LayoutProtocol {
         
         mainLabelStackView.snp.makeConstraints {
             $0.centerX.equalTo(mainImage.snp.centerX)
+            $0.centerY.equalTo(mainImage.snp.centerY)
             $0.top.equalTo(mainImage.snp.top).offset(35)
             $0.leading.equalTo(mainImage.snp.leading).offset(20)
         }
@@ -219,12 +222,13 @@ extension HomeView: LayoutProtocol {
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(mainImage.snp.bottom).offset(19.03)
-            $0.bottom.equalToSuperview().offset(-209)
+            $0.top.equalTo(mainImage.snp.bottom).offset(10)
         }
+
         
         recodeButtonStackView.snp.makeConstraints {
             $0.centerX.equalTo(recodeButton.snp.centerX)
+            $0.centerY.equalTo(recodeButton.snp.centerY)
             $0.top.equalTo(recodeButton.snp.top).offset(29)
             $0.leading.equalTo(recodeButton.snp.leading).offset(44)
             $0.trailing.equalTo(recodeButton.snp.trailing).offset(-44)
@@ -235,10 +239,11 @@ extension HomeView: LayoutProtocol {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(recodeButton.snp.bottom).offset(10)
-            $0.bottom.equalToSuperview().offset(-121)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-20)
         }
         
         exclamationMarkImage.snp.makeConstraints {
+            $0.centerY.equalTo(captionButton.snp.centerY)
             $0.width.equalTo(18)
             $0.height.equalTo(18)
             $0.leading.equalTo(captionButton.snp.leading).offset(20)
@@ -247,17 +252,21 @@ extension HomeView: LayoutProtocol {
         
         captionLabelStackView.snp.makeConstraints {
             $0.centerX.equalTo(captionButton.snp.centerX)
+            $0.centerY.equalTo(captionButton.snp.centerY)
             $0.top.equalTo(captionButton.snp.top).offset(18)
             $0.leading.equalTo(captionButton.snp.leading).offset(50)
             $0.trailing.equalToSuperview().offset(-30)
         }
         
         nextButton.snp.makeConstraints {
+            $0.centerY.equalTo(captionButton.snp.centerY)
             $0.width.equalTo(6)
             $0.height.equalTo(11)
             $0.trailing.equalTo(captionButton.snp.trailing).offset(-23.5)
             $0.top.equalTo(captionButton.snp.top).offset(30)
         }
+        
+
         
         captionButton.layer.zPosition = CGFloat(-1)
         
