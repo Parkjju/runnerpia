@@ -19,7 +19,7 @@ final class RouteViewController: UIViewController {
         super.viewDidLoad()
         
         self.view = RouteRecordView()
-        
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     // MARK: - Selectors
