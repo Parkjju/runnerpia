@@ -63,6 +63,7 @@ class MainViewManager {
         
         tabBarViewController.selectedIndex = 1
         tabBarViewController.tabBar.backgroundColor = .white
+        tabBarViewController.tabBar.layer.masksToBounds = false
         rootViewController = tabBarViewController
     }
     
