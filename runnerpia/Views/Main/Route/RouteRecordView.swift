@@ -83,7 +83,7 @@ class RouteRecordView: UIView {
             $0.centerX.equalTo(sv.snp.centerX)
             $0.top.equalTo(elapsedTimeLabel.snp.bottom).offset(5)
         }
-
+        
         return sv
     }()
     
@@ -146,7 +146,7 @@ class RouteRecordView: UIView {
             let scaledImage = playImage.scalePreservingAspectRatio(targetSize: CGSize(width: 35, height: 35)).withTintColor(.white, renderingMode: .alwaysOriginal)
             btn.setImage(scaledImage, for: .normal)
         }
-
+        
         return btn
     }()
     
@@ -160,13 +160,30 @@ class RouteRecordView: UIView {
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 14)
         
-        view.addSubview(label)
+        let closeButton = UIButton(type:.system)
+        closeButton.setBackgroundImage(UIImage(systemName: "xmark")?.withTintColor(.white, renderingMode: .alwaysOriginal).scalePreservingAspectRatio(targetSize: CGSize(width:14,height:14)), for: .normal)
+        closeButton.backgroundColor = .clear
+        
+        [label, closeButton].forEach { view.addSubview($0) }
         
         label.snp.makeConstraints {
             $0.left.equalTo(view.snp.left).offset(20)
             $0.right.equalTo(view.snp.right).offset(-20)
             $0.centerY.equalTo(view.snp.centerY)
         }
+        
+        closeButton.snp.makeConstraints {
+            $0.top.equalTo(label.snp.top)
+            $0.right.equalTo(view.snp.right).offset(-20)
+            $0.width.equalTo(14)
+            $0.height.equalTo(14)
+        }
+        
+        closeButton.addTarget(self, action: #selector(alertViewCloseButtonTapped), for: .touchUpInside)
+        
+        view.layer.cornerRadius = 10
+        view.isHidden = true
+        view.layer.opacity = 0
         
         return view
     }()
@@ -216,6 +233,14 @@ class RouteRecordView: UIView {
     @objc func playButtonTouchUpHandler(){
         timer.invalidate()
         pushTime = 0
+        
+        let alertViewLabel = alertView.subviews.first as! UILabel
+        alertViewLabel.text = isRecordStarted ? "종료버튼을 길게 누르면\n러닝 기록이 종료됩니다." : "시작버튼을 길게 누르면\n러닝 기록이 시작됩니다."
+        
+        UIView.animate(withDuration: 0.2) {
+            self.alertView.isHidden = false
+            self.alertView.layer.opacity = 1
+        }
         
         // 버튼 UI 초기화
         animateButton(isReset: true)
@@ -281,10 +306,10 @@ class RouteRecordView: UIView {
         timer.invalidate()
         
         pushTime = 0
-
+        
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addSecondToPushTime), userInfo: nil, repeats: true)
         timer.fire()
-
+        
         animateButton(isReset: false)
     }
     
@@ -303,6 +328,11 @@ class RouteRecordView: UIView {
         let secondString = Int(elapsedSeconds / 10) == 0 ? "0\(Int(elapsedSeconds))" : "\(Int(elapsedSeconds))"
         
         elapsedTimeLabel.text = "\(minuteString):\(secondString)"
+    }
+    
+    @objc func alertViewCloseButtonTapped(){
+        alertView.isHidden = true
+        alertView.layer.opacity = 0
     }
     
     // MARK: Helpers
@@ -380,7 +410,7 @@ class RouteRecordView: UIView {
     // 레코딩 시작된 이후에는 playButton이 아닌 stopButton 레이아웃을 조정해야함.
     func animateButton(isReset: Bool){
         let animateTarget = isRecordStarted ? stopButton : playButton
-
+        
         if(isReset){
             UIView.animate(withDuration: 0.1) {
                 animateTarget.snp.updateConstraints {
@@ -409,7 +439,7 @@ class RouteRecordView: UIView {
         stopButton.addTarget(self, action: #selector(stopButtonTouchDownHandler), for:.touchDown)
         stopButton.addTarget(self, action: #selector(playButtonTouchUpHandler), for:.touchUpInside)
     }
-
+    
 }
 
 extension RouteRecordView: LayoutProtocol{
@@ -439,7 +469,7 @@ extension RouteRecordView: LayoutProtocol{
         alertView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(15)
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.height.equalTo(60)
         }
         
@@ -503,7 +533,7 @@ extension RouteRecordView: CLLocationManagerDelegate{
             
             previousLocation = locationManager.location
             pathCoordinates.append(NMGLatLng(lat: locationManager.location!.coordinate.latitude, lng: locationManager.location!.coordinate.longitude))
-        
+            
             pathOverlay.path = NMGLineString(points: pathCoordinates)
             pathOverlay.color = hexStringToUIColor(hex: "#21A345")
             pathOverlay.outlineColor = .clear
