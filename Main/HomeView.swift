@@ -11,13 +11,11 @@ import SnapKit
 class HomeView: UIView {
     
     // MARK: - Properties
-    
-    let mainImageHeightRatio: CGFloat = 109 / 335
-    
+        
     // ------ mainImage
     private lazy var mainImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "mainImage")
+        imageView.image = UIImage(named: "mainImage")?.scalePreservingAspectRatio(targetSize: CGSize(width: 335, height: 109))
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
@@ -51,13 +49,18 @@ class HomeView: UIView {
         return stackView
     }()
     
-    // ------ recondeButton
+    // ------ recodeButton
     private let recodeButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .mainBlue
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 20
-        button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
+        
+        if let recodeButton = UIImage(named: "recodeButton") {
+            let scaledImage = recodeButton.scalePreservingAspectRatio(targetSize: CGSize(width: 335, height: 364))
+            button.setImage(scaledImage, for: .normal)
+        }
+
+        button.imageView?.contentMode = .scaleAspectFill
+
+        button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -68,17 +71,21 @@ class HomeView: UIView {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         button.titleLabel?.textAlignment = .left
-        button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
         return button
     }()
     
     
     private lazy var recodePlusButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "plusButton"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
-        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        
+        if let recodePlusButtonImage = UIImage(named: "plusButton") {
+            let scaledImage = recodePlusButtonImage.scalePreservingAspectRatio(targetSize: CGSize(width: 40, height: 40))
+            button.setImage(scaledImage, for: .normal)
+        }
+        
+        button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -112,13 +119,13 @@ class HomeView: UIView {
         button.backgroundColor = .white
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
-        button.addTarget(self, action: #selector(captionButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(captionButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var exclamationMarkImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "exclamationMark")
+        imageView.image = UIImage(named: "exclamationMark")?.scalePreservingAspectRatio(targetSize: CGSize(width: 335, height: 78))
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -205,10 +212,9 @@ extension HomeView: LayoutProtocol {
     func setLayout() {
         mainImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(35)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(mainImage.snp.width).multipliedBy(mainImageHeightRatio)
         }
         
         mainLabelStackView.snp.makeConstraints {
@@ -265,8 +271,6 @@ extension HomeView: LayoutProtocol {
             $0.trailing.equalTo(captionButton.snp.trailing).offset(-23.5)
             $0.top.equalTo(captionButton.snp.top).offset(30)
         }
-        
-
         
         captionButton.layer.zPosition = CGFloat(-1)
         

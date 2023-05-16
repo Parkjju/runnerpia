@@ -64,6 +64,10 @@ class MainViewManager {
         tabBarViewController.selectedIndex = 1
         tabBarViewController.tabBar.backgroundColor = .white
         tabBarViewController.tabBar.layer.masksToBounds = false
+        tabBarViewController.tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBarViewController.tabBar.layer.shadowOpacity = 0.1
+        tabBarViewController.tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        tabBarViewController.tabBar.layer.shadowRadius = 6
         rootViewController = tabBarViewController
     }
     
