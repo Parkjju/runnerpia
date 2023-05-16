@@ -150,6 +150,27 @@ class RouteRecordView: UIView {
         return btn
     }()
     
+    let alertView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.6)
+        
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.text = "정지 버튼을 길게 누르면 \n러닝이 종료됩니다."
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 14)
+        
+        view.addSubview(label)
+        
+        label.snp.makeConstraints {
+            $0.left.equalTo(view.snp.left).offset(20)
+            $0.right.equalTo(view.snp.right).offset(-20)
+            $0.centerY.equalTo(view.snp.centerY)
+        }
+        
+        return view
+    }()
+    
     var timer = Timer()
     
     var pushTime: TimeInterval = 0
@@ -393,7 +414,7 @@ class RouteRecordView: UIView {
 
 extension RouteRecordView: LayoutProtocol{
     func setSubViews() {
-        [map,playSection].forEach{ self.addSubview($0) }
+        [map,playSection, alertView].forEach{ self.addSubview($0) }
         [playSectionTitle, playButton, playButtonDuringRecord, stopButton].forEach{ self.addSubview($0) }
         
         playButtonDuringRecord.isHidden = true
@@ -415,6 +436,13 @@ extension RouteRecordView: LayoutProtocol{
             $0.height.equalTo(240)
         }
         
+        alertView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(15)
+            $0.height.equalTo(60)
+        }
+        
         playSectionTitle.snp.makeConstraints {
             $0.top.equalTo(playSection.snp.top).offset(40)
             $0.centerX.equalToSuperview()
@@ -429,12 +457,9 @@ extension RouteRecordView: LayoutProtocol{
     }
 }
 
-
+// MARK: 백그라운드 로케이션 트래킹 관련 - always tracking으로 체크되어 있는지 확인 및 예외처리
 extension RouteRecordView: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        
-        
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locations.first!.coordinate.latitude, lng: locations.first!.coordinate.longitude))
         map.moveCamera(cameraUpdate)
         
@@ -445,7 +470,14 @@ extension RouteRecordView: CLLocationManagerDelegate{
         // 사용자가 멈춰있는데 좌표값에 변화가 있는게 감지가 된 경우 - 경로 트래킹 재시작
         if(isRecordPaused){
             // 셀렉터 호출시 자동으로 paused값은 변화함
-            self.perform(#selector(playButtonDuringRecordTouchUpHandler))
+            // MARK: 20미터 이상 진행 후에 재시작
+            // 음성 재생같은 피드백 필요
+            if(locationManager.location!.distance(from: previousLocation!) > 20){
+                self.perform(#selector(playButtonDuringRecordTouchUpHandler))
+            }else{
+                return
+            }
+            
         }else{
             // MARK: 거리 레이블 업데이트
             let elapsedDistanceLabel = movedDistanceSection.subviews.first as! UILabel
