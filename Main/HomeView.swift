@@ -15,7 +15,7 @@ class HomeView: UIView {
     // ------ mainImage
     private lazy var mainImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "mainImage")?.scalePreservingAspectRatio(targetSize: CGSize(width: 335, height: 109))
+        imageView.image = UIImage(named: "mainImage")
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
@@ -52,12 +52,9 @@ class HomeView: UIView {
     // ------ recodeButton
     private let recodeButton: UIButton = {
         let button = UIButton()
-        
-        if let recodeButton = UIImage(named: "recodeButton") {
-            let scaledImage = recodeButton.scalePreservingAspectRatio(targetSize: CGSize(width: 335, height: 364))
-            button.setImage(scaledImage, for: .normal)
-        }
-
+        button.backgroundColor = .mainBlue
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 20
         button.imageView?.contentMode = .scaleAspectFill
 
         button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
@@ -78,15 +75,18 @@ class HomeView: UIView {
     
     private lazy var recodePlusButton: UIButton = {
         let button = UIButton()
+        let imageView = UIImageView(image: UIImage(named: "plusButton"))
         
-        if let recodePlusButtonImage = UIImage(named: "plusButton") {
-            let scaledImage = recodePlusButtonImage.scalePreservingAspectRatio(targetSize: CGSize(width: 40, height: 40))
-            button.setImage(scaledImage, for: .normal)
+        imageView.contentMode = .scaleAspectFill
+        button.addSubview(imageView)
+        
+        // ImageView를 버튼과 같은 크기로 설정
+        imageView.snp.makeConstraints { make in
+            make.edges.equalTo(button)
         }
         
-        button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
         return button
+        
     }()
     
     
@@ -96,7 +96,7 @@ class HomeView: UIView {
         button.titleLabel?.textAlignment = .left
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        button.addTarget(self, action: #selector(recodeButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -125,7 +125,7 @@ class HomeView: UIView {
     
     private lazy var exclamationMarkImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "exclamationMark")?.scalePreservingAspectRatio(targetSize: CGSize(width: 335, height: 78))
+        imageView.image = UIImage(named: "exclamationMark")
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -180,6 +180,8 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+
+    
     // MARK: - Selectors
     
     @objc private func recodeButtonTapped(_ sender: UIButton) {
@@ -212,6 +214,8 @@ extension HomeView: LayoutProtocol {
     func setLayout() {
         mainImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
+            $0.width.equalTo(335)
+            $0.height.equalTo(109)
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(35)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
@@ -226,6 +230,8 @@ extension HomeView: LayoutProtocol {
         
         recodeButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
+            $0.width.equalTo(335)
+            $0.height.equalTo(364)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(mainImage.snp.bottom).offset(10)
@@ -242,6 +248,8 @@ extension HomeView: LayoutProtocol {
         
         captionButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
+            $0.width.equalTo(335)
+            $0.height.equalTo(78)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(recodeButton.snp.bottom).offset(10)
