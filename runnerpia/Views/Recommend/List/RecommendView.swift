@@ -61,11 +61,12 @@ class RecommendView: UIView {
         tableView.register(RecommendTableViewCell.self, forCellReuseIdentifier: "recommendCell")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
     }
     
     private func setupData(){
-        let firstData = Route(user: User(userId: "경준", nickname: "경준"), routeName: "한강 잠실 러닝길" , arrayOfPos: nil, runningTime: "500분", review: "두줄까지 작성됩니다. 두줄 넘어가면 좌/우 여백 유지하면서 좌측 정렬로 줄내림되면서 ... 처리 됩니다.두줄까지 작성됩니다. 두줄 넘어가면 좌/우 여백 유지하면서 좌측 정렬로 줄내림되면서 ... 처리 됩니다.", runningDate: "2023-12-30", recommendedTags: ["1","2"], secureTags: ["0","1","2"], files: nil)
-        let secondData = Route(user: User(userId: "경준", nickname: "경준"),routeName: "한강 잠실 러닝길", arrayOfPos: nil, runningTime: "320분", review: "예시 데이터입니다. 여기 러닝 코스 아주 괜찮습니다. 붕어빵 가게도 있습니다. 중간에 ㅕ편의점도 있어요 ! 경치가 좋아요~ 고양이가 많습니당", runningDate: "2023-02-20", recommendedTags: ["1","2","3"], secureTags: ["1","2"], files: nil)
+        let firstData = Route(user: User(userId: "경준", nickname: "경준"), routeName: "한강 잠실 러닝길" ,distance: 500, arrayOfPos: nil, runningTime: "500분", review: "두줄까지 작성됩니다. 두줄 넘어가면 좌/우 여백 유지하면서 좌측 정렬로 줄내림되면서 ... 처리 됩니다.두줄까지 작성됩니다. 두줄 넘어가면 좌/우 여백 유지하면서 좌측 정렬로 줄내림되면서 ... 처리 됩니다.", runningDate: "12월 31일 토요일 오후 6~9시", recommendedTags: ["1","2"], secureTags: ["0","1","2"], files: nil)
+        let secondData = Route(user: User(userId: "경준", nickname: "경준"),routeName: "한강 잠실 러닝길",distance: 300,arrayOfPos: nil, runningTime: "320분", review: "예시 데이터입니다. 여기 러닝 코스 아주 괜찮습니다. 붕어빵 가게도 있습니다. 중간에 ㅕ편의점도 있어요 ! 경치가 좋아요~ 고양이가 많습니당", runningDate: "12월 30일 일요일 오후 2~3시", recommendedTags: ["1","2","3"], secureTags: ["1","2"], files: nil)
         
         
         routeData.append(firstData)
@@ -96,7 +97,17 @@ extension RecommendView: LayoutProtocol{
 
 extension RecommendView: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 220
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .clear
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -106,13 +117,17 @@ extension RecommendView: UITableViewDelegate{
 
 extension RecommendView: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        routeData.count
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return routeData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recommendCell", for: indexPath) as! RecommendTableViewCell
-        
-        cell.cellData = routeData.count > 0 ? routeData[indexPath.row] : nil
+    
+        cell.cellData = routeData.count > 0 ? routeData[indexPath.section] : nil
         
         return cell
     }
