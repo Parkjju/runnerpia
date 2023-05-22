@@ -54,7 +54,8 @@ final class ParticularView: UIView {
         let imageView = UIImageView()
         let image = UIImage(named: "locationIcon")
         imageView.image = image
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(x: 0, y: 0, width: 18, height: 18)
         return imageView
     }()
     
@@ -71,7 +72,7 @@ final class ParticularView: UIView {
         let imageView = UIImageView()
         let image = UIImage(named: "dot")
         imageView.image = image
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -79,7 +80,7 @@ final class ParticularView: UIView {
         let imageView = UIImageView()
         let image = UIImage(named: "mapIcon")
         imageView.image = image
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -99,7 +100,7 @@ final class ParticularView: UIView {
         stackView.axis = .horizontal
         stackView.spacing = 0
         stackView.alignment = .leading
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         return stackView
     }()
     
@@ -112,6 +113,7 @@ final class ParticularView: UIView {
         textView.isEditable = false
         textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return textView
     }()
     
@@ -125,6 +127,7 @@ final class ParticularView: UIView {
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 20
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        button.backgroundColor = .mainBlue
         return button
     }()
     
@@ -158,8 +161,7 @@ extension ParticularView: LayoutProtocol {
     
     func setSubViews() {
         
-//        [map, spotStackView, locationStackView, textView, routeButton]
-        [map, spotStackView]
+        [map, spotStackView, locationStackView, textView, routeButton]
             .forEach { self.addSubview($0) }
   
     }
@@ -175,12 +177,34 @@ extension ParticularView: LayoutProtocol {
             $0.trailing.equalToSuperview().offset(-16)
         }
         
-        
         spotStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(map.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
+        }
+        
+        locationStackView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(spotStackView.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-158)
+        }
+        
+        textView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(locationStackView.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
+        }
+        
+        routeButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(343)
+            $0.height.equalTo(52)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(6)
         }
         
     }
