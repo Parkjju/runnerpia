@@ -25,6 +25,8 @@
 		C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */; };
 		C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */; };
 		C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */; };
+		C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */; };
+		C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886B9112A1B8933006BE2CD /* ParticularView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewManager.swift; sourceTree = "<group>"; };
 		C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MypageViewController.swift; path = Main/MypageViewController.swift; sourceTree = SOURCE_ROOT; };
 		C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RouteViewController.swift; path = Main/RouteViewController.swift; sourceTree = SOURCE_ROOT; };
+		C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ParticularRouteController.swift; path = Main/ParticularRouteController.swift; sourceTree = SOURCE_ROOT; };
+		C886B9112A1B8933006BE2CD /* ParticularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticularView.swift; sourceTree = "<group>"; };
 		FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_runnerpia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnerpia.release.xcconfig"; path = "Target Support Files/Pods-runnerpia/Pods-runnerpia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,6 +171,7 @@
 				C9AD727E2A106764005B9B5B /* Route */,
 				C86646B42A10BBB100A4E12A /* HomeViewController.swift */,
 				C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */,
+				C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 			children = (
 				C9AD72802A10676D005B9B5B /* Route */,
 				C86646B62A10BBB900A4E12A /* HomeView.swift */,
+				C886B9112A1B8933006BE2CD /* ParticularView.swift */,
 			);
 			name = Main;
 			path = runnerpia/Views/Main;
@@ -328,7 +334,9 @@
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
+				C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */,
 				884F6DEE2A120A6E007B7F73 /* UIImage.swift in Sources */,
+				C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */,
 				C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */,
 				C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */,
 			);

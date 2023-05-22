@@ -28,7 +28,9 @@ class MainViewManager {
         window.backgroundColor = .white
         window.makeKeyAndVisible()
         
-        setTapBarController()
+//        setTapBarController()
+        
+        rootViewController = ParticularRouteController()
         
         // 로그인메서드 추가
     }
