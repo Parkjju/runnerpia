@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		882273282A1B6ECE00FC2663 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882273272A1B6ECE00FC2663 /* User.swift */; };
+		8822732B2A1B70EF00FC2663 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822732A2A1B70EF00FC2663 /* Tags.swift */; };
 		884F6DEE2A120A6E007B7F73 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884F6DED2A120A6E007B7F73 /* UIImage.swift */; };
 		884F6DF02A12244B007B7F73 /* UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884F6DEF2A12244B007B7F73 /* UIControl.swift */; };
+		885F19CF2A1B8D990069AC6E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19CE2A1B8D980069AC6E /* Route.swift */; };
+		885F19D12A1B8F640069AC6E /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19D02A1B8F640069AC6E /* UIView.swift */; };
+		885F19D82A1B916B0069AC6E /* RecommendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19D72A1B916B0069AC6E /* RecommendTableViewCell.swift */; };
+		885F19DD2A1B95650069AC6E /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19DC2A1B95650069AC6E /* RecommendViewController.swift */; };
+		885F19DF2A1B98110069AC6E /* RecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19DE2A1B98110069AC6E /* RecommendView.swift */; };
+		885F19E12A1B9AB10069AC6E /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19E02A1B9AB10069AC6E /* Constraints.swift */; };
+		885F19E42A1BAACD0069AC6E /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19E32A1BAACD0069AC6E /* Tag.swift */; };
 		88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A603032A119DF100CBB6B8 /* RouteRecordView.swift */; };
 		88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DB2A02985900A240BD /* AppDelegate.swift */; };
 		88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DD2A02985A00A240BD /* SceneDelegate.swift */; };
@@ -29,8 +38,17 @@
 
 /* Begin PBXFileReference section */
 		197A93498D86022DC04A50A8 /* Pods-runnerpia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnerpia.debug.xcconfig"; path = "Target Support Files/Pods-runnerpia/Pods-runnerpia.debug.xcconfig"; sourceTree = "<group>"; };
+		882273272A1B6ECE00FC2663 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8822732A2A1B70EF00FC2663 /* Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
 		884F6DED2A120A6E007B7F73 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		884F6DEF2A12244B007B7F73 /* UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControl.swift; sourceTree = "<group>"; };
+		885F19CE2A1B8D980069AC6E /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		885F19D02A1B8F640069AC6E /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		885F19D72A1B916B0069AC6E /* RecommendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendTableViewCell.swift; sourceTree = "<group>"; };
+		885F19DC2A1B95650069AC6E /* RecommendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendViewController.swift; sourceTree = "<group>"; };
+		885F19DE2A1B98110069AC6E /* RecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendView.swift; sourceTree = "<group>"; };
+		885F19E02A1B9AB10069AC6E /* Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
+		885F19E32A1BAACD0069AC6E /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		88A603032A119DF100CBB6B8 /* RouteRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteRecordView.swift; sourceTree = "<group>"; };
 		88C189D82A02985900A240BD /* runnerpia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = runnerpia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88C189DB2A02985900A240BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +91,56 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		882273292A1B70DA00FC2663 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				8822732A2A1B70EF00FC2663 /* Tags.swift */,
+				885F19E02A1B9AB10069AC6E /* Constraints.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		885F19D32A1B910C0069AC6E /* Recommend */ = {
+			isa = PBXGroup;
+			children = (
+				885F19D42A1B911D0069AC6E /* List */,
+			);
+			path = Recommend;
+			sourceTree = "<group>";
+		};
+		885F19D42A1B911D0069AC6E /* List */ = {
+			isa = PBXGroup;
+			children = (
+				885F19D72A1B916B0069AC6E /* RecommendTableViewCell.swift */,
+				885F19DE2A1B98110069AC6E /* RecommendView.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		885F19DA2A1B95460069AC6E /* Recommend */ = {
+			isa = PBXGroup;
+			children = (
+				885F19DB2A1B954E0069AC6E /* List */,
+			);
+			path = Recommend;
+			sourceTree = "<group>";
+		};
+		885F19DB2A1B954E0069AC6E /* List */ = {
+			isa = PBXGroup;
+			children = (
+				885F19DC2A1B95650069AC6E /* RecommendViewController.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		885F19E22A1BAABC0069AC6E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				885F19E32A1BAACD0069AC6E /* Tag.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		88C189CF2A02985900A240BD = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +164,7 @@
 			children = (
 				88C189DB2A02985900A240BD /* AppDelegate.swift */,
 				88C189DD2A02985A00A240BD /* SceneDelegate.swift */,
+				882273292A1B70DA00FC2663 /* Util */,
 				88C189F12A0298EC00A240BD /* Models */,
 				88C189F02A0298E500A240BD /* Views */,
 				88C189EF2A0298DF00A240BD /* Controllers */,
@@ -113,6 +182,7 @@
 		88C189EF2A0298DF00A240BD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				885F19DA2A1B95460069AC6E /* Recommend */,
 				C9AD727D2A10675E005B9B5B /* Main */,
 			);
 			path = Controllers;
@@ -121,6 +191,8 @@
 		88C189F02A0298E500A240BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				885F19E22A1BAABC0069AC6E /* Common */,
+				885F19D32A1B910C0069AC6E /* Recommend */,
 				C9AD727F2A106769005B9B5B /* Main */,
 			);
 			name = Views;
@@ -130,6 +202,8 @@
 		88C189F12A0298EC00A240BD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				885F19CE2A1B8D980069AC6E /* Route.swift */,
+				882273272A1B6ECE00FC2663 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -149,6 +223,7 @@
 				C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */,
 				884F6DED2A120A6E007B7F73 /* UIImage.swift */,
 				884F6DEF2A12244B007B7F73 /* UIControl.swift */,
+				885F19D02A1B8F640069AC6E /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -319,18 +394,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */,
+				885F19E12A1B9AB10069AC6E /* Constraints.swift in Sources */,
 				C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */,
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
 				C817305E2A109F1600E6BE03 /* UIColor.swift in Sources */,
+				8822732B2A1B70EF00FC2663 /* Tags.swift in Sources */,
+				885F19E42A1BAACD0069AC6E /* Tag.swift in Sources */,
 				884F6DF02A12244B007B7F73 /* UIControl.swift in Sources */,
 				C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */,
 				C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */,
+				885F19D82A1B916B0069AC6E /* RecommendTableViewCell.swift in Sources */,
+				885F19CF2A1B8D990069AC6E /* Route.swift in Sources */,
+				882273282A1B6ECE00FC2663 /* User.swift in Sources */,
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
+				885F19DD2A1B95650069AC6E /* RecommendViewController.swift in Sources */,
+				885F19D12A1B8F640069AC6E /* UIView.swift in Sources */,
 				884F6DEE2A120A6E007B7F73 /* UIImage.swift in Sources */,
 				C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */,
 				C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */,
+				885F19DF2A1B98110069AC6E /* RecommendView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
