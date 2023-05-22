@@ -93,18 +93,25 @@ class RecommendTableViewCell: UITableViewCell {
     }
     
     func setupUI(){
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
+        
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
+        
         guard let data = cellData else {
             return
         }
         
         mainLabel.text = data.routeName
-        infoLabel.text = data.review
+        infoLabel.text = "\(data.runningDate!) ﹒ \(data.runningTime!) ﹒ \(data.distance!)km"
     }
 }
 
 extension RecommendTableViewCell: LayoutProtocol{
     func setSubViews() {
-        [mainLabel,button].forEach { self.contentView.addSubview($0) }
+        [mainLabel,button, infoLabel].forEach { self.contentView.addSubview($0) }
     }
     
     func setLayout() {
@@ -114,9 +121,14 @@ extension RecommendTableViewCell: LayoutProtocol{
         }
         
         button.snp.makeConstraints {
-            $0.leading.equalTo(self.contentView.snp.leading).offset(-16)
+            $0.trailing.equalTo(self.contentView.snp.trailing).offset(-16)
             $0.width.equalTo(76)
             $0.lastBaseline.equalTo(mainLabel.snp.lastBaseline)
+        }
+        
+        infoLabel.snp.makeConstraints {
+            $0.top.equalTo(mainLabel.snp.bottom).offset(6)
+            $0.leading.equalTo(mainLabel.snp.leading)
         }
     }
 }
