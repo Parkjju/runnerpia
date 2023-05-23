@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 
 final class ParticularRouteController: UIViewController {
-
+    
     
     // MARK: - Properties
     private var particularView = ParticularView()
     private let numberOfPhotosToShow = 3
-
+    
     
     // MARK: - LifeCycle
     
@@ -26,7 +26,7 @@ final class ParticularRouteController: UIViewController {
         configureDelegate()
         configureUI()
         
-
+        
     }
     
     override func loadView() {
@@ -49,14 +49,14 @@ final class ParticularRouteController: UIViewController {
         particularView.collectionView.dataSource = self
         particularView.collectionView.delegate = self
         particularView.collectionView.register(ParticularCollectionViewCell.self, forCellWithReuseIdentifier: ParticularCollectionViewCell.identifier)
-
+        
     }
 }
 
 
 // MARK: - CollectionView
 
-extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfPhotosToShow
@@ -71,6 +71,15 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let photoViewController = PhotoViewController()
+        present(photoViewController, animated: true, completion: nil)
+    }
+    
+    
+}
+
+extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width: CGFloat = (collectionView.frame.width / 3) - 1.0
@@ -80,14 +89,14 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1.0 // 원하는 가로 간격 값으로 설정
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1.0 // 원하는 세로 간격 값으로 설정
     }
-
-
     
 }
+
+
 
 
 
