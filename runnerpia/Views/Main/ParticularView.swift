@@ -21,27 +21,37 @@ final class ParticularView: UIView {
         return map
     }()
     
+    // -- collectionView
+    var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.scrollDirection = .horizontal
+        return collectionView
+    }()
+
     
     // -- 1. spotStackView
     private lazy var spotLabel: UILabel = {
         let label = UILabel()
-        label.text = "송정 뚝방길"
+        label.text = "송정뚝방길"
         label.textAlignment = .left
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         return label
     }()
     
-    private lazy var bookmarkIcon: UIImageView = {
-        let imageView = UIImageView()
-        let image = UIImage(named: "bookmarkIcon")
-        imageView.image = image
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    private lazy var bookmarkButton: UIButton = {
+        let button = UIButton(type: .custom)
+        let normalImage = UIImage(named: "bookmarkIcon")
+        let selectedImage = UIImage(named: "bookmarkIconSelected")
+        button.setImage(normalImage, for: .normal)
+        button.setImage(selectedImage, for: .selected)
+        button.contentMode = .scaleAspectFit
+        return button
     }()
     
     lazy var spotStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [spotLabel, bookmarkIcon])
+        let stackView = UIStackView(arrangedSubviews: [spotLabel, bookmarkButton])
         stackView.axis = .horizontal
         stackView.spacing = 6
         stackView.alignment = .leading
@@ -161,7 +171,7 @@ extension ParticularView: LayoutProtocol {
     
     func setSubViews() {
         
-        [map, spotStackView, locationStackView, textView, routeButton]
+        [map, collectionView, spotStackView, locationStackView, textView, routeButton]
             .forEach { self.addSubview($0) }
   
     }
@@ -176,10 +186,19 @@ extension ParticularView: LayoutProtocol {
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
         }
-        
+
+        collectionView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(343)
+            $0.height.equalTo(120)
+            $0.top.equalTo(map.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
+        }
+
         spotStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(map.snp.bottom).offset(16)
+            $0.top.equalTo(collectionView.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
         }

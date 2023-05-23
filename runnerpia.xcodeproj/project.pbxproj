@@ -19,6 +19,7 @@
 		9382DC40BD2B210BBD0A8319 /* Pods_runnerpia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */; };
 		C811CD3E2A029A2E00F92530 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C811CD3D2A029A2E00F92530 /* SnapKit */; };
 		C817305E2A109F1600E6BE03 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817305D2A109F1600E6BE03 /* UIColor.swift */; };
+		C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */; };
 		C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B42A10BBB100A4E12A /* HomeViewController.swift */; };
 		C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B62A10BBB900A4E12A /* HomeView.swift */; };
 		C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */; };
@@ -43,6 +44,7 @@
 		88C189E72A02985C00A240BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88C189E92A02985C00A240BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C817305D2A109F1600E6BE03 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticularCollectionViewCell.swift; sourceTree = "<group>"; };
 		C86646B42A10BBB100A4E12A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Main/HomeViewController.swift; sourceTree = SOURCE_ROOT; };
 		C86646B62A10BBB900A4E12A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = Main/HomeView.swift; sourceTree = SOURCE_ROOT; };
 		C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutProtocols.swift; sourceTree = "<group>"; };
@@ -157,6 +159,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		C850CB8F2A1BA9A3002C2FD5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		C86646BA2A10BCFC00A4E12A /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +200,7 @@
 				C9AD72802A10676D005B9B5B /* Route */,
 				C86646B62A10BBB900A4E12A /* HomeView.swift */,
 				C886B9112A1B8933006BE2CD /* ParticularView.swift */,
+				C850CB8F2A1BA9A3002C2FD5 /* Cells */,
 			);
 			name = Main;
 			path = runnerpia/Views/Main;
@@ -331,6 +342,7 @@
 				884F6DF02A12244B007B7F73 /* UIControl.swift in Sources */,
 				C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */,
 				C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */,
+				C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */,
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
