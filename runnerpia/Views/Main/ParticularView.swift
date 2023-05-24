@@ -9,7 +9,13 @@ import UIKit
 import NMapsMap
 import CoreLocation
 
+protocol ParticularViewDelegate: AnyObject {
+    func bookmarkButtonTapped(_ particularView: ParticularView)
+}
+
 final class ParticularView: UIView {
+    
+    weak var delegate: ParticularViewDelegate?
     
     // MARK: - Properties
     
@@ -40,13 +46,15 @@ final class ParticularView: UIView {
         return label
     }()
     
-    private lazy var bookmarkButton: UIButton = {
+    lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: .custom)
         let normalImage = UIImage(named: "bookmarkIcon")
         let selectedImage = UIImage(named: "bookmarkIconSelected")
         button.setImage(normalImage, for: .normal)
         button.setImage(selectedImage, for: .selected)
         button.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
+
         return button
     }()
     
@@ -156,6 +164,13 @@ final class ParticularView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Selectors
+    
+    @objc private func bookmarkButtonTapped() {
+        delegate?.bookmarkButtonTapped(self)
+    }
+
     
     
     // MARK: - Helpers

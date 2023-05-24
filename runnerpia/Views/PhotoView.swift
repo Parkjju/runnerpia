@@ -9,11 +9,18 @@ import UIKit
 final class PhotoView: UIView {
     
     // MARK: - Properties
-    
-    private lazy var routeImage: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
+
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.isPagingEnabled = true
+        return scrollView
     }()
+    
+    var images: [UIImage] = [] {
+        didSet {
+            setupImageViews()
+        }
+    }
     
     
     // MARK: - LifeCycles
@@ -24,7 +31,7 @@ final class PhotoView: UIView {
         configureUI()
         setSubViews()
         setLayout()
-        
+        setupImageViews()
     }
     
     
@@ -36,6 +43,21 @@ final class PhotoView: UIView {
     // MARK: - Helpers
     private func configureUI() {
         backgroundColor = .black
+        
+    }
+    
+    func setupImageViews() {
+        
+        scrollView.subviews.forEach { $0.removeFromSuperview() } // 기존의 이미지 뷰들을 제거합니다.
+
+        scrollView.contentSize = CGSize(width: frame.width * CGFloat(images.count), height: frame.height)
+        
+        for (index, image) in images.enumerated() {
+            let imageView = UIImageView(image: image)
+            imageView.contentMode = .scaleAspectFit
+            imageView.frame = CGRect(x: CGFloat(index) * frame.width, y: 0, width: frame.width, height: frame.height)
+            scrollView.addSubview(imageView)
+        }
     }
 }
 
@@ -45,15 +67,12 @@ final class PhotoView: UIView {
 extension PhotoView: LayoutProtocol {
     
     func setSubViews() {
-        addSubview(routeImage)
+        addSubview(scrollView)
     }
     
     func setLayout() {
-        routeImage.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalTo(50)
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
 
     }

@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import SnapKit
 
 final class PhotoViewController: UIViewController {
     
     // MARK: - Properties
-    let photoView = PhotoView()
+    var photoView: PhotoView!
     
     // MARK: - LifeCycle
     
@@ -18,10 +19,25 @@ final class PhotoViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configureNavigation()
+        
+        let images: [UIImage] = [
+            UIImage(named: "random1")!,
+            UIImage(named: "random2")!,
+            UIImage(named: "random3")!
+        ]
+        photoView = PhotoView()
+        photoView.images = images
+        view.addSubview(photoView)
+        
+        photoView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     override func loadView() {
-        view = photoView
+        let view = photoView
+        self.view = view
+        
     }
     
     
@@ -47,10 +63,9 @@ final class PhotoViewController: UIViewController {
             let leftBarButton = UIBarButtonItem(image: backButtonImage, style: .plain, target: self, action: #selector(backButtonTapped))
             navigationItem.leftBarButtonItem = leftBarButton
         }
-
     }
+
     
-    
-    
-    // MARK: - Layout Extension
 }
+    
+
