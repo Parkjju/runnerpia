@@ -126,6 +126,10 @@ extension ParticularRouteController: ParticularViewDelegate {
         }
     }
     
+    func routeButtonTapped(_ particularView: ParticularView) {
+        print("경로 따라가기 버튼 탭")
+    }
+    
 }
 
 

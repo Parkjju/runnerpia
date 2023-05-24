@@ -11,6 +11,7 @@ import CoreLocation
 
 protocol ParticularViewDelegate: AnyObject {
     func bookmarkButtonTapped(_ particularView: ParticularView)
+    func routeButtonTapped(_ particularView: ParticularView)
 }
 
 final class ParticularView: UIView {
@@ -54,7 +55,6 @@ final class ParticularView: UIView {
         button.setImage(selectedImage, for: .selected)
         button.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
-
         return button
     }()
     
@@ -146,6 +146,7 @@ final class ParticularView: UIView {
         button.layer.cornerRadius = 20
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         button.backgroundColor = .mainBlue
+        button.addTarget(self, action: #selector(routeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -169,6 +170,10 @@ final class ParticularView: UIView {
     
     @objc private func bookmarkButtonTapped() {
         delegate?.bookmarkButtonTapped(self)
+    }
+    
+    @objc private func routeButtonTapped() {
+        delegate?.routeButtonTapped(self)
     }
 
     
