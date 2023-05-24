@@ -19,6 +19,8 @@
 		885F19E12A1B9AB10069AC6E /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19E02A1B9AB10069AC6E /* Constraints.swift */; };
 		885F19E82A1D7C780069AC6E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19E72A1D7C780069AC6E /* TagCollectionViewCell.swift */; };
 		885F19EA2A1DF8960069AC6E /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19E92A1DF8960069AC6E /* LeftAlignedCollectionViewFlowLayout.swift */; };
+		885F19ED2A1DFB850069AC6E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19EC2A1DFB850069AC6E /* PostViewController.swift */; };
+		885F19F02A1DFB9B0069AC6E /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F19EF2A1DFB9B0069AC6E /* PostView.swift */; };
 		88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A603032A119DF100CBB6B8 /* RouteRecordView.swift */; };
 		88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DB2A02985900A240BD /* AppDelegate.swift */; };
 		88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DD2A02985A00A240BD /* SceneDelegate.swift */; };
@@ -51,6 +53,8 @@
 		885F19E02A1B9AB10069AC6E /* Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
 		885F19E72A1D7C780069AC6E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		885F19E92A1DF8960069AC6E /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		885F19EC2A1DFB850069AC6E /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		885F19EF2A1DFB9B0069AC6E /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		88A603032A119DF100CBB6B8 /* RouteRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteRecordView.swift; sourceTree = "<group>"; };
 		88C189D82A02985900A240BD /* runnerpia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = runnerpia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88C189DB2A02985900A240BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +146,22 @@
 				885F19E72A1D7C780069AC6E /* TagCollectionViewCell.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		885F19EB2A1DFB730069AC6E /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				885F19EC2A1DFB850069AC6E /* PostViewController.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		885F19EE2A1DFB8B0069AC6E /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				885F19EF2A1DFB9B0069AC6E /* PostView.swift */,
+			);
+			path = Post;
 			sourceTree = "<group>";
 		};
 		88C189CF2A02985900A240BD = {
@@ -242,6 +262,7 @@
 		C9AD727D2A10675E005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				885F19EB2A1DFB730069AC6E /* Post */,
 				C9AD727E2A106764005B9B5B /* Route */,
 				C86646B42A10BBB100A4E12A /* HomeViewController.swift */,
 				C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */,
@@ -260,6 +281,7 @@
 		C9AD727F2A106769005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				885F19EE2A1DFB8B0069AC6E /* Post */,
 				C9AD72802A10676D005B9B5B /* Route */,
 				C86646B62A10BBB900A4E12A /* HomeView.swift */,
 			);
@@ -396,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				885F19ED2A1DFB850069AC6E /* PostViewController.swift in Sources */,
 				C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */,
 				885F19E12A1B9AB10069AC6E /* Constraints.swift in Sources */,
 				885F19EA2A1DF8960069AC6E /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
@@ -403,6 +426,7 @@
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
 				C817305E2A109F1600E6BE03 /* UIColor.swift in Sources */,
 				8822732B2A1B70EF00FC2663 /* Tags.swift in Sources */,
+				885F19F02A1DFB9B0069AC6E /* PostView.swift in Sources */,
 				885F19E82A1D7C780069AC6E /* TagCollectionViewCell.swift in Sources */,
 				884F6DF02A12244B007B7F73 /* UIControl.swift in Sources */,
 				C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */,
