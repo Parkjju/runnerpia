@@ -29,13 +29,14 @@ final class RouteViewController: UIViewController {
 }
 
 extension RouteViewController: PostDataDelegate{
-    func getData() -> ((TimeInterval,TimeInterval), Date, Int, [NMGLatLng]) {
+    // MARK: 피그마 순서 - 날짜 / 소요시간 / 거리 / 폴리라인 좌표
+    func getData() -> (Date, (TimeInterval, TimeInterval), (Int, Int), [NMGLatLng]) {
         let view = self.view as! RouteRecordView
         let timeTuple = (view.elapsedMinutes, view.elapsedSeconds)
         let today = view.today
-        let distance = view.accumulatedDistance
+        let distance = (view.accumulatedKilometer,view.accumulatedMeter)
         let coordinates = view.pathCoordinates
-        print((timeTuple, today, distance, coordinates))
-        return (timeTuple, today, distance, coordinates)
+        
+        return (today, timeTuple, distance, coordinates)
     }
 }
