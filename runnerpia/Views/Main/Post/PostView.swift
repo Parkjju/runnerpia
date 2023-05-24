@@ -10,6 +10,8 @@ import NMapsMap
 
 class PostView: UIView {
     // MARK: Properties
+    var delegate: PostDataDelegate?
+    
     let map: NMFMapView = {
         let map = NMFMapView()
         map.mapType = .basic
@@ -70,7 +72,6 @@ class PostView: UIView {
     let dateView: UIView = {
         let view = UIView()
         let calendarImage = UIImageView(image: UIImage(systemName: "calendar")?.withTintColor(.black, renderingMode: .alwaysOriginal))
-        print(calendarImage.frame.width, calendarImage.frame.height)
         
         // MARK: 데이터 전달받고 dateFormatting 후 문자열 추가
         let date = UILabel()
@@ -215,4 +216,8 @@ extension PostView: LayoutProtocol{
             $0.height.equalTo(56)
         }
     }
+}
+
+protocol PostDataDelegate{
+    func getData() -> ((TimeInterval,TimeInterval), Date, Int, [NMGLatLng])
 }

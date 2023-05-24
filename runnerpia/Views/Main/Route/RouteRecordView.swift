@@ -14,7 +14,6 @@ class RouteRecordView: UIView {
     // MARK: Properties
     let locationManager = CLLocationManager()
     let pathOverlay = NMFPath()
-    var pathCoordinates:[NMGLatLng] = []
     
     let map: NMFMapView = {
         let map = NMFMapView()
@@ -191,8 +190,13 @@ class RouteRecordView: UIView {
     var timer = Timer()
     
     var pushTime: TimeInterval = 0
+    
+    // MARK: 전달 필요한 데이터 1. elapsedSeconds / elapsedMinutes
     var elapsedSeconds: TimeInterval = 0
     var elapsedMinutes: TimeInterval = 0
+    
+    // MARK: 전달 필요한 데이터 2. 오늘 날짜 및 시간
+    var today = Date()
     
     var feedbackGenerator: UINotificationFeedbackGenerator?
     
@@ -200,9 +204,14 @@ class RouteRecordView: UIView {
     var isRecordStarted: Bool = false
     
     var previousLocation: CLLocation?
+    
+    // MARK: 전달 필요한 데이터 3. 누적 거리
     var accumulatedDistance = 0
     var accumulatedMeter = 0
     var accumulatedKilometer = 0
+    
+    // MARK: 전달 필요한 데이터 4. 누적 좌표값들
+    var pathCoordinates:[NMGLatLng] = []
     
     // MARK: - LifeCycles
     override init(frame: CGRect) {
@@ -543,7 +552,5 @@ extension RouteRecordView: CLLocationManagerDelegate{
             pathOverlay.width = 10
             pathOverlay.mapView = map
         }
-        
-        
     }
 }
