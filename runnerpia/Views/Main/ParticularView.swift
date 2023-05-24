@@ -61,9 +61,9 @@ final class ParticularView: UIView {
     lazy var spotStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [spotLabel, bookmarkButton])
         stackView.axis = .horizontal
-        stackView.spacing = 6
+        stackView.spacing = 0
         stackView.alignment = .leading
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         return stackView
     }()
     
@@ -116,7 +116,7 @@ final class ParticularView: UIView {
                                                        dotIcon,
                                                        mapIcon, distanceLabel])
         stackView.axis = .horizontal
-        stackView.spacing = 0
+        stackView.spacing = 5
         stackView.alignment = .leading
         stackView.distribution = .fill
         return stackView
@@ -125,7 +125,7 @@ final class ParticularView: UIView {
     // -- 3 textView
     private lazy var textView: UITextView = {
         let textView = UITextView()
-        textView.text = "성동구에서 가장 안전한 러닝 루트를 소개합니다! 나무가 많아 그늘 아래에서 달릴 수 있고, 관리도 참 잘 되어서 쾌적해요. 무엇보다도 해질 때 쯤 강 너머로 보이는 석양을 보면서 달리면 가슴이 벅차오릅니다... 오후 10시 이후로는 한산한 편이지만 가로등이 다 켜져있어서 안전해요~!"
+        textView.text = "성동구에서 가장 안전한 러닝 루트를 소개합니다!\n나무가 많아 그늘 아래에서 달릴 수 있고, 관리도 참 잘 되어서 쾌적해요. 무엇보다도 해질 때 쯤 강 너머로 보이는 석양을 보면서 달리면 가슴이 벅차오릅니다... 오후 10시 이후로는 한산한 편이지만 가로등이 다 켜져있어서 안전해요~!"
         textView.textAlignment = .left
         textView.isScrollEnabled = false
         textView.isEditable = false
@@ -143,7 +143,7 @@ final class ParticularView: UIView {
         button.setTitle("경로 따라가기", for: .normal)
         button.backgroundColor = .blue
         button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 30
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         button.backgroundColor = .mainBlue
         button.addTarget(self, action: #selector(routeButtonTapped), for: .touchUpInside)
@@ -200,17 +200,21 @@ extension ParticularView: LayoutProtocol {
         
         map.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(343)
-            $0.height.equalTo(263)
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
+//            $0.width.equalTo(343)
+//            $0.height.equalTo(263)
+            $0.width.equalToSuperview().multipliedBy(0.9)
+            $0.height.equalToSuperview().multipliedBy(0.3)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
         }
 
         collectionView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(343)
-            $0.height.equalTo(120)
+//            $0.width.equalTo(343)
+//            $0.height.equalTo(120)
+            $0.width.equalToSuperview().multipliedBy(0.9)
+            $0.height.equalToSuperview().multipliedBy(0.15)
             $0.top.equalTo(map.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
@@ -218,9 +222,9 @@ extension ParticularView: LayoutProtocol {
 
         spotStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(collectionView.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
+            $0.top.equalTo(collectionView.snp.bottom)
+            $0.leading.equalToSuperview().offset(18)
+            $0.trailing.equalToSuperview().offset(-18)
         }
         
         locationStackView.snp.makeConstraints {
@@ -239,11 +243,13 @@ extension ParticularView: LayoutProtocol {
         
         routeButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(343)
-            $0.height.equalTo(52)
+//            $0.width.equalTo(343)
+//            $0.height.equalTo(52)
+            $0.width.equalToSuperview().multipliedBy(0.9) // 너비를 상위 뷰의 90%로 설정
+            $0.height.equalToSuperview().multipliedBy(0.07) // 높이를 상위 뷰의 10%로 설정
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(6)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-6)
         }
         
     }

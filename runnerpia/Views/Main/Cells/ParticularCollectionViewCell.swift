@@ -49,7 +49,7 @@ extension ParticularCollectionViewCell: LayoutProtocol {
         imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 20
+        imageView.layer.cornerRadius = 10
     }
     
     
