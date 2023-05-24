@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import NMapsMap
 
 final class RouteViewController: UIViewController {
     
@@ -25,4 +26,16 @@ final class RouteViewController: UIViewController {
     // MARK: - Selectors
     
     // MARK: - Helpers
+}
+
+extension RouteViewController: PostDataDelegate{
+    func getData() -> ((TimeInterval,TimeInterval), Date, Int, [NMGLatLng]) {
+        let view = self.view as! RouteRecordView
+        let timeTuple = (view.elapsedMinutes, view.elapsedSeconds)
+        let today = view.today
+        let distance = view.accumulatedDistance
+        let coordinates = view.pathCoordinates
+        print((timeTuple, today, distance, coordinates))
+        return (timeTuple, today, distance, coordinates)
+    }
 }
