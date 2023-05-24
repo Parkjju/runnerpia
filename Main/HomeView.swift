@@ -57,7 +57,7 @@ class HomeView: UIView {
         button.layer.cornerRadius = 20
         button.imageView?.contentMode = .scaleAspectFill
 
-        button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(recordButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -68,7 +68,7 @@ class HomeView: UIView {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         button.titleLabel?.textAlignment = .left
-        button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(recordButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -96,7 +96,7 @@ class HomeView: UIView {
         button.titleLabel?.textAlignment = .left
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        button.addTarget(self, action: #selector(recodeButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(recordButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -184,8 +184,11 @@ class HomeView: UIView {
     
     // MARK: - Selectors
     
-    @objc private func recodeButtonTapped(_ sender: UIButton) {
-        print("recodeButton Tapped")
+    @objc private func recordButtonTapped(_ sender: UIButton) {
+        let vc = self.parentViewController as! HomeViewController
+        let routeVC = RouteViewController()
+        routeVC.modalPresentationStyle = .fullScreen
+        vc.present(routeVC, animated: true)
     }
     
     @objc private func captionButtonTapped(_ sender: UIButton) {
