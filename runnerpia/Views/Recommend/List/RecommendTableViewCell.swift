@@ -61,14 +61,20 @@ class RecommendTableViewCell: UITableViewCell {
         return label
     }()
     
-    let tagBox: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.spacing = 100
-        sv.distribution = .fillProportionally
-        sv.alignment = .fill
-        sv.backgroundColor = .black
-        return sv
+    let tagCollectionView: UICollectionView = {
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: "Tag")
+        
+        cv.collectionViewLayout = layout
+        
+        return cv
     }()
     
     let recommendTag: UIView = {
@@ -87,7 +93,12 @@ class RecommendTableViewCell: UITableViewCell {
         setupUI()
         setSubViews()
         setLayout()
+
+        tagCollectionView.dataSource = self
+        tagCollectionView.delegate = self
     }
+    
+    
     
     required init?(coder: NSCoder) {
          fatalError("init(coder:) has not been implemented")
@@ -120,7 +131,6 @@ class RecommendTableViewCell: UITableViewCell {
         summaryLabel.text = "\(data.review!)"
         
         setMap(data)
-        setTags(secureTags: data.secureTags!, recommendedTags: data.recommendedTags!)
     }
     
     func setMap(_ data: Route){
@@ -137,33 +147,11 @@ class RecommendTableViewCell: UITableViewCell {
         pathOverlay.width = 10
         pathOverlay.mapView = map
     }
-    
-    func setTags(secureTags: [String], recommendedTags: [String]){
-        let secureTagBox = secureTags.map {
-            let tag = Tag()
-            tag.isSecureTag = true
-            tag.tagName = globalSecureTags[Int($0)!]
-            return tag
-        }
-        
-        let recommendedTagBox = recommendedTags.map{
-            let tag = Tag()
-            tag.isSecureTag = false
-            tag.tagName = globalRecommendedTags[Int($0)!]
-            return tag
-        }
-        
-        let gradientTag = Tag()
-        gradientTag.isGradient = true
-        gradientTag.tagName = "+3"
-        
-        [secureTagBox.first!, recommendedTagBox.first!, gradientTag].forEach { tagBox.addSubview($0) }
-    }
 }
 
 extension RecommendTableViewCell: LayoutProtocol{
     func setSubViews() {
-        [mainLabel,button, infoLabel, map, summaryLabel, tagBox].forEach { self.contentView.addSubview($0) }
+        [mainLabel,button, infoLabel, map, summaryLabel, tagCollectionView].forEach { self.contentView.addSubview($0) }
     }
     
     func setLayout() {
@@ -193,15 +181,71 @@ extension RecommendTableViewCell: LayoutProtocol{
         
         summaryLabel.snp.makeConstraints {
             $0.leading.equalTo(mainLabel.snp.leading)
-            $0.trailing.equalTo(self.contentView.snp.trailing).offset(-16)
+            $0.trailing.equalTo(self.contentView.snp.trailing).offset(-30)
             $0.top.equalTo(map.snp.bottom).offset(10)
         }
         
-        tagBox.snp.makeConstraints {
+        tagCollectionView.snp.makeConstraints {
             $0.leading.equalTo(mainLabel.snp.leading)
-            $0.trailing.equalTo(self.contentView.snp.trailing).offset(-16)
+            $0.trailing.lessThanOrEqualTo(self.contentView.snp.trailing).offset(-16)
             $0.top.equalTo(summaryLabel.snp.bottom).offset(10)
-            $0.bottom.equalTo(self.contentView.snp.bottom).offset(-20)
+            $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
+            $0.height.greaterThanOrEqualTo(80)
         }
+    }
+}
+
+extension RecommendTableViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: 100, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
+        
+        switch(indexPath.item){
+        case 0:
+            cell.isSecureTag = true
+            cell.tagName = globalSecureTags[indexPath.item]
+        case 1:
+            cell.isSecureTag = false
+            cell.tagName = globalRecommendedTags[indexPath.item]
+        case 2:
+            cell.tagName = "+3"
+            cell.isGradient = true
+        default:
+            break
+        }
+        
+        
+        return cell
+    }
+}
+
+class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let attributes = super.layoutAttributesForElements(in: rect)
+
+        var leftMargin = sectionInset.left
+        var maxY: CGFloat = -1.0
+        attributes?.forEach { layoutAttribute in
+            if layoutAttribute.frame.origin.y >= maxY {
+                leftMargin = sectionInset.left
+            }
+
+            layoutAttribute.frame.origin.x = leftMargin
+
+            leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
+            maxY = max(layoutAttribute.frame.maxY , maxY)
+        }
+
+        return attributes
     }
 }
