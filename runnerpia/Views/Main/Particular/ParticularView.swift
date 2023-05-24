@@ -201,8 +201,6 @@ extension ParticularView: LayoutProtocol {
         map.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
-//            $0.width.equalTo(343)
-//            $0.height.equalTo(263)
             $0.width.equalToSuperview().multipliedBy(0.9)
             $0.height.equalToSuperview().multipliedBy(0.3)
             $0.leading.equalToSuperview().offset(16)
@@ -211,8 +209,6 @@ extension ParticularView: LayoutProtocol {
 
         collectionView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-//            $0.width.equalTo(343)
-//            $0.height.equalTo(120)
             $0.width.equalToSuperview().multipliedBy(0.9)
             $0.height.equalToSuperview().multipliedBy(0.15)
             $0.top.equalTo(map.snp.bottom).offset(10)
@@ -228,10 +224,9 @@ extension ParticularView: LayoutProtocol {
         }
         
         locationStackView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.equalTo(spotStackView.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-158)
+            $0.trailing.lessThanOrEqualToSuperview()
         }
         
         textView.snp.makeConstraints {
@@ -243,8 +238,6 @@ extension ParticularView: LayoutProtocol {
         
         routeButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-//            $0.width.equalTo(343)
-//            $0.height.equalTo(52)
             $0.width.equalToSuperview().multipliedBy(0.9) // 너비를 상위 뷰의 90%로 설정
             $0.height.equalToSuperview().multipliedBy(0.07) // 높이를 상위 뷰의 10%로 설정
             $0.leading.equalToSuperview().offset(16)

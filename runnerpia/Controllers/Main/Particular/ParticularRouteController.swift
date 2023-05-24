@@ -69,6 +69,15 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
         let image = UIImage(named: "random1")
         cell.imageView.image = image
         
+        if indexPath.item == numberOfPhotosToShow - 1 && numberOfPhotosToShow >= 3 {
+            cell.imageView.alpha = 0.5 // 불투명 효과 적용
+            cell.numberLabel.text = "+\(numberOfPhotosToShow)" // 텍스트 설정
+            cell.numberLabel.isHidden = false // 숫자 레이블 표시
+        } else {
+            cell.imageView.alpha = 1.0 // 불투명 효과 해제
+            cell.numberLabel.isHidden = true // 숫자 레이블 숨김
+        }
+        
         
         return cell
     }
@@ -109,7 +118,6 @@ extension ParticularRouteController: ParticularViewDelegate {
     
     func bookmarkButtonTapped(_ particularView: ParticularView) {
         if particularView.bookmarkButton.isSelected {
-            // 이미 선택된 상태인 경우 북마크를 제거합니다.
             particularView.bookmarkButton.isSelected = false
             // 북마크 제거에 관련된 추가 로직을 수행합니다.
         } else {

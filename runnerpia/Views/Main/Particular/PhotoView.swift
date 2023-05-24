@@ -21,8 +21,6 @@ final class PhotoView: UIView {
         scrollView.isPagingEnabled = true
         return scrollView
     }()
-
-
     
     // MARK: - LifeCycles
     

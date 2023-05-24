@@ -13,10 +13,17 @@ final class ParticularCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
 
     static let identifier = "ParticularCollectionViewCell"
-    let imageView = UIImageView()
-    
     let particularRouteController = ParticularRouteController()
 
+    lazy var imageView: UIImageView = UIImageView()
+
+    lazy var numberLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        return label
+    }()
     
     // MARK: - LifeCycle
 
@@ -42,14 +49,20 @@ final class ParticularCollectionViewCell: UICollectionViewCell {
 extension ParticularCollectionViewCell: LayoutProtocol {
     
     func setSubViews() {
-        addSubview(imageView)
-    }
+        [imageView, numberLabel].forEach { self.addSubview($0) }
+        }
+    
     
     func setLayout() {
         imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
+        
+        numberLabel.snp.makeConstraints {
+            $0.centerX.equalTo(imageView)
+            $0.centerY.equalTo(imageView)
+        }
     }
     
     
