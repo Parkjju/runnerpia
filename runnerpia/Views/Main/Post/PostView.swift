@@ -7,6 +7,7 @@
 
 import UIKit
 import NMapsMap
+import CoreLocation
 
 class PostView: UIView {
     // MARK: Properties
@@ -162,14 +163,51 @@ class PostView: UIView {
     }
     
     override func didMoveToSuperview() {
+        // MARK: 데이터 전달을 위한 델리게이트 지정
+        self.delegate = self.parentViewController!.presentingViewController as! RouteViewController
+        
         setSubViews()
         setLayout()
         setUI()
     }
     
     // MARK: Helpers
+    // MARK: 데이터 바인딩작업 진행
     func setUI(){
         map.layer.cornerRadius = 10
+        
+        let (date, startDate, distance, coordinates) = delegate!.getData()
+        
+        bindingLocation(coordinates)
+        bindingTime(date)
+    }
+    
+    func bindingLocation(_ coordinates: [NMGLatLng]){
+        let startLocation = CLLocation(latitude: coordinates.first!.lat, longitude: coordinates.first!.lng)
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "ko")
+        
+        geocoder.reverseGeocodeLocation(startLocation, preferredLocale: locale) { placemarks, _ in
+            guard let placemarks = placemarks, let address = placemarks.last else {
+                return
+            }
+            print(address.subLocality) // 중동
+//            print(address.locality) - 용인시
+//            print(address.name) - 중동 1083
+            
+        }
+    }
+    
+    func bindingTime(_ date: Date){
+        let label = dateView.subviews.last as! UILabel
+        
+        // MARK: 한국시간으로 변경
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko")
+        dateFormatter.dateFormat = "M월 dd일 E요일 a k시 m분 시작"
+        
+        // MARK: 날짜 바인딩
+        label.text = dateFormatter.string(from: date)
     }
 
 }
@@ -219,5 +257,5 @@ extension PostView: LayoutProtocol{
 }
 
 protocol PostDataDelegate{
-    func getData() -> ((TimeInterval,TimeInterval), Date, Int, [NMGLatLng])
+    func getData() -> (Date,(TimeInterval,TimeInterval), (Int, Int), [NMGLatLng])
 }
