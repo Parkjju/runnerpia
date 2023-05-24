@@ -87,7 +87,7 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
 extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat = (collectionView.frame.width / 3) - 1.0
+        let width: CGFloat = (collectionView.frame.width / 3) - 7
         return CGSize(width: width, height: width)
     }
     
