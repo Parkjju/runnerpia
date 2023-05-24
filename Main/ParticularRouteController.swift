@@ -15,7 +15,7 @@ final class ParticularRouteController: UIViewController {
     // MARK: - Properties
     private var particularView = ParticularView()
     private let numberOfPhotosToShow = 3
-    
+
     
     // MARK: - LifeCycle
     
@@ -72,8 +72,11 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let photoViewController = PhotoViewController()
-        present(photoViewController, animated: true, completion: nil)
+
+        let viewController = UINavigationController(rootViewController: PhotoViewController())
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
+    
     }
     
     
