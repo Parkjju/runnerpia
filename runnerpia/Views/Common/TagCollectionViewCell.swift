@@ -46,7 +46,6 @@ class TagCollectionViewCell: UICollectionViewCell {
     
     override func didMoveToSuperview() {
         setUI()
-        print(self.contentView.bounds)
     }
 
     func setUI(){
