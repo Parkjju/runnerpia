@@ -41,7 +41,7 @@ class MainViewManager {
     private func setTapBarController() {
         let tabBarViewController = UITabBarController()
         
-        let vc1 = UINavigationController(rootViewController: RouteViewController())
+        let vc1 = UINavigationController(rootViewController: RecommendViewController())
         let vc2 = UINavigationController(rootViewController: HomeViewController())
         let vc3 = UINavigationController(rootViewController: MyPageViewController())
         
