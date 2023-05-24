@@ -260,6 +260,9 @@ class RouteRecordView: UIView {
         pushTime += timer.timeInterval
         
         if(pushTime == 2 && !isRecordStarted){
+            // 시작시간 초기화
+            today = Date()
+            
             self.feedbackGenerator?.notificationOccurred(.success)
             playButton.removeTarget(nil, action: nil, for: .allEvents)
             setupRecordingUI()
@@ -541,7 +544,7 @@ extension RouteRecordView: CLLocationManagerDelegate{
             let meterString = Int(accumulatedMeter / 10) == 0 ? "0\(accumulatedMeter)" : "\(accumulatedMeter)"
             let kilometerString = "\(accumulatedKilometer)"
             
-            elapsedDistanceLabel.text = "\(kilometerString):\(meterString)km"
+            elapsedDistanceLabel.text = "\(kilometerString).\(meterString)km"
             
             previousLocation = locationManager.location
             pathCoordinates.append(NMGLatLng(lat: locationManager.location!.coordinate.latitude, lng: locationManager.location!.coordinate.longitude))
