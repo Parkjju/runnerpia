@@ -12,6 +12,7 @@ import CoreLocation
 class PostView: UIView {
     // MARK: Properties
     var delegate: PostDataDelegate?
+    var eventDelegate: PostViewEventDelegate?
     
     let map: NMFMapView = {
         let map = NMFMapView()
@@ -134,6 +135,7 @@ class PostView: UIView {
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         btn.clipsToBounds = true
         btn.layer.cornerRadius = 10
+        btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         return btn
     }()
     
@@ -148,11 +150,19 @@ class PostView: UIView {
     
     override func didMoveToSuperview() {
         // MARK: 데이터 전달을 위한 델리게이트 지정
-        self.delegate = self.parentViewController!.presentingViewController as! RouteViewController
+        let navigationVC =  self.parentViewController!.presentingViewController as! UINavigationController
+        self.delegate = navigationVC.viewControllers[0] as! RouteViewController
+        
+        self.eventDelegate = self.parentViewController as! PostViewController
         
         setSubViews()
         setLayout()
         setUI()
+    }
+    
+    // MARK: Selectors
+    @objc func registerButtonTapped(){
+        eventDelegate?.registerButtonTapped()
     }
     
     // MARK: Helpers
@@ -190,7 +200,6 @@ class PostView: UIView {
             }
         }
     }
-    
     func bindingEndLocation(_ coordinates: [NMGLatLng]){
         let endLocation = CLLocation(latitude: coordinates.last!.lat, longitude: coordinates.last!.lng)
         
@@ -211,7 +220,6 @@ class PostView: UIView {
             }
         }
     }
-    
     func bindingTime(_ date: Date){
         let label = dateView.subviews.last as! UILabel
         
@@ -242,20 +250,17 @@ class PostView: UIView {
         // MARK: 날짜 바인딩
         label.text = dateFormatter.string(from: date)
     }
-    
     func bindingElapsedTime(_ elapsedTime: (TimeInterval, TimeInterval)){
         let (elapsedMinute, elapsedSecond) = elapsedTime
         
         let label = timeView.subviews[1] as! UILabel
         label.text = elapsedMinute > 0 ? "\(Int(elapsedMinute))분 \(Int(elapsedSecond))초" : "\(Int(elapsedSecond))초"
     }
-    
     func bindingDistance(_ distance: (Int, Int)){
         let (km, meter) = distance
         let distanceLabel = distanceView.subviews.last as! UILabel
         distanceLabel.text = meter / 10 > 0 ? "\(km).\(meter)km" : "\(km).0\(meter)km"
     }
-    
     func bindingPolyline(_ coordinates: [NMGLatLng]){
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinates.first!.lat, lng: coordinates.first!.lng))
         map.moveCamera(cameraUpdate)
@@ -319,4 +324,8 @@ extension PostView: LayoutProtocol{
 
 protocol PostDataDelegate{
     func getData() -> (Date,(TimeInterval,TimeInterval), (Int, Int), [NMGLatLng])
+}
+
+protocol PostViewEventDelegate: AnyObject{
+    func registerButtonTapped()
 }

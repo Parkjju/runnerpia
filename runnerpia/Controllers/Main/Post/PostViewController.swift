@@ -15,5 +15,14 @@ class PostViewController: UIViewController {
         let postView = PostView()
         self.view = postView
     }
+}
 
+extension PostViewController: PostViewEventDelegate{
+    func registerButtonTapped() {
+        // 뷰 생성 및 present
+        let postDetailVC = PostDetailViewController()
+        postDetailVC.modalPresentationStyle = .fullScreen
+        
+        self.present(postDetailVC, animated: true)
+    }
 }
