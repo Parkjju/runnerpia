@@ -187,8 +187,9 @@ class HomeView: UIView {
     @objc private func recordButtonTapped(_ sender: UIButton) {
         let vc = self.parentViewController as! HomeViewController
         let routeVC = RouteViewController()
-        routeVC.modalPresentationStyle = .fullScreen
-        vc.present(routeVC, animated: true)
+        let navigationVC = UINavigationController(rootViewController: routeVC)
+        navigationVC.modalPresentationStyle = .fullScreen
+        vc.present(navigationVC, animated: true)
     }
     
     @objc private func captionButtonTapped(_ sender: UIButton) {
