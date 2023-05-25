@@ -83,7 +83,6 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
         }
     }
 
-    
     // 페이지 갯수
     private func setPageControl() {
         pageControl.numberOfPages = images.count
@@ -94,15 +93,32 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
           pageControl.currentPage = currentPage
       }
     
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let value = scrollView.contentOffset.x / scrollView.frame.size.width
+//
+//        if value.isFinite && !value.isNaN {
+//            setPageControlSelectedPage(currentPage: Int(round(value)))
+//        } else {
+//            // 예외 처리 또는 오류 처리
+//        }
+//    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let value = scrollView.contentOffset.x / scrollView.frame.size.width
+        let pageWidth = scrollView.frame.size.width
+        let contentOffsetX = scrollView.contentOffset.x
+        let currentPage: Int
         
-        if value.isFinite && !value.isNaN {
-            setPageControlSelectedPage(currentPage: Int(round(value)))
+        if pageWidth > 0 {
+            currentPage = Int((contentOffsetX + pageWidth / 2) / pageWidth)
         } else {
-            // 예외 처리 또는 오류 처리
+            currentPage = 0
         }
+        
+        pageControl.currentPage = currentPage
+        updateNavigationBarTitle()
     }
+
+
 
     
     private func updateNavigationBarTitle() {
