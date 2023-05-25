@@ -12,6 +12,7 @@ import CoreLocation
 class RouteRecordView: UIView {
     
     // MARK: Properties
+    var changeViewDelegate: ChangeViewDelegate?
     let locationManager = CLLocationManager()
     let pathOverlay = NMFPath()
     
@@ -215,7 +216,6 @@ class RouteRecordView: UIView {
     
     // MARK: - LifeCycles
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
         configureUI()
         setSubViews()
@@ -225,6 +225,10 @@ class RouteRecordView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func didMoveToSuperview() {
+        self.changeViewDelegate = self.parentViewController as! RouteViewController
     }
     
     // MARK: Selectors
@@ -279,9 +283,7 @@ class RouteRecordView: UIView {
                 self.parentViewController?.dismiss(animated: true)
             }
             
-            let postVC = PostViewController()
-            postVC.modalPresentationStyle = .fullScreen
-            self.parentViewController!.present(postVC, animated: false)
+            changeViewDelegate?.nextView()
         }
     }
     
@@ -459,11 +461,6 @@ class RouteRecordView: UIView {
         stopButton.addTarget(self, action: #selector(playButtonTouchUpHandler), for:.touchUpInside)
     }
     
-    deinit{
-        locationManager.stopUpdatingLocation()
-        
-    }
-    
 }
 
 extension RouteRecordView: LayoutProtocol{
@@ -566,4 +563,8 @@ extension RouteRecordView: CLLocationManagerDelegate{
             pathOverlay.mapView = map
         }
     }
+}
+
+protocol ChangeViewDelegate: AnyObject{
+    func nextView()
 }

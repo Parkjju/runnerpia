@@ -40,3 +40,12 @@ extension RouteViewController: PostDataDelegate{
         return (today, timeTuple, distance, coordinates)
     }
 }
+
+extension RouteViewController: ChangeViewDelegate{
+    func nextView() {
+        let postVC = PostViewController()
+        postVC.modalPresentationStyle = .fullScreen
+        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.pushViewController(postVC, animated: true)
+    }
+}

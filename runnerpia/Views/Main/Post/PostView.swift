@@ -150,7 +150,9 @@ class PostView: UIView {
     
     override func didMoveToSuperview() {
         // MARK: 데이터 전달을 위한 델리게이트 지정
-        let navigationVC =  self.parentViewController!.presentingViewController as! UINavigationController
+        
+        let navigationVC = self.parentViewController?.parent as! UINavigationController
+        
         self.delegate = navigationVC.viewControllers[0] as! RouteViewController
         
         self.eventDelegate = self.parentViewController as! PostViewController
