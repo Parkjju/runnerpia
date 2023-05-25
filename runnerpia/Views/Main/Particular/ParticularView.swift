@@ -143,7 +143,6 @@ final class ParticularView: UIView {
         button.setTitle("경로 따라가기", for: .normal)
         button.backgroundColor = .blue
         button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 30
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         button.backgroundColor = .mainBlue
         button.addTarget(self, action: #selector(routeButtonTapped), for: .touchUpInside)
@@ -161,6 +160,7 @@ final class ParticularView: UIView {
         setLayout()
         
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

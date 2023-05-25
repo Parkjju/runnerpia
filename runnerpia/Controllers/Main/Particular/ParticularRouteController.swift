@@ -34,6 +34,13 @@ final class ParticularRouteController: UIViewController {
         particularView.collectionView.collectionViewLayout = UICollectionViewFlowLayout()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let cornerRadius = particularView.routeButton.frame.height / 2
+        particularView.routeButton.layer.masksToBounds = true
+        particularView.routeButton.layer.cornerRadius = cornerRadius
+    }
+    
     
     // MARK: - Selectors
     
