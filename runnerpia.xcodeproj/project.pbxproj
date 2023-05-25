@@ -37,6 +37,8 @@
 		C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */; };
 		C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */; };
 		C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */; };
+		C9051C652A1F453D0031660F /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9051C642A1F453D0031660F /* PostDetailViewController.swift */; };
+		C9051C672A1F454D0031660F /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9051C662A1F454D0031660F /* PostDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,8 @@
 		C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewManager.swift; sourceTree = "<group>"; };
 		C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MypageViewController.swift; path = Main/MypageViewController.swift; sourceTree = SOURCE_ROOT; };
 		C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RouteViewController.swift; path = Main/RouteViewController.swift; sourceTree = SOURCE_ROOT; };
+		C9051C642A1F453D0031660F /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
+		C9051C662A1F454D0031660F /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_runnerpia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnerpia.release.xcconfig"; path = "Target Support Files/Pods-runnerpia/Pods-runnerpia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				885F19EC2A1DFB850069AC6E /* PostViewController.swift */,
+				C9051C642A1F453D0031660F /* PostDetailViewController.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				885F19EF2A1DFB9B0069AC6E /* PostView.swift */,
+				C9051C662A1F454D0031660F /* PostDetailView.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -435,6 +441,8 @@
 				885F19CF2A1B8D990069AC6E /* Route.swift in Sources */,
 				882273282A1B6ECE00FC2663 /* User.swift in Sources */,
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
+				C9051C652A1F453D0031660F /* PostDetailViewController.swift in Sources */,
+				C9051C672A1F454D0031660F /* PostDetailView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
 				885F19DD2A1B95650069AC6E /* RecommendViewController.swift in Sources */,
