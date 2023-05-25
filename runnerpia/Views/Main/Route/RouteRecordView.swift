@@ -260,6 +260,7 @@ class RouteRecordView: UIView {
         pushTime += timer.timeInterval
         
         if(pushTime == 2 && !isRecordStarted){
+            
             // 시작시간 초기화
             today = Date()
             
@@ -274,6 +275,9 @@ class RouteRecordView: UIView {
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateElapsedLabels), userInfo: nil, repeats: true)
         }else if(pushTime == 2 && isRecordStarted){
             self.feedbackGenerator?.notificationOccurred(.success)
+            if(pathCoordinates.count == 0){
+                self.parentViewController?.dismiss(animated: true)
+            }
             
             let postVC = PostViewController()
             postVC.modalPresentationStyle = .fullScreen
@@ -455,6 +459,11 @@ class RouteRecordView: UIView {
         stopButton.addTarget(self, action: #selector(playButtonTouchUpHandler), for:.touchUpInside)
     }
     
+    deinit{
+        locationManager.stopUpdatingLocation()
+        
+    }
+    
 }
 
 extension RouteRecordView: LayoutProtocol{
@@ -517,7 +526,8 @@ extension RouteRecordView: CLLocationManagerDelegate{
             // 셀렉터 호출시 자동으로 paused값은 변화함
             // MARK: 20미터 이상 진행 후에 재시작
             // 음성 재생같은 피드백 필요
-            if(locationManager.location!.distance(from: previousLocation!) > 20){
+            guard let previousLocation else {return}
+            if(locationManager.location!.distance(from: previousLocation) > 20){
                 self.perform(#selector(playButtonDuringRecordTouchUpHandler))
             }else{
                 return
