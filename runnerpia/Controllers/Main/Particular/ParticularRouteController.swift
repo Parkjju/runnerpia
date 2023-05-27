@@ -32,6 +32,7 @@ final class ParticularRouteController: UIViewController {
     override func loadView() {
         view = particularView
         particularView.collectionView.collectionViewLayout = UICollectionViewFlowLayout()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,6 +48,8 @@ final class ParticularRouteController: UIViewController {
     // MARK: - Helpers
     
     private func configureUI() {
+        particularView.collectionView.tag = 1
+        particularView.tagsCollectionView.tag = 2
     }
     
     private func configureNavigation() {
@@ -57,6 +60,10 @@ final class ParticularRouteController: UIViewController {
         particularView.collectionView.dataSource = self
         particularView.collectionView.delegate = self
         particularView.collectionView.register(ParticularCollectionViewCell.self, forCellWithReuseIdentifier: ParticularCollectionViewCell.identifier)
+        
+        particularView.tagsCollectionView.dataSource = self
+        particularView.tagsCollectionView.delegate = self
+        
     }
     
 }
@@ -67,26 +74,59 @@ final class ParticularRouteController: UIViewController {
 extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfPhotosToShow
+        
+        if collectionView.tag == 1 {
+            return numberOfPhotosToShow
+            
+        } else if collectionView.tag == 2 {
+            return 3
+        }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticularCollectionViewCell.identifier, for: indexPath) as? ParticularCollectionViewCell else { return UICollectionViewCell() }
         
-        let image = UIImage(named: "random1")
-        cell.imageView.image = image
-        
-        if indexPath.item == numberOfPhotosToShow - 1 && numberOfPhotosToShow >= 3 {
-            cell.imageView.alpha = 0.5 // 불투명 효과 적용
-            cell.numberLabel.text = "+\(numberOfPhotosToShow)" // 텍스트 설정
-            cell.numberLabel.isHidden = false // 숫자 레이블 표시
-        } else {
-            cell.imageView.alpha = 1.0 // 불투명 효과 해제
-            cell.numberLabel.isHidden = true // 숫자 레이블 숨김
+        if collectionView.tag == 1 {
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticularCollectionViewCell.identifier, for: indexPath) as? ParticularCollectionViewCell else { return UICollectionViewCell() }
+            
+            let image = UIImage(named: "random1")
+            cell.imageView.image = image
+            
+            if indexPath.item == numberOfPhotosToShow - 1 && numberOfPhotosToShow >= 3 {
+                cell.imageView.alpha = 0.5 // 불투명 효과 적용
+                cell.numberLabel.text = "+\(numberOfPhotosToShow)" // 텍스트 설정
+                cell.numberLabel.isHidden = false // 숫자 레이블 표시
+            } else {
+                cell.imageView.alpha = 1.0 // 불투명 효과 해제
+                cell.numberLabel.isHidden = true // 숫자 레이블 숨김
+            }
+            return cell
+            
+            
+        } else if collectionView.tag == 2 {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
+            
+            switch(indexPath.item) {
+            case 0:
+                cell.isSecureTag = true
+                cell.tagName = globalSecureTags[indexPath.item]
+            case 1:
+                cell.isSecureTag = false
+                cell.tagName = globalRecommendedTags[indexPath.item]
+            case 2:
+                cell.tagName = "+3"
+                cell.isGradient = true
+            default:
+                break
+            }
+            
+            return cell
         }
         
-        
-        return cell
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -102,21 +142,31 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
 
 extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat = (collectionView.frame.width / 3) - 7
-        return CGSize(width: width, height: width)
+        
+        if collectionView.tag == 1 {
+            let width: CGFloat = (collectionView.frame.width / 3) - 7
+            return CGSize(width: width, height: width)
+        } 
+        return CGSize(width: 100, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0 // 원하는 가로 간격 값으로 설정
+        
+        if collectionView.tag == 1 {
+            return 1.0 // 원하는 가로 간격 값으로 설정
+        }
+        return 1.0 // 기본값
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0 // 원하는 세로 간격 값으로 설정
+        if collectionView.tag == 1 {
+            return 1.0 // 원하는 세로 간격 값으로 설정
+        }
+        return 1.0 // 기본값
     }
-    
 }
-
 
 
 // MARK: - Delegate

@@ -136,6 +136,21 @@ final class ParticularView: UIView {
     }()
     
     // -- 4 Tags
+    let tagsCollectionView: UICollectionView = {
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: "Tag")
+        
+        collectionView.collectionViewLayout = layout
+        
+        return collectionView
+    }()
     
     // -- 5 경로 버튼
     lazy var routeButton: UIButton = {
@@ -191,9 +206,9 @@ extension ParticularView: LayoutProtocol {
     
     func setSubViews() {
         
-        [map, collectionView, spotStackView, locationStackView, textView, routeButton]
+        [map, collectionView, spotStackView, locationStackView, textView, tagsCollectionView, routeButton]
             .forEach { self.addSubview($0) }
-  
+
     }
     
     func setLayout() {
@@ -234,6 +249,13 @@ extension ParticularView: LayoutProtocol {
             $0.top.equalTo(locationStackView.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
+        }
+        
+        tagsCollectionView.snp.makeConstraints {
+            $0.top.equalTo(textView.snp.bottom).offset(10)
+            $0.leading.equalTo(textView.snp.leading)
+            $0.trailing.lessThanOrEqualTo(self.textView.snp.trailing).offset(-16)
+            $0.height.greaterThanOrEqualTo(80)
         }
         
         routeButton.snp.makeConstraints {

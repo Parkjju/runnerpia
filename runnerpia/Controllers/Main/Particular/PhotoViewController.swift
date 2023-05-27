@@ -92,16 +92,7 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     private func setPageControlSelectedPage(currentPage:Int) {
           pageControl.currentPage = currentPage
       }
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let value = scrollView.contentOffset.x / scrollView.frame.size.width
-//
-//        if value.isFinite && !value.isNaN {
-//            setPageControlSelectedPage(currentPage: Int(round(value)))
-//        } else {
-//            // 예외 처리 또는 오류 처리
-//        }
-//    }
+
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.size.width
