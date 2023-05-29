@@ -25,6 +25,24 @@ extension UIColor {
     // 안심태그, 일반태그 컬러
     static let secureTagColor = hexStringToUIColor(hex: "#BBE2FF")
     static let recommendedTagColor = hexStringToUIColor(hex: "#FCDCBE")
+    
+    // 지정컬러 (추후 이 부분 남기고 정리)
+    static let blue400 = hexStringToUIColor(hex: "#3B8DED")
+    static let blue500 = hexStringToUIColor(hex: "#005EE2")
+    
+    static let grey100 = hexStringToUIColor(hex: "#F2F2F2")
+    static let grey200 = hexStringToUIColor(hex: "#DFDFDF")
+    static let grey300 = hexStringToUIColor(hex: "#C1C1C1")
+
+    static let grey400 = hexStringToUIColor(hex: "#A5A5A5")
+    static let grey500 = hexStringToUIColor(hex: "#8B8B8B")
+    static let grey600 = hexStringToUIColor(hex: "#6F6F6F")
+
+    static let grey700 = hexStringToUIColor(hex: "#555555")
+    static let grey800 = hexStringToUIColor(hex: "#3D3D3D")
+    static let grey1900 = hexStringToUIColor(hex: "#242424")
+    
+    static let orange200 = hexStringToUIColor(hex: "#FFECD0")
 }
 
 // MARK: #000000 -> UIColor (hexcode to UIColor)

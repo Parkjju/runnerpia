@@ -279,6 +279,7 @@ class RouteRecordView: UIView {
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateElapsedLabels), userInfo: nil, repeats: true)
         }else if(pushTime == 2 && isRecordStarted){
             self.feedbackGenerator?.notificationOccurred(.success)
+            
             if(pathCoordinates.count == 0){
                 self.parentViewController?.dismiss(animated: true)
             }
