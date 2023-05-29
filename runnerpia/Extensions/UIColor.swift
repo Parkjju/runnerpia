@@ -41,6 +41,8 @@ extension UIColor {
     static let grey700 = hexStringToUIColor(hex: "#555555")
     static let grey800 = hexStringToUIColor(hex: "#3D3D3D")
     static let grey1900 = hexStringToUIColor(hex: "#242424")
+    
+    static let orange200 = hexStringToUIColor(hex: "#FFECD0")
 
 }
 

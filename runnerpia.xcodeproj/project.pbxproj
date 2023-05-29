@@ -40,6 +40,7 @@
 		C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */; };
 		C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */; };
 		C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886B9112A1B8933006BE2CD /* ParticularView.swift */; };
+		C89A26F72A249570006FD929 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89A26F62A249570006FD929 /* UIFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RouteViewController.swift; path = Main/RouteViewController.swift; sourceTree = SOURCE_ROOT; };
 		C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ParticularRouteController.swift; path = runnerpia/Controllers/Main/Particular/ParticularRouteController.swift; sourceTree = SOURCE_ROOT; };
 		C886B9112A1B8933006BE2CD /* ParticularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticularView.swift; sourceTree = "<group>"; };
+		C89A26F62A249570006FD929 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_runnerpia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnerpia.release.xcconfig"; path = "Target Support Files/Pods-runnerpia/Pods-runnerpia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +187,7 @@
 				884F6DED2A120A6E007B7F73 /* UIImage.swift */,
 				884F6DEF2A12244B007B7F73 /* UIControl.swift */,
 				C847CC912A1E43BF00F0639C /* UIView.swift */,
+				C89A26F62A249570006FD929 /* UIFont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				C847CC982A1E43CD00F0639C /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */,
 				C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */,
+				C89A26F72A249570006FD929 /* UIFont.swift in Sources */,
 				C847CC9F2A1E443100F0639C /* RecommendViewController.swift in Sources */,
 				C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */,
 				C847CCA82A1E447000F0639C /* RecommendView.swift in Sources */,

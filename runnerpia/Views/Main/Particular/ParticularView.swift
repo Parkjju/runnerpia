@@ -43,7 +43,7 @@ final class ParticularView: UIView {
         label.text = "송정뚝방길"
         label.textAlignment = .left
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        label.font = .semiBold24
         return label
     }()
     
