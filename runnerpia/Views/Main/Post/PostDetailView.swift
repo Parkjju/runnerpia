@@ -27,20 +27,21 @@ class PostDetailView: UIView {
     let pathSectionLabel: UILabel = {
         let label = UILabel()
         label.text = "러닝 경로 이름"
+        label.font = UIFont.semiBold18
         return label
     }()
     
     let pathNameTextField: UITextField = {
         let tf = UITextField()
         tf.borderStyle = .roundedRect
-        tf.layer.borderColor = UIColor.green.cgColor
+        tf.layer.borderColor = UIColor.grey300.cgColor
         tf.layer.borderWidth = 1
-        tf.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        tf.font = UIFont.semiBold18
         tf.placeholder = "송정뚝방길"
         tf.layer.cornerRadius = 10
         tf.clipsToBounds = true
-//        tf.setLeftPaddingPoints(4)
-//        tf.setRightPaddingPoints(4)
+        tf.setLeftPaddingPoints(4)
+        tf.setRightPaddingPoints(4)
         
         // 클리어버튼 아이콘 커스텀 가능 여부 서치
         tf.clearButtonMode = .whileEditing
@@ -50,6 +51,7 @@ class PostDetailView: UIView {
     let pathInformationSectionLabel: UILabel = {
         let label = UILabel()
         label.text = "경로 정보"
+        label.font = UIFont.semiBold18
         return label
     }()
     
@@ -150,10 +152,46 @@ class PostDetailView: UIView {
         return view
     }()
     
+    let divider: Divider = {
+        let d = Divider()
+        return d
+    }()
+    
+    let rateSectionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.semiBold18
+        label.text = "다녀오신 경로를 평가해주세요!"
+        return label
+    }()
+    
+    let secureTagSectionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "안심태그"
+        label.font = UIFont.medium16
+        return label
+    }()
+    
+    let secureTagCollectionView: UICollectionView = {
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: "Tag")
+        
+        return cv
+    }()
+    
+    
+    
     // MARK: LifeCycles
     override func didMoveToSuperview() {
         setSubViews()
         setLayout()
+        setupController()
     }
     
     // MARK: Helpers
@@ -170,13 +208,17 @@ class PostDetailView: UIView {
         pathOverlay.color = .polylineColor
         pathOverlay.outlineColor = .clear
         pathOverlay.width = 10
-        
+    }
+    
+    func setupController(){
+        secureTagCollectionView.delegate = self
+        secureTagCollectionView.dataSource = self
     }
 }
 
 extension PostDetailView: LayoutProtocol{
     func setSubViews() {
-        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView].forEach { self.addSubview($0) }
+        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider].forEach { self.addSubview($0) }
     }
     func setLayout() {
         map.snp.makeConstraints {
@@ -228,6 +270,12 @@ extension PostDetailView: LayoutProtocol{
             $0.top.equalTo(timeView.snp.bottom).offset(6)
             $0.leading.equalTo(map.snp.leading)
             $0.height.equalTo(25)
+        }
+        
+        divider.snp.makeConstraints {
+            $0.top.equalTo(distanceView.snp.bottom).offset(20)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
         }
     }
 }
