@@ -14,8 +14,10 @@ final class ParticularRouteController: UIViewController {
     
     // MARK: - Properties
     private var particularView = ParticularView()
-    private let numberOfPhotosToShow = 3
     
+    // 추후 수정
+    private let numberOfPhotosToShow = 3
+    var selectedImage: UIImage?
     
     // MARK: - LifeCycle
     
@@ -131,12 +133,13 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let viewController = UINavigationController(rootViewController: PhotoViewController())
-        viewController.modalPresentationStyle = .fullScreen
-        self.present(viewController, animated: true)
-        
+        if collectionView.tag == 1 {
+                    let viewController = UINavigationController(rootViewController: PhotoViewController())
+                    viewController.modalPresentationStyle = .fullScreen
+                    self.present(viewController, animated: true)
+        }
+
     }
-    
     
 }
 
@@ -148,7 +151,7 @@ extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
         if collectionView.tag == 1 {
             let width: CGFloat = (collectionView.frame.width / 3) - 7
             return CGSize(width: width, height: width)
-        } 
+        }
         return CGSize(width: 100, height: 50)
     }
     

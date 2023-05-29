@@ -12,9 +12,13 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Properties
     var photoView = PhotoView()
-    var images = [#imageLiteral(resourceName: "random1"), #imageLiteral(resourceName: "random2"), #imageLiteral(resourceName: "random4")]
-    var imageViews = [UIImageView]()
     let pageControl = UIPageControl()
+    
+    // 추후 수정
+    var imageViews = [UIImageView]()
+    var images = [#imageLiteral(resourceName: "random6"), #imageLiteral(resourceName: "random5"), #imageLiteral(resourceName: "random4")]
+    var selectedImage: UIImage?
+
                   
                   
     // MARK: - LifeCycle
@@ -26,10 +30,7 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
         addContentScrollView()
         setPageControl()
         updateNavigationBarTitle()
-        
-        photoView.scrollView.delegate = self
-        
-
+        configureDelegate()
     }
     
     override func loadView() {
@@ -47,7 +48,6 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
         updateNavigationBarTitle()
     }
 
-    
 
     // MARK: - Selectors
     
@@ -70,9 +70,14 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    private func configureDelegate() {
+        photoView.scrollView.delegate = self
+    }
+    
     private func addContentScrollView() {
         for i in 0..<images.count {
             let imageView = UIImageView()
+
             imageView.contentMode = .scaleAspectFit
             let xPos = photoView.scrollView.frame.width * CGFloat(i)
             imageView.frame = CGRect(x: xPos, y: 0, width: photoView.scrollView.frame.width, height: photoView.scrollView.frame.height)
@@ -108,9 +113,6 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
         pageControl.currentPage = currentPage
         updateNavigationBarTitle()
     }
-
-
-
     
     private func updateNavigationBarTitle() {
         let imageCount = images.count

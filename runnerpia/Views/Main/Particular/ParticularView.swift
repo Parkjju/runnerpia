@@ -222,10 +222,19 @@ extension ParticularView: LayoutProtocol {
             $0.trailing.equalToSuperview().offset(-16)
         }
 
+//        collectionView.snp.makeConstraints {
+//            $0.centerX.equalToSuperview()
+//            $0.width.equalToSuperview().multipliedBy(0.9)
+//            $0.height.equalToSuperview().multipliedBy(0.15)
+//            $0.top.equalTo(map.snp.bottom).offset(10)
+//            $0.leading.equalToSuperview().offset(16)
+//            $0.trailing.equalToSuperview().offset(-16)
+//        }
+        
         collectionView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.height.equalToSuperview().multipliedBy(0.15)
+            $0.height.equalTo(110) // 적절한 높이 값으로 수정해야 함
             $0.top.equalTo(map.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
@@ -233,7 +242,7 @@ extension ParticularView: LayoutProtocol {
 
         spotStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(collectionView.snp.bottom)
+            $0.top.equalTo(collectionView.snp.bottom).offset(15)
             $0.leading.equalToSuperview().offset(18)
             $0.trailing.equalToSuperview().offset(-18)
         }
@@ -254,7 +263,7 @@ extension ParticularView: LayoutProtocol {
         tagsCollectionView.snp.makeConstraints {
             $0.top.equalTo(textView.snp.bottom).offset(10)
             $0.leading.equalTo(textView.snp.leading)
-            $0.trailing.lessThanOrEqualTo(self.textView.snp.trailing).offset(-16)
+            $0.trailing.lessThanOrEqualTo(self.textView.snp.trailing)
             $0.height.greaterThanOrEqualTo(80)
         }
         
