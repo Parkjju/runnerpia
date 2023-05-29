@@ -21,7 +21,7 @@ final class ParticularCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        label.font = .semiBold24
         return label
     }()
     

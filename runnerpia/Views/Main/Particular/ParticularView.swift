@@ -82,7 +82,7 @@ final class ParticularView: UIView {
         label.text = "성동구 송정동"
         label.textAlignment = .left
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = .regular14
         return label
     }()
     
@@ -107,7 +107,7 @@ final class ParticularView: UIView {
         label.text = "5.8km"
         label.textAlignment = .left
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.font = .regular14
         return label
     }()
     
@@ -131,7 +131,7 @@ final class ParticularView: UIView {
         textView.isEditable = false
         textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        textView.font = .regular14
         return textView
     }()
     
