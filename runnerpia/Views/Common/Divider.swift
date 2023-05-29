@@ -23,7 +23,7 @@ class Divider: UIView {
             $0.height.equalTo(1)
         }
         
-        self.backgroundColor = .
+        self.backgroundColor = .grey200
     }
 
 }
