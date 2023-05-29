@@ -30,6 +30,8 @@ class MainViewManager {
         
         setTapBarController()
         
+//        rootViewController = ParticularRouteController()
+        
         // 로그인메서드 추가
     }
 
