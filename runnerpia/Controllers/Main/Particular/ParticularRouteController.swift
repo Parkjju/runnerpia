@@ -28,7 +28,6 @@ final class ParticularRouteController: UIViewController {
         configureDelegate()
         configureUI()
         
-        
     }
     
     override func loadView() {
