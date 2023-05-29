@@ -15,6 +15,16 @@ class PostViewController: UIViewController {
         let postView = PostView()
         self.view = postView
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 }
 
 extension PostViewController: PostViewEventDelegate{
@@ -23,6 +33,10 @@ extension PostViewController: PostViewEventDelegate{
         let postDetailVC = PostDetailViewController()
         postDetailVC.modalPresentationStyle = .fullScreen
         
-        self.present(postDetailVC, animated: true)
+        // 임시데이터 바인딩
+        let postView = self.view as! PostView
+        postDetailVC.bindingData = postView.delegate!.getData()
+        
+        self.navigationController?.pushViewController(postDetailVC, animated: false)
     }
 }

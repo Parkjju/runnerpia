@@ -18,6 +18,9 @@ class PostView: UIView {
         let map = NMFMapView()
         map.mapType = .basic
         map.positionMode = .direction
+        
+        // 맵 스크롤링 고정
+        map.allowsScrolling = false
         return map
     }()
     
@@ -228,7 +231,7 @@ class PostView: UIView {
         // MARK: 한국시간으로 변경
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko")
-        dateFormatter.dateFormat = "M월 dd일 E요일 a k시 m분 시작"
+        dateFormatter.dateFormat = "M월 dd일 E요일 a h시 m분 시작"
         
         // MARK: 러닝 완료 레이블
         let completeDateFormatter = DateFormatter()

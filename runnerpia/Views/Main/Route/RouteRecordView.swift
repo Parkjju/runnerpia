@@ -280,6 +280,8 @@ class RouteRecordView: UIView {
         }else if(pushTime == 2 && isRecordStarted){
             self.feedbackGenerator?.notificationOccurred(.success)
             
+            // 위치업데이트 중단
+            locationManager.stopUpdatingLocation()
             if(pathCoordinates.count == 0){
                 self.parentViewController?.dismiss(animated: true)
             }
@@ -461,7 +463,6 @@ class RouteRecordView: UIView {
         stopButton.addTarget(self, action: #selector(stopButtonTouchDownHandler), for:.touchDown)
         stopButton.addTarget(self, action: #selector(playButtonTouchUpHandler), for:.touchUpInside)
     }
-    
 }
 
 extension RouteRecordView: LayoutProtocol{
