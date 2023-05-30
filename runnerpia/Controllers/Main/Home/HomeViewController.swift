@@ -38,7 +38,7 @@ final class HomeViewController: UIViewController {
     @objc private func searchButtonTapped() {
         let searchViewController = SearchViewController()
         searchViewController.hidesBottomBarWhenPushed = true // 탭 바 나타나지 않도록 설정
-        navigationController?.setNavigationBarHidden(true, animated: false)
+//        navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.pushViewController(searchViewController, animated: true)
     }
 
