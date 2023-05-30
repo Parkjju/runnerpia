@@ -23,6 +23,10 @@ class PostDetailViewController: UIViewController {
         let postDetailView = PostDetailView()
         self.view = postDetailView
     }
+    
+    @objc func scrollViewTapHandler(sender: UITapGestureRecognizer){
+        sender.view?.endEditing(true)
+    }
 
 
 }
@@ -101,4 +105,9 @@ extension PostDetailViewController: UICollectionViewDelegateFlowLayout{
         
         return CGSize(width: 100, height: 50)
     }
+}
+
+// MARK: 텍스트뷰 델리게이트 - 글자수 뷰 업데이트 및 플레이스 홀더 UI 조작 필요
+extension PostDetailViewController: UITextViewDelegate{
+    
 }

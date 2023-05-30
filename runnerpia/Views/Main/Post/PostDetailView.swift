@@ -233,6 +233,25 @@ class PostDetailView: UIView {
         return d
     }()
     
+    let introduceSectionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "추천하는 경로에 대해 소개해 주세요!"
+        label.font = UIFont.semiBold18
+        return label
+    }()
+
+    let introduceTextField: UITextView = {
+        let tv = UITextView()
+        tv.text = "최소 30자 이상 작성해주세요. (비방, 욕설을 포함한 관련없는 내용은 통보 없이 삭제될 수 있습니다."
+        tv.font = UIFont.regular14
+        tv.textColor = .textGrey02
+        tv.clipsToBounds = true
+        tv.layer.cornerRadius = 10
+        tv.layer.borderWidth = 1
+        tv.layer.borderColor = UIColor.grey200.cgColor
+        
+        return tv
+    }()
     
     // MARK: LifeCycles
     override func didMoveToSuperview() {
@@ -240,6 +259,7 @@ class PostDetailView: UIView {
         setLayout()
         setupController()
         updateCollectionViewHeight()
+        setupScrollViewTapGesture()
     }
     
     // MARK: Helpers
@@ -258,6 +278,7 @@ class PostDetailView: UIView {
         pathOverlay.width = 10
     }
     
+    // MARK: 텍스트뷰 notification 추가 후, 텍스트뷰 editing 진입에 따라 뷰 조정해줘야함
     func setupController(){
         secureTagCollectionView.delegate = self.parentViewController as! PostDetailViewController
         secureTagCollectionView.dataSource = self.parentViewController as! PostDetailViewController
@@ -286,12 +307,20 @@ class PostDetailView: UIView {
             }
         }
     }
+    
+    func setupScrollViewTapGesture(){
+        let tapGesture = UITapGestureRecognizer(target: self.parentViewController, action: #selector(PostDetailViewController.scrollViewTapHandler(sender:)))
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.isEnabled = true
+        tapGesture.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(tapGesture)
+    }
 }
 
 extension PostDetailView: LayoutProtocol{
     func setSubViews() {
         self.addSubview(scrollView)
-        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag].forEach { scrollView.subviews.first!.addSubview($0) }
+        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField].forEach { scrollView.subviews.first!.addSubview($0) }
     }
     func setLayout() {
         scrollView.snp.makeConstraints {
@@ -393,6 +422,18 @@ extension PostDetailView: LayoutProtocol{
             $0.top.equalTo(normalTagCollectionView.snp.bottom).offset(10)
             $0.leading.equalTo(map.snp.leading)
             $0.trailing.equalTo(map.snp.trailing)
+        }
+        
+        introduceSectionLabel.snp.makeConstraints {
+            $0.top.equalTo(dividerAfterTag.snp.bottom).offset(20)
+            $0.leading.equalTo(map.snp.leading)
+        }
+        
+        introduceTextField.snp.makeConstraints {
+            $0.top.equalTo(introduceSectionLabel.snp.bottom).offset(12)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+            $0.height.equalTo(200)
         }
     }
 }
