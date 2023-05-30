@@ -51,10 +51,19 @@ class TagCollectionViewCell: UICollectionViewCell {
     func setUI(){
         self.clipsToBounds = true
         self.layer.cornerRadius = 10
+        
+        if(!isSelected && isSecureTag){
+            self.contentView.backgroundColor = hexStringToUIColor(hex: "#B1DEFD")
+            tagNameLabel.textColor = .grey700
+            return
+        }else if(!isSelected && !isSecureTag){
+            self.contentView.backgroundColor = .orange200
+            tagNameLabel.textColor = .grey700
+            return
+        }
     
         // 피그마 자동생성 코드
         if(isGradient){
-            
             gradientLayer = CAGradientLayer()
             gradientLayer.frame = self.contentView.bounds
             gradientLayer.colors = [hexStringToUIColor(hex: "#FCDCBE").cgColor,hexStringToUIColor(hex: "#BBE2FF").cgColor]
