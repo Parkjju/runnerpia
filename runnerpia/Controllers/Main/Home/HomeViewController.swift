@@ -17,6 +17,7 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         configureNavigationBar()
+        navigationController?.navigationBar.isHidden = false
     }
     
     override func viewDidLoad() {

@@ -57,18 +57,21 @@ final class SearchViewController: UIViewController {
 // MARK: - extension SearchBar
 
 extension SearchViewController: UISearchBarDelegate {
+    
     private func configureSearchBar() {
         searchView.searchBar.placeholder = "시/구까지 입력해주세요."
         searchView.searchBar.showsCancelButton = true
         searchView.searchBar.backgroundImage = UIImage() // 상, 하단 줄 해제
         if let cancelButton = searchView.searchBar.value(forKey: "cancelButton") as? UIButton {
-            // "Cancel" 버튼의 텍스트를 숨깁니다.
             cancelButton.setTitle("", for: .normal)
-            
-            // 이미지를 설정합니다.
-            let cancelButtonImage = UIImage(named: "cancelButton")
+            let cancelButtonImage = UIImage(named: "cancelButton")?.withRenderingMode(.alwaysOriginal)
             cancelButton.setImage(cancelButtonImage, for: .normal)
         }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        navigationController?.popViewController(animated: true)
     }
 }
 
