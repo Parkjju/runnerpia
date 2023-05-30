@@ -9,8 +9,9 @@ import UIKit
 import NMapsMap
 
 class PostDetailView: UIView {
-    // MARK: properties
     
+    
+    // MARK: properties
     var bindingData: (Date, (TimeInterval, TimeInterval), (Int, Int), [NMGLatLng])?{
         didSet{
             updateUI()
@@ -21,6 +22,8 @@ class PostDetailView: UIView {
         let sv = UIScrollView()
         let view = UIView()
         
+        sv.clipsToBounds = true
+        
         sv.addSubview(view)
         view.snp.makeConstraints {
             $0.top.equalTo(sv.contentLayoutGuide.snp.top)
@@ -30,7 +33,7 @@ class PostDetailView: UIView {
             
             $0.leading.equalTo(sv.frameLayoutGuide.snp.leading)
             $0.trailing.equalTo(sv.frameLayoutGuide.snp.trailing)
-            $0.height.equalTo(1200)
+            $0.height.equalTo(1500)
         }
         return sv
     }()
@@ -249,8 +252,37 @@ class PostDetailView: UIView {
         tv.layer.cornerRadius = 10
         tv.layer.borderWidth = 1
         tv.layer.borderColor = UIColor.grey200.cgColor
-        
+        tv.textContainerInset = .init(top: 12, left: 16, bottom: 12, right: 16)
         return tv
+    }()
+    
+    let numberOfTextInput: UILabel = {
+        let label = UILabel()
+        label.text = "0 / 300"
+        label.font = .medium14
+        label.textColor = .textGrey01
+        return label
+    }()
+    
+    let photoSectionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "경험했던 경로의 사진을 등록해주세요"
+        label.font = .semiBold18
+        return label
+    }()
+    
+    let photoCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "Photo")
+        cv.tag = 3
+        return cv
     }()
     
     // MARK: LifeCycles
@@ -260,6 +292,7 @@ class PostDetailView: UIView {
         setupController()
         updateCollectionViewHeight()
         setupScrollViewTapGesture()
+        setTextViewNotification()
     }
     
     // MARK: Helpers
@@ -285,6 +318,8 @@ class PostDetailView: UIView {
         
         normalTagCollectionView.delegate = self.parentViewController as! PostDetailViewController
         normalTagCollectionView.dataSource = self.parentViewController as! PostDetailViewController
+        
+        introduceTextField.delegate = self.parentViewController as! PostDetailViewController
     }
     
     func updateCollectionViewHeight(){
@@ -315,12 +350,16 @@ class PostDetailView: UIView {
         tapGesture.cancelsTouchesInView = false
         scrollView.addGestureRecognizer(tapGesture)
     }
+    
+    func setTextViewNotification(){
+        NotificationCenter.default.addObserver(self.parentViewController as! PostDetailViewController, selector: #selector(PostDetailViewController.moveUpAction), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
 }
 
 extension PostDetailView: LayoutProtocol{
     func setSubViews() {
         self.addSubview(scrollView)
-        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField].forEach { scrollView.subviews.first!.addSubview($0) }
+        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField, numberOfTextInput, photoSectionLabel, photoCollectionView].forEach { scrollView.subviews.first!.addSubview($0) }
     }
     func setLayout() {
         scrollView.snp.makeConstraints {
@@ -407,7 +446,7 @@ extension PostDetailView: LayoutProtocol{
         }
         
         normalTagSectionLabel.snp.makeConstraints {
-            $0.top.equalTo(secureTagCollectionView.snp.bottom)
+            $0.top.equalTo(secureTagCollectionView.snp.bottom).offset(20)
             $0.leading.equalTo(map.snp.leading)
         }
         
@@ -419,7 +458,7 @@ extension PostDetailView: LayoutProtocol{
         }
         
         dividerAfterTag.snp.makeConstraints {
-            $0.top.equalTo(normalTagCollectionView.snp.bottom).offset(10)
+            $0.top.equalTo(normalTagCollectionView.snp.bottom).offset(20)
             $0.leading.equalTo(map.snp.leading)
             $0.trailing.equalTo(map.snp.trailing)
         }
@@ -435,5 +474,23 @@ extension PostDetailView: LayoutProtocol{
             $0.trailing.equalTo(map.snp.trailing)
             $0.height.equalTo(200)
         }
+        
+        numberOfTextInput.snp.makeConstraints {
+            $0.top.equalTo(introduceTextField.snp.bottom).offset(10)
+            $0.trailing.equalTo(map.snp.trailing)
+        }
+        
+        photoSectionLabel.snp.makeConstraints {
+            $0.top.equalTo(numberOfTextInput.snp.bottom).offset(30)
+            $0.leading.equalTo(map.snp.leading)
+        }
+        
+        photoCollectionView.snp.makeConstraints {
+            $0.top.equalTo(photoSectionLabel.snp.bottom).offset(12)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+            $0.height.equalTo(60)
+        }
+        photoCollectionView.backgroundColor = .black
     }
 }
