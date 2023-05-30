@@ -16,6 +16,8 @@ class PostDetailViewController: UIViewController {
             view.bindingData = bindingData
         }
     }
+    
+    let placeholderText = "최소 30자 이상 작성해주세요. (비방, 욕설을 포함한 관련없는 내용은 통보 없이 삭제될 수 있습니다."
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +26,13 @@ class PostDetailViewController: UIViewController {
         self.view = postDetailView
     }
     
+    // MARK: objc methods
     @objc func scrollViewTapHandler(sender: UITapGestureRecognizer){
         sender.view?.endEditing(true)
+    }
+    
+    @objc func moveUpAction(){
+        // MARK: 키보드 업 액션 필요
     }
 
 
@@ -33,6 +40,9 @@ class PostDetailViewController: UIViewController {
 
 extension PostDetailViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if(collectionView.tag == 3){
+            return 4
+        }
         return 6
     }
     
@@ -89,7 +99,16 @@ extension PostDetailViewController: UICollectionViewDataSource{
             default:
                 break
             }
+            return cell
+        }else if(collectionView.tag == 3){
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Photo", for: indexPath) as! PhotoCollectionViewCell
             
+            switch(indexPath.item){
+            case 0:
+                cell.isAddButton = true
+            default:
+                break
+            }
             
             return cell
         }else{
@@ -103,11 +122,34 @@ extension PostDetailViewController: UICollectionViewDataSource{
 extension PostDetailViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: 100, height: 50)
+        return CGSize(width: 80, height: 80)
     }
 }
 
 // MARK: 텍스트뷰 델리게이트 - 글자수 뷰 업데이트 및 플레이스 홀더 UI 조작 필요
 extension PostDetailViewController: UITextViewDelegate{
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if(textView.text == placeholderText){
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if(textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty){
+            textView.text = placeholderText
+            textView.textColor = .textGrey02
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let view = self.view as! PostDetailView
+        view.numberOfTextInput.text = "\(textView.text.count) / 300"
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        return newText.count <= 300
+    }
 }
