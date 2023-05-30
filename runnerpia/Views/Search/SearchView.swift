@@ -30,13 +30,11 @@ final class SearchView: UIView {
         configureUI()
         setSubViews()
         setLayout()
-        configureSearchBar()
         configureDelegate()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        configureSearchBar()
     }
     
     
@@ -45,12 +43,6 @@ final class SearchView: UIView {
     private func configureUI() {
     }
     
-    private func configureSearchBar() {
-        searchBar.placeholder = "시/구까지 입력해주세요."
-        searchBar.showsCancelButton = true
-        searchBar.backgroundImage = UIImage()
-        
-    }
     
     private func configureDelegate() {
         searchBar.delegate = self
@@ -81,8 +73,3 @@ extension SearchView: LayoutProtocol {
     
 }
 
-extension SearchView: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder() // SearchBar의 포커스 해제
-    }
-}
