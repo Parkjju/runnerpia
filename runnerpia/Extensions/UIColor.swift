@@ -18,6 +18,7 @@ extension UIColor {
     
     // 부제목 grey02 스케일 텍스트 컬러
     static let textGrey02 = hexStringToUIColor(hex: "#8B8B8B")
+    static let textGrey01 = hexStringToUIColor(hex: "#A5A5A5")
     
     // 폴리라인 컬러
     static let polylineColor = hexStringToUIColor(hex: "#005BE4")
