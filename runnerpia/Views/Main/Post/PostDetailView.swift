@@ -17,6 +17,24 @@ class PostDetailView: UIView {
         }
     }
     
+    let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        let view = UIView()
+        
+        sv.addSubview(view)
+        view.snp.makeConstraints {
+            $0.top.equalTo(sv.contentLayoutGuide.snp.top)
+            $0.leading.equalTo(sv.contentLayoutGuide.snp.leading)
+            $0.trailing.equalTo(sv.contentLayoutGuide.snp.trailing)
+            $0.bottom.equalTo(sv.contentLayoutGuide.snp.bottom)
+            
+            $0.leading.equalTo(sv.frameLayoutGuide.snp.leading)
+            $0.trailing.equalTo(sv.frameLayoutGuide.snp.trailing)
+            $0.height.equalTo(1200)
+        }
+        return sv
+    }()
+    
     let map: NMFMapView = {
         let map = NMFMapView()
         map.allowsScrolling = false
@@ -168,6 +186,7 @@ class PostDetailView: UIView {
         let label = UILabel()
         label.text = "안심태그"
         label.font = UIFont.medium16
+        label.textColor = .grey800
         return label
     }()
     
@@ -181,10 +200,38 @@ class PostDetailView: UIView {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: "Tag")
+        cv.tag = 1
         
         return cv
     }()
     
+    let normalTagSectionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "일반태그"
+        label.font = UIFont.medium16
+        label.textColor = .grey800
+        return label
+    }()
+    
+    let normalTagCollectionView: UICollectionView = {
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: "Tag")
+        cv.tag = 2
+        
+        return cv
+    }()
+    
+    let dividerAfterTag: UIView = {
+        let d = Divider()
+        return d
+    }()
     
     
     // MARK: LifeCycles
@@ -192,6 +239,7 @@ class PostDetailView: UIView {
         setSubViews()
         setLayout()
         setupController()
+        updateCollectionViewHeight()
     }
     
     // MARK: Helpers
@@ -211,20 +259,52 @@ class PostDetailView: UIView {
     }
     
     func setupController(){
-        secureTagCollectionView.delegate = self
-        secureTagCollectionView.dataSource = self
+        secureTagCollectionView.delegate = self.parentViewController as! PostDetailViewController
+        secureTagCollectionView.dataSource = self.parentViewController as! PostDetailViewController
+        
+        normalTagCollectionView.delegate = self.parentViewController as! PostDetailViewController
+        normalTagCollectionView.dataSource = self.parentViewController as! PostDetailViewController
+    }
+    
+    func updateCollectionViewHeight(){
+        // 안심태그 컬렉션뷰 dynamic height
+        secureTagCollectionView.setNeedsLayout()
+        secureTagCollectionView.layoutIfNeeded()
+        
+        if(secureTagCollectionView.contentSize.height > secureTagCollectionView.frame.height){
+            secureTagCollectionView.snp.updateConstraints {
+                $0.height.equalTo(secureTagCollectionView.contentSize.height)
+            }
+        }
+        
+        normalTagCollectionView.setNeedsLayout()
+        normalTagCollectionView.layoutIfNeeded()
+        
+        if(normalTagCollectionView.contentSize.height > normalTagCollectionView.frame.height){
+            normalTagCollectionView.snp.updateConstraints {
+                $0.height.equalTo(normalTagCollectionView.contentSize.height)
+            }
+        }
     }
 }
 
 extension PostDetailView: LayoutProtocol{
     func setSubViews() {
-        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider].forEach { self.addSubview($0) }
+        self.addSubview(scrollView)
+        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag].forEach { scrollView.subviews.first!.addSubview($0) }
     }
     func setLayout() {
-        map.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
-            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        map.snp.makeConstraints {
+            $0.leading.equalTo(scrollView.contentLayoutGuide.snp.leading).offset(Constraints.paddingLeftAndRight)
+            $0.trailing.equalTo(scrollView.contentLayoutGuide.snp.trailing).offset(-Constraints.paddingLeftAndRight)
+            $0.top.equalTo(scrollView.contentLayoutGuide.snp.top)
             $0.height.equalTo(self.frame.height / 4)
         }
         
@@ -274,6 +354,43 @@ extension PostDetailView: LayoutProtocol{
         
         divider.snp.makeConstraints {
             $0.top.equalTo(distanceView.snp.bottom).offset(20)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+        }
+        
+        rateSectionLabel.snp.makeConstraints {
+            $0.top.equalTo(divider.snp.bottom).offset(20)
+            $0.leading.equalTo(map.snp.leading)
+        }
+        
+        secureTagSectionLabel.snp.makeConstraints {
+            $0.top.equalTo(rateSectionLabel.snp.bottom).offset(16)
+            $0.leading.equalTo(map.snp.leading)
+        }
+        
+        secureTagCollectionView.snp.makeConstraints {
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+            $0.top.equalTo(secureTagSectionLabel.snp.bottom).offset(10)
+            
+            // 다이나믹 height 오토레이아웃 지정 가능?
+            $0.height.equalTo(60)
+        }
+        
+        normalTagSectionLabel.snp.makeConstraints {
+            $0.top.equalTo(secureTagCollectionView.snp.bottom)
+            $0.leading.equalTo(map.snp.leading)
+        }
+        
+        normalTagCollectionView.snp.makeConstraints {
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+            $0.top.equalTo(normalTagSectionLabel.snp.bottom).offset(10)
+            $0.height.equalTo(60)
+        }
+        
+        dividerAfterTag.snp.makeConstraints {
+            $0.top.equalTo(normalTagCollectionView.snp.bottom).offset(10)
             $0.leading.equalTo(map.snp.leading)
             $0.trailing.equalTo(map.snp.trailing)
         }
