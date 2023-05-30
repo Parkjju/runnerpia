@@ -53,12 +53,18 @@ final class SearchView: UIView {
 extension SearchView: LayoutProtocol {
     
     func setSubViews() {
-        addSubview(map)
+        [searchBar, map].forEach { self.addSubview($0) }
     }
     
     func setLayout() {
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide)
+            $0.leading.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+        
         map.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(50)
+            $0.top.equalTo(searchBar.snp.bottom).offset(50)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }

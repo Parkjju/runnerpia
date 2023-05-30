@@ -39,21 +39,15 @@ final class SearchViewController: UIViewController {
     // MARK: - Helpers
     
     private func configureUI() {
-        searchView.searchBar.placeholder = "시/구까지 입력해주세요."
-        searchView.searchBar.showsCancelButton = true
-        searchView.searchBar.backgroundImage = UIImage()
-        
-//        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+
     }
     
     private func configureNavigation() {
-        navigationController?.navigationBar.tintColor = .black
-//        navigationItem.searchController = searchController
+        navigationController?.navigationBar.isHidden = true
+
     }
     
     private func configureDelegate() {
-
         searchView.searchBar.delegate = self
         locationManager.delegate = self
     }
@@ -67,6 +61,14 @@ extension SearchViewController: UISearchBarDelegate {
         searchView.searchBar.placeholder = "시/구까지 입력해주세요."
         searchView.searchBar.showsCancelButton = true
         searchView.searchBar.backgroundImage = UIImage() // 상, 하단 줄 해제
+        if let cancelButton = searchView.searchBar.value(forKey: "cancelButton") as? UIButton {
+            // "Cancel" 버튼의 텍스트를 숨깁니다.
+            cancelButton.setTitle("", for: .normal)
+            
+            // 이미지를 설정합니다.
+            let cancelButtonImage = UIImage(named: "cancelButton")
+            cancelButton.setImage(cancelButtonImage, for: .normal)
+        }
     }
 }
 
