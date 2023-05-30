@@ -12,8 +12,6 @@ final class HomeViewController: UIViewController {
     // MARK: - Properties
     
     var homeView = HomeView()
-    
-    private var searchController = UISearchController(searchResultsController: nil)
 
     // MARK: - LifeCycle
     

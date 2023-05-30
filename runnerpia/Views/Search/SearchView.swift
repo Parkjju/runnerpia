@@ -13,7 +13,9 @@ final class SearchView: UIView {
     
     // MARK: - Properties
         
-    private lazy var map: NMFMapView = {
+    let searchBar = UISearchBar()
+    
+    lazy var map: NMFMapView = {
         let map = NMFMapView()
         map.mapType = .basic
         map.positionMode = .direction
@@ -32,12 +34,14 @@ final class SearchView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+
     }
     
     
     // MARK: - Helpers
     
     private func configureUI() {
+
     }
     
     
