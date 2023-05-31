@@ -101,6 +101,11 @@ extension SearchViewController: CLLocationManagerDelegate {
             marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
             marker.mapView = searchView.map
             marker.iconImage = NMFOverlayImage(name: "marker")
+            marker.captionText = "10"
+            marker.captionColor = .grey800
+            marker.subCaptionText = "1.2km"
+            marker.subCaptionColor = .blue500
+            
             
             // 오버레이
             let locationOverlay = searchView.map.locationOverlay

@@ -38,9 +38,8 @@ final class ParticularView: UIView {
 
     
     // -- 1. spotStackView
-    private lazy var spotLabel: UILabel = {
+    lazy var spotLabel: UILabel = {
         let label = UILabel()
-        label.text = "송정뚝방길"
         label.textAlignment = .left
         label.textColor = .black
         label.font = .semiBold24
@@ -77,9 +76,8 @@ final class ParticularView: UIView {
         return imageView
     }()
     
-    private lazy var locationLabel: UILabel = {
+    lazy var locationLabel: UILabel = {
         let label = UILabel()
-        label.text = "성동구 송정동"
         label.textAlignment = .left
         label.textColor = .black
         label.font = .regular14
@@ -102,9 +100,8 @@ final class ParticularView: UIView {
         return imageView
     }()
     
-    private lazy var distanceLabel: UILabel = {
+    lazy var distanceLabel: UILabel = {
         let label = UILabel()
-        label.text = "5.8km"
         label.textAlignment = .left
         label.textColor = .black
         label.font = .regular14
@@ -123,9 +120,8 @@ final class ParticularView: UIView {
     }()
     
     // -- 3 textView
-    private lazy var textView: UITextView = {
+     lazy var textView: UITextView = {
         let textView = UITextView()
-        textView.text = "성동구에서 가장 안전한 러닝 루트를 소개합니다!\n나무가 많아 그늘 아래에서 달릴 수 있고, 관리도 참 잘 되어서 쾌적해요. 무엇보다도 해질 때 쯤 강 너머로 보이는 석양을 보면서 달리면 가슴이 벅차오릅니다... 오후 10시 이후로는 한산한 편이지만 가로등이 다 켜져있어서 안전해요~!"
         textView.textAlignment = .left
         textView.isScrollEnabled = false
         textView.isEditable = false

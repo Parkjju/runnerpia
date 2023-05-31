@@ -14,8 +14,12 @@ final class ParticularCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "ParticularCollectionViewCell"
     let particularRouteController = ParticularRouteController()
+    
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
 
-    lazy var imageView: UIImageView = UIImageView()
+        return imageView
+    }()
 
     lazy var numberLabel: UILabel = {
         let label = UILabel()
@@ -55,9 +59,6 @@ extension ParticularCollectionViewCell: LayoutProtocol {
     
     func setLayout() {
         imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 10
         
         numberLabel.snp.makeConstraints {
             $0.centerX.equalTo(imageView)

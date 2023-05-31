@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
 struct Route{
     let user: User?
@@ -18,5 +19,5 @@ struct Route{
     let runningDate: String?
     let recommendedTags: [String]?
     let secureTags: [String]?
-    let files: [String]?
+    let files: [UIImage]?
 }
