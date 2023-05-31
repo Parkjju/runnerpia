@@ -89,7 +89,7 @@ final class ParticularRouteController: UIViewController {
     }
     
     
-    private func setupData() -> Route {
+    func setupData() -> Route {
         let firstData = Route(
             user: User(userId: "주영", nickname: "주영"),
             routeName: "송정 뚝방길",

@@ -13,6 +13,8 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     // MARK: - Properties
     var photoView = PhotoView()
     let pageControl = UIPageControl()
+    let particularRouteController = ParticularRouteController()
+    var data: Route?
     
     // 추후 수정
     var imageViews = [UIImageView]()
@@ -75,27 +77,42 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func addContentScrollView() {
-        for i in 0..<images.count {
+        let data = particularRouteController.setupData()
+        let files = data.files ?? []
+        
+        for i in 0..<files.count {
             let imageView = UIImageView()
 
             imageView.contentMode = .scaleAspectFit
             let xPos = photoView.scrollView.frame.width * CGFloat(i)
             imageView.frame = CGRect(x: xPos, y: 0, width: photoView.scrollView.frame.width, height: photoView.scrollView.frame.height)
-            imageView.image = images[i]
+            imageView.image = files[i]
             imageViews.append(imageView)
             photoView.scrollView.addSubview(imageView)
             photoView.scrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
         }
+    
     }
 
     // 페이지 갯수
     private func setPageControl() {
-        pageControl.numberOfPages = images.count
+        let data = particularRouteController.setupData()
+        if let filesCount = data.files?.count {
+            let currentIndex = min(pageControl.currentPage, filesCount - 1)
+            pageControl.currentPage = currentIndex
+        } else {
+            pageControl.currentPage = 0
+        }
      }
     
     // 현재 선택된 페이지
     private func setPageControlSelectedPage(currentPage:Int) {
-          pageControl.currentPage = currentPage
+        data = particularRouteController.setupData()
+        guard let filesCount = data?.files?.count else {
+            pageControl.numberOfPages = 0
+            return
+        }
+        pageControl.numberOfPages = filesCount
       }
 
     
@@ -115,7 +132,7 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func updateNavigationBarTitle() {
-        let imageCount = images.count
+        let imageCount = pageControl.numberOfPages
         let currentPage = pageControl.currentPage
         let title = "\(currentPage + 1)/\(imageCount)"
         navigationItem.title = title
