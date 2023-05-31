@@ -272,7 +272,7 @@ class PostDetailView: UIView {
     }()
     
     let photoCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = LeftAlignedCollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
@@ -320,8 +320,13 @@ class PostDetailView: UIView {
         normalTagCollectionView.dataSource = self.parentViewController as! PostDetailViewController
         
         introduceTextField.delegate = self.parentViewController as! PostDetailViewController
+        
+        photoCollectionView.delegate = self.parentViewController as! PostDetailViewController
+        photoCollectionView.dataSource = self.parentViewController as! PostDetailViewController
     }
     
+    // MARK: 컬렉션뷰들이 수퍼뷰에 부착된 후 사이즈 재계산 진행
+    // MARK: 초기에 하드코딩으로 지정해둔 컬렉션뷰 height 오토레이아웃 값을 컨텐츠 사이즈 height에 맞춰 동적 계산이 이루어지는 로직
     func updateCollectionViewHeight(){
         // 안심태그 컬렉션뷰 dynamic height
         secureTagCollectionView.setNeedsLayout()
@@ -339,6 +344,15 @@ class PostDetailView: UIView {
         if(normalTagCollectionView.contentSize.height > normalTagCollectionView.frame.height){
             normalTagCollectionView.snp.updateConstraints {
                 $0.height.equalTo(normalTagCollectionView.contentSize.height)
+            }
+        }
+        
+        photoCollectionView.setNeedsLayout()
+        photoCollectionView.layoutIfNeeded()
+        
+        if(photoCollectionView.contentSize.height > photoCollectionView.frame.height){
+            photoCollectionView.snp.updateConstraints {
+                $0.height.equalTo(photoCollectionView.contentSize.height)
             }
         }
     }
@@ -491,6 +505,5 @@ extension PostDetailView: LayoutProtocol{
             $0.trailing.equalTo(map.snp.trailing)
             $0.height.equalTo(60)
         }
-        photoCollectionView.backgroundColor = .black
     }
 }
