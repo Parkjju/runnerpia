@@ -22,6 +22,15 @@ final class SearchView: UIView {
         return map
     }()
     
+//    lazy var map: NMFNaverMapView = {
+//        let map = NMFNaverMapView()
+////        map.mapType = .basic
+//        map.positionMode = .direction
+//        map.showLocationButton = true
+//        return map
+//    }()
+    
+    
     // MARK: - LifeCycles
     
     override init(frame: CGRect) {
@@ -59,8 +68,8 @@ extension SearchView: LayoutProtocol {
     func setLayout() {
         searchBar.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-10)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
         }
         
         map.snp.makeConstraints {

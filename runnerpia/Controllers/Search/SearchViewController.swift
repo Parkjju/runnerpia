@@ -16,6 +16,7 @@ final class SearchViewController: UIViewController {
     
     var searchView = SearchView()
     var locationManager = CLLocationManager()
+
     
     // MARK: - LifeCycle
     
@@ -50,6 +51,7 @@ final class SearchViewController: UIViewController {
     private func configureDelegate() {
         searchView.searchBar.delegate = self
         locationManager.delegate = self
+        
     }
 
 }
@@ -82,20 +84,27 @@ extension SearchViewController: CLLocationManagerDelegate {
     private func configureMap() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+//        searchView.map.showLocationButton = true
         
         if CLLocationManager.locationServicesEnabled() {
             print("위치 서비스 On 상태")
-            locationManager.startUpdatingLocation()
+            locationManager.startUpdatingLocation() // 현재 위치를 가져옴
             print(locationManager.location?.coordinate)
             
-            //현 위치로 카메라 이동
+            // 현 위치로 카메라 이동
             let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
             cameraUpdate.animation = .easeIn
             searchView.map.moveCamera(cameraUpdate)
             
+            // 마커
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
             marker.mapView = searchView.map
+            marker.iconImage = NMFOverlayImage(name: "marker")
+            
+            // 오버레이
+            let locationOverlay = searchView.map.locationOverlay
+            locationOverlay.icon = NMFOverlayImage(name: "myLocation")
             
         } else {
             print("위치 서비스 Off 상태")
