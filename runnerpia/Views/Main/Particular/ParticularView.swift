@@ -230,7 +230,7 @@ extension ParticularView: LayoutProtocol {
         collectionView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.height.equalTo(110) // 적절한 높이 값으로 수정해야 함
+            $0.height.equalTo(120)
             $0.top.equalTo(map.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)

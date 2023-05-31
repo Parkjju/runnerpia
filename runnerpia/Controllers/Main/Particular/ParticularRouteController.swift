@@ -245,9 +245,12 @@ extension ParticularRouteController: ParticularViewDelegate {
     }
     
     func routeButtonTapped(_ particularView: ParticularView) {
-        print("경로 따라가기 버튼 탭")
+        
+        let routeViewController = RouteViewController()
+        routeViewController.modalPresentationStyle = .fullScreen
+        present(routeViewController, animated: true, completion: nil)
+
+        
     }
     
 }
-
-

@@ -14,14 +14,10 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     var photoView = PhotoView()
     let pageControl = UIPageControl()
     let particularRouteController = ParticularRouteController()
-    var data: Route?
     
-    // 추후 수정
-    var imageViews = [UIImageView]()
-    var images = [#imageLiteral(resourceName: "random6"), #imageLiteral(resourceName: "random5"), #imageLiteral(resourceName: "random4")]
-    var selectedImage: UIImage?
+    //  ⚠️ 추후 수정
+    var data: Route?
 
-                  
                   
     // MARK: - LifeCycle
     
@@ -87,7 +83,6 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
             let xPos = photoView.scrollView.frame.width * CGFloat(i)
             imageView.frame = CGRect(x: xPos, y: 0, width: photoView.scrollView.frame.width, height: photoView.scrollView.frame.height)
             imageView.image = files[i]
-            imageViews.append(imageView)
             photoView.scrollView.addSubview(imageView)
             photoView.scrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
         }
