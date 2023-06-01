@@ -12,9 +12,9 @@ import CoreLocation
 class RouteRecordView: UIView {
     
     // MARK: Properties
+    var changeViewDelegate: ChangeViewDelegate?
     let locationManager = CLLocationManager()
     let pathOverlay = NMFPath()
-    var pathCoordinates:[NMGLatLng] = []
     
     let map: NMFMapView = {
         let map = NMFMapView()
@@ -191,8 +191,13 @@ class RouteRecordView: UIView {
     var timer = Timer()
     
     var pushTime: TimeInterval = 0
+    
+    // MARK: 전달 필요한 데이터 1. elapsedSeconds / elapsedMinutes
     var elapsedSeconds: TimeInterval = 0
     var elapsedMinutes: TimeInterval = 0
+    
+    // MARK: 전달 필요한 데이터 2. 오늘 날짜 및 시간
+    var today = Date()
     
     var feedbackGenerator: UINotificationFeedbackGenerator?
     
@@ -200,13 +205,17 @@ class RouteRecordView: UIView {
     var isRecordStarted: Bool = false
     
     var previousLocation: CLLocation?
+    
+    // MARK: 전달 필요한 데이터 3. 누적 거리
     var accumulatedDistance = 0
     var accumulatedMeter = 0
     var accumulatedKilometer = 0
     
+    // MARK: 전달 필요한 데이터 4. 누적 좌표값들
+    var pathCoordinates:[NMGLatLng] = []
+    
     // MARK: - LifeCycles
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
         configureUI()
         setSubViews()
@@ -216,6 +225,10 @@ class RouteRecordView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func didMoveToSuperview() {
+        self.changeViewDelegate = self.parentViewController as! RouteViewController
     }
     
     // MARK: Selectors
@@ -251,6 +264,10 @@ class RouteRecordView: UIView {
         pushTime += timer.timeInterval
         
         if(pushTime == 2 && !isRecordStarted){
+            
+            // 시작시간 초기화
+            today = Date()
+            
             self.feedbackGenerator?.notificationOccurred(.success)
             playButton.removeTarget(nil, action: nil, for: .allEvents)
             setupRecordingUI()
@@ -262,7 +279,14 @@ class RouteRecordView: UIView {
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateElapsedLabels), userInfo: nil, repeats: true)
         }else if(pushTime == 2 && isRecordStarted){
             self.feedbackGenerator?.notificationOccurred(.success)
-            parentViewController?.dismiss(animated: true)
+            
+            // 위치업데이트 중단
+            locationManager.stopUpdatingLocation()
+            if(pathCoordinates.count == 0){
+                self.parentViewController?.dismiss(animated: true)
+            }
+            
+            changeViewDelegate?.nextView()
         }
     }
     
@@ -439,7 +463,6 @@ class RouteRecordView: UIView {
         stopButton.addTarget(self, action: #selector(stopButtonTouchDownHandler), for:.touchDown)
         stopButton.addTarget(self, action: #selector(playButtonTouchUpHandler), for:.touchUpInside)
     }
-    
 }
 
 extension RouteRecordView: LayoutProtocol{
@@ -502,7 +525,8 @@ extension RouteRecordView: CLLocationManagerDelegate{
             // 셀렉터 호출시 자동으로 paused값은 변화함
             // MARK: 20미터 이상 진행 후에 재시작
             // 음성 재생같은 피드백 필요
-            if(locationManager.location!.distance(from: previousLocation!) > 20){
+            guard let previousLocation else {return}
+            if(locationManager.location!.distance(from: previousLocation) > 20){
                 self.perform(#selector(playButtonDuringRecordTouchUpHandler))
             }else{
                 return
@@ -529,7 +553,7 @@ extension RouteRecordView: CLLocationManagerDelegate{
             let meterString = Int(accumulatedMeter / 10) == 0 ? "0\(accumulatedMeter)" : "\(accumulatedMeter)"
             let kilometerString = "\(accumulatedKilometer)"
             
-            elapsedDistanceLabel.text = "\(kilometerString):\(meterString)km"
+            elapsedDistanceLabel.text = "\(kilometerString).\(meterString)km"
             
             previousLocation = locationManager.location
             pathCoordinates.append(NMGLatLng(lat: locationManager.location!.coordinate.latitude, lng: locationManager.location!.coordinate.longitude))
@@ -540,7 +564,9 @@ extension RouteRecordView: CLLocationManagerDelegate{
             pathOverlay.width = 10
             pathOverlay.mapView = map
         }
-        
-        
     }
+}
+
+protocol ChangeViewDelegate: AnyObject{
+    func nextView()
 }
