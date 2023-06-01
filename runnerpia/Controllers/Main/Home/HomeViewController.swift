@@ -12,13 +12,12 @@ final class HomeViewController: UIViewController {
     // MARK: - Properties
     
     var homeView = HomeView()
-    
-    private var searchController = UISearchController(searchResultsController: nil)
 
     // MARK: - LifeCycle
     
     override func viewWillAppear(_ animated: Bool) {
         configureNavigationBar()
+        navigationController?.navigationBar.isHidden = false
     }
     
     override func viewDidLoad() {
@@ -35,29 +34,29 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc private func searchButtonTapped() {
+        let searchViewController = SearchViewController()
+        searchViewController.hidesBottomBarWhenPushed = true // 탭 바 나타나지 않도록 설정
+//        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.pushViewController(searchViewController, animated: true)
+    }
+
+    
     // MARK: - Helpers
     
     private func configureUI() {
     }
     
     private func configureNavigationBar() {
-        let logoImage = UIImage(named: "logo")
-        let logoImageView = UIImageView(image: logoImage)
+        let logoImageView = UIImageView(image: UIImage(named: "logo"))
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.frame = CGRect(x: 0, y: 0, width: 79, height: 24)
         let logoBarButton = UIBarButtonItem(customView: logoImageView)
         navigationItem.leftBarButtonItem = logoBarButton
         
-        // ⚠️ 서치 버튼 누른 후 행동 추가해야 함
-        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil)
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTapped))
         searchButton.tintColor = .black
         navigationItem.rightBarButtonItem = searchButton
-        
-        searchController.searchBar.placeholder = "Search"
-        searchController.obscuresBackgroundDuringPresentation = false
-        definesPresentationContext = true
     }
-    
-    
-    
+
 }

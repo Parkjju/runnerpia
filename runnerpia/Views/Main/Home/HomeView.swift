@@ -66,7 +66,7 @@ class HomeView: UIView {
         button.backgroundColor = .clear
         button.setTitle("러너피아로 지금 달려볼까요?", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        button.titleLabel?.font = .semiBold20
         button.titleLabel?.textAlignment = .left
         button.addTarget(self, action: #selector(recordButtonTapped), for: .touchUpInside)
         return button
@@ -95,7 +95,7 @@ class HomeView: UIView {
         button.setTitle("누르면 기록이 시작돼요", for: .normal)
         button.titleLabel?.textAlignment = .left
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        button.titleLabel?.font = .semiBold12
         button.addTarget(self, action: #selector(recordButtonTapped), for: .touchUpInside)
         return button
     }()

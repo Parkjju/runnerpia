@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import CoreLocation
 
 final class ParticularRouteController: UIViewController {
     
@@ -19,6 +20,7 @@ final class ParticularRouteController: UIViewController {
     private let numberOfPhotosToShow = 3
     var selectedImage: UIImage?
     
+    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -27,6 +29,8 @@ final class ParticularRouteController: UIViewController {
         configureNavigation()
         configureDelegate()
         configureUI()
+        
+        setupData()
         
     }
     
@@ -51,6 +55,18 @@ final class ParticularRouteController: UIViewController {
     private func configureUI() {
         particularView.collectionView.tag = 1
         particularView.tagsCollectionView.tag = 2
+        
+        // ⚠️ 추후 수정
+        let data = setupData()
+        particularView.spotLabel.text = data.routeName
+        particularView.locationLabel.text = "성동구 송정동"
+        if let distance = data.distance {
+            particularView.distanceLabel.text = "\(distance)km"
+        } else {
+            particularView.distanceLabel.text = ""
+        }
+        particularView.textView.text = data.review
+        
     }
     
     private func configureNavigation() {
@@ -67,6 +83,28 @@ final class ParticularRouteController: UIViewController {
         
     }
     
+    
+    func setupData() -> Route {
+        let firstData = Route(
+            user: User(userId: "주영", nickname: "주영"),
+            routeName: "송정 뚝방길",
+            distance: 20,
+            arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
+            runningTime: "",
+            review: "성동구에서 가장 안전한 루트를 소개합니다~!",
+            runningDate: "",
+            recommendedTags: ["1", "2"],
+            secureTags: ["1", "2", "3"],
+            files: [#imageLiteral(resourceName: "random6"), #imageLiteral(resourceName: "random4"), #imageLiteral(resourceName: "random5"), #imageLiteral(resourceName: "random1")]
+        )
+        
+        return firstData
+    }
+    
+
+    
 }
 
 
@@ -77,7 +115,7 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if collectionView.tag == 1 {
-            return numberOfPhotosToShow
+            return 3
             
         } else if collectionView.tag == 2 {
             return 3
@@ -91,18 +129,28 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
         if collectionView.tag == 1 {
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticularCollectionViewCell.identifier, for: indexPath) as? ParticularCollectionViewCell else { return UICollectionViewCell() }
-            
-            let image = UIImage(named: "random1")
-            cell.imageView.image = image
+     
+            let data = setupData()
+            cell.imageView.image = data.files?[indexPath.item]
+            cell.imageView.contentMode = .scaleAspectFill
+            cell.imageView.clipsToBounds = true
+            cell.imageView.layer.cornerRadius = 10
             
             if indexPath.item == numberOfPhotosToShow - 1 && numberOfPhotosToShow >= 3 {
                 cell.imageView.alpha = 0.5 // 불투명 효과 적용
-                cell.numberLabel.text = "+\(numberOfPhotosToShow)" // 텍스트 설정
+                
+                if let count = data.files?.count {
+                    cell.numberLabel.text = "+\(count - 3)"
+                } else {
+                    cell.numberLabel.text = ""
+                }
+
                 cell.numberLabel.isHidden = false // 숫자 레이블 표시
             } else {
                 cell.imageView.alpha = 1.0 // 불투명 효과 해제
                 cell.numberLabel.isHidden = true // 숫자 레이블 숨김
             }
+            
             return cell
             
             
@@ -175,6 +223,7 @@ extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
 
 extension ParticularRouteController: ParticularViewDelegate {
     
+    
     func bookmarkButtonTapped(_ particularView: ParticularView) {
         if particularView.bookmarkButton.isSelected {
             particularView.bookmarkButton.isSelected = false
@@ -194,9 +243,16 @@ extension ParticularRouteController: ParticularViewDelegate {
     }
     
     func routeButtonTapped(_ particularView: ParticularView) {
-        print("경로 따라가기 버튼 탭")
+        
+        let routeViewController = RouteViewController()
+        routeViewController.modalPresentationStyle = .fullScreen
+        present(routeViewController, animated: true, completion: nil)
+
+        
+    }
+    
+    func locationButtonTapped(_ particularView: ParticularView) {
+        print("로케이션 버튼")
     }
     
 }
-
-

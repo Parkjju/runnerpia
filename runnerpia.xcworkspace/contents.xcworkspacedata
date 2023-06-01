@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../Home.gpx">
+      location = "group:../../Downloads/Home.gpx">
    </FileRef>
    <FileRef
       location = "group:runnerpia.xcodeproj">

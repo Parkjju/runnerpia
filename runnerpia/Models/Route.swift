@@ -5,6 +5,7 @@
 //  Created by Jun on 2023/05/22.
 //
 
+import Foundation
 import CoreLocation
 import UIKit
 
@@ -18,7 +19,5 @@ struct Route{
     let runningDate: String?
     let recommendedTags: [String]?
     let secureTags: [String]?
-    
-    // 추후 String으로 변경 예정
     let files: [UIImage]?
 }
