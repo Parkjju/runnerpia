@@ -276,8 +276,7 @@ class PostDetailView: UIView {
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        
+        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 100) / 4, height: (UIScreen.main.bounds.width - 100) / 4)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "Photo")
@@ -292,7 +291,6 @@ class PostDetailView: UIView {
         setupController()
         updateCollectionViewHeight()
         setupScrollViewTapGesture()
-        setTextViewNotification()
     }
     
     // MARK: Helpers
@@ -365,9 +363,7 @@ class PostDetailView: UIView {
         scrollView.addGestureRecognizer(tapGesture)
     }
     
-    func setTextViewNotification(){
-        NotificationCenter.default.addObserver(self.parentViewController as! PostDetailViewController, selector: #selector(PostDetailViewController.moveUpAction), name: UIResponder.keyboardWillShowNotification, object: nil)
-    }
+   
 }
 
 extension PostDetailView: LayoutProtocol{
