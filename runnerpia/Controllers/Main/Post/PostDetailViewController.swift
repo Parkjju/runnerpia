@@ -22,23 +22,12 @@ class PostDetailViewController: UIViewController {
     
     // MARK: 속성감시자에서 컬렉션뷰 리로드 하지말고 DispatchWorkItem 마지막 notify에서 리로드
     var dispatchWorkItems: [DispatchWorkItem] = []
-    var numberOflastSelectedImages: Int = 0
     
     // MARK: 리로드시 이미지 추가 셀 위치가 변경되어버리는 문제
     // MARK: 컬렉션뷰 리로드에 인덱스를 유지하지 못하는 이 유
-    var selectedImages: [UIImage] = []{
-        didSet{
-            // MARK: 비동기처리 완료된 dispatchWorkItems가 push되었다면 리로드
-            if(selectedImages.count == dispatchWorkItems.count){
-                DispatchQueue.main.async {
-                    let view = self.view as! PostDetailView
-                    view.photoCollectionView.reloadData()
-                    view.updateCollectionViewHeight()
-                }
-                numberOflastSelectedImages = selectedImages.count
-            }
-        }
-    }
+    // MARK: didSet이 한번만 호출될 수 있는 조건을 찾아보기
+    var isLoadEnded: Bool = false
+    var selectedImages: [UIImage] = [UIImage(systemName: "plus")!]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +52,7 @@ class PostDetailViewController: UIViewController {
 
         // The default value is 1. Setting the value to 0 sets the selection limit to the maximum that the system supports.
         // 디폴트는 1개를 가져올 수 있고 0개 선택시 무한대로 가져올 수 있다고 함
-        configuration.selectionLimit = 10
+        configuration.selectionLimit = 11 - selectedImages.count
 
         // 애셋 타입을 지정한다. Live Photo 등을 가져올 수도 있음
         configuration.filter = .any(of: [.images])
@@ -84,7 +73,7 @@ class PostDetailViewController: UIViewController {
 extension PostDetailViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(collectionView.tag == 3){
-            return selectedImages.count + 1
+            return selectedImages.count
         }
         return 6
     }
@@ -147,11 +136,13 @@ extension PostDetailViewController: UICollectionViewDataSource{
         }else if(collectionView.tag == 3){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Photo", for: indexPath) as! PhotoCollectionViewCell
             
-            if(indexPath.item == 0){
-                cell.isAddButton = true
-            }else{
-                cell.selectedImage = selectedImages[indexPath.item - 1]
-            }
+//            if(indexPath.item == 0){
+//                cell.isAddButton = true
+//            }else{
+//                print(selectedImages[indexPath.item])
+//                cell.selectedImage = selectedImages[indexPath.item]
+//            }
+            cell.selectedImage = selectedImages[indexPath.item]
             
             return cell
         }else{
@@ -181,32 +172,55 @@ extension PostDetailViewController: PHPickerViewControllerDelegate{
         
         picker.dismiss(animated: true)
         
+        // MARK: addImage도 포함해서 11개
+        if(results.count + selectedImages.count > 11){
+            let alert = UIAlertController(title: "사진 등록", message: "사진은 10장까지만 등록이 가능합니다.", preferredStyle: .alert)
+            let success = UIAlertAction(title: "확인", style:.default)
+            alert.addAction(success)
+            
+            present(alert, animated: true)
+            return
+        }
+        
+        // MARK: 이미지 로드를 안하고 dismiss를 하면 비동기작업 자체를 실행하면 안됨
+        if(results.count == 0){
+            return
+        }
+        
         let itemProviders = results.map { $0.itemProvider }
         
-        dispatchWorkItems = []
+        let group = DispatchGroup()
+        let imageQueue = DispatchQueue(label: "imageQueue", attributes: .concurrent)
         
-        // MARK: DispatchWorkItem 적용, 비동기처리 순서 부여
-        itemProviders.forEach { itemProvider in
-            // MARK: canloadobject 비동기
-            let dispatchWorkItem = DispatchWorkItem {
+        isLoadEnded = false
+        
+        // MARK: DispatchGroup으로 모든 작업 끝마친 뒤 리로드 비동기작업 하나만 붙이기
+        // MARK: didSet으로 배열에 매번 비동기 실행할 경우 경쟁상황 심함
+        // MARK: 이미지 append 작업은 다른 큐에서 처리
+        // wait메서드 처리
+        // group enter는 한번 하는데 forEach에서 여러번 leave -> ERROR
+        imageQueue.async(group: group) {
+            itemProviders.forEach { itemProvider in
                 if(itemProvider.canLoadObject(ofClass: UIImage.self)){
+                    group.enter()
                     itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
+                        
                         self.selectedImages.append(image as! UIImage)
+                        group.leave()
                     }
                 }
             }
-            
-            dispatchWorkItems.append(dispatchWorkItem)
-            
         }
+        group.wait()
         
-        for (index, item) in dispatchWorkItems.enumerated(){
-            if(index == dispatchWorkItems.count - 1){
-                break
-            }
-            item.notify(queue: DispatchQueue.main, execute: dispatchWorkItems[index + 1])
+        // MARK: 더이상 경쟁상황은 없음 Thread-safe 코드 작성 마무리
+        // MARK: 컬렉션뷰 리로드 이후 셀 위치 꼬이는 문제 -> layout변경에 따라 달라지는 부분 처리
+        group.notify(queue: DispatchQueue.main) {
+            // 설마 리로드랑 viewHeight처리도 순서에 맞춰 진행?
+            let view = self.view as! PostDetailView
+            view.photoCollectionView.reloadData()
+            view.updateCollectionViewHeight()
         }
-        DispatchQueue.main.async(execute: dispatchWorkItems.first!)
     }
 }
 
