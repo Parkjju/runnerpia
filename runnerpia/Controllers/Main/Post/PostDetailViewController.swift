@@ -41,10 +41,6 @@ class PostDetailViewController: UIViewController {
         sender.view?.endEditing(true)
     }
     
-    @objc func moveUpAction(){
-        // MARK: 키보드 업 액션 필요
-    }
-    
     // MARK: Helpers
     func setupImagePicker(){
         // 피커뷰 설정 관련 인스턴스
@@ -135,13 +131,6 @@ extension PostDetailViewController: UICollectionViewDataSource{
             return cell
         }else if(collectionView.tag == 3){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Photo", for: indexPath) as! PhotoCollectionViewCell
-            
-//            if(indexPath.item == 0){
-//                cell.isAddButton = true
-//            }else{
-//                print(selectedImages[indexPath.item])
-//                cell.selectedImage = selectedImages[indexPath.item]
-//            }
             cell.selectedImage = selectedImages[indexPath.item]
             
             return cell
@@ -155,8 +144,10 @@ extension PostDetailViewController: UICollectionViewDataSource{
 
 extension PostDetailViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: 80, height: 80)
+        // MARK: 컬렉션뷰 4컬럼 배치를 위한 값 계산
+        // MARK: estimatedSize로 지정할 경우 배치가 이상해짐
+        // MARK: 포토 컬렉션뷰에만 해당하는 문제이며 나머지는 intrinsicSize에 따라 자동 fitting
+        return CGSize(width: (UIScreen.main.bounds.width - 62) / 4, height: (UIScreen.main.bounds.width - 62) / 4)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -249,5 +240,19 @@ extension PostDetailViewController: UITextViewDelegate{
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         return newText.count <= 300
+    }
+}
+
+extension PostDetailViewController: PhotoCollectionViewCellEventDelegate{
+    func removeButtonTapped(_ selected: PhotoCollectionViewCell){
+        guard let removeIndex = selectedImages.firstIndex(of: selected.selectedImage!) else {return}
+        selectedImages.remove(at: removeIndex)
+        
+        // MARK: 지우는게 너무 밋밋함
+        DispatchQueue.main.async {
+            let view = self.view as! PostDetailView
+            view.photoCollectionView.reloadData()
+            view.updateCollectionViewHeight()
+        }
     }
 }
