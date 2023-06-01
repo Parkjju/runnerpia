@@ -84,7 +84,8 @@ extension SearchViewController: CLLocationManagerDelegate {
     
     private func configureMap() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
+//        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         //        searchView.map.showLocationButton = true
         
         if CLLocationManager.locationServicesEnabled() {
@@ -111,7 +112,7 @@ extension SearchViewController: CLLocationManagerDelegate {
     
             
             let viewMarker: UIView = {
-                let locationMarker = UIImageView()
+                let locationMarker = UIImageView() // 최소 사이즈 설정
                 locationMarker.image = UIImage(named: "marker")
                 locationMarker.contentMode = .scaleAspectFit
                 
