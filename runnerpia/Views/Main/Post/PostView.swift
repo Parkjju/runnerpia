@@ -291,7 +291,7 @@ extension PostView: LayoutProtocol{
         map.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(20)
             $0.height.equalTo(self.frame.height / 2)
         }
         dateLabel.snp.makeConstraints {
@@ -319,7 +319,7 @@ extension PostView: LayoutProtocol{
             $0.height.equalTo(25)
         }
         registerButton.snp.makeConstraints {
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-20)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(56)
