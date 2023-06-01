@@ -80,6 +80,7 @@ extension SearchViewController: UISearchBarDelegate {
 // MARK: - extension Map
 
 extension SearchViewController: CLLocationManagerDelegate {
+
     
     private func configureMap() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -101,34 +102,54 @@ extension SearchViewController: CLLocationManagerDelegate {
             marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
             marker.mapView = searchView.map
             
+            
+            // ⚠️ 추후수정
+            let particularRouteController = ParticularRouteController()
+            let data = particularRouteController.setupData()
+            let leftLabelText = "2"
+            let rightLabelText = data.distance
+    
+            
             let viewMarker: UIView = {
                 let locationMarker = UIImageView()
                 locationMarker.image = UIImage(named: "marker")
                 locationMarker.contentMode = .scaleAspectFit
-
+                
                 locationMarker.sizeToFit() // 이미지의 원본 크기에 맞게 이미지 뷰의 크기 조정
                 
-                let leftLabel = UILabel(frame: CGRect(x: 6, y: 2, width: 49, height: 20))
-                leftLabel.text = "10"
+                let leftLabel = UILabel(frame: CGRect(x: 4, y: 2, width: 49, height: 20))
+                leftLabel.text = "\(leftLabelText)"
                 leftLabel.textColor = .white
                 leftLabel.textAlignment = .center
-                leftLabel.font = .regular14
+                leftLabel.font = .regular12
                 locationMarker.addSubview(leftLabel)
-
-                let rightLabel = UILabel(frame: CGRect(x: 31, y: 2, width: 49, height: 20))
-                rightLabel.text = "|1km"
+                
+                let middleLabel = UILabel(frame: CGRect(x: 13, y: 2, width: 49, height: 20))
+                middleLabel.text = "|"
+                middleLabel.textColor = .markerColorGreen
+                middleLabel.textAlignment = .center
+                middleLabel.font = .regular12
+                locationMarker.addSubview(middleLabel)
+                
+                let rightLabel = UILabel(frame: CGRect(x: 33, y: 2, width: 49, height: 20))
+                
+                if let unwrappedDistance = rightLabelText {
+                    rightLabel.text = "\(unwrappedDistance)km"
+                } else {
+                    rightLabel.text = ""
+                }
+                
                 rightLabel.textColor = .markerColorGreen
                 rightLabel.textAlignment = .center
-                rightLabel.font = .regular14
+                rightLabel.font = .regular12
                 locationMarker.addSubview(rightLabel)
 
                 return locationMarker
             }()
             
-
             marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
-        
             
+        
             // 오버레이
             let locationOverlay = searchView.map.locationOverlay
             locationOverlay.icon = NMFOverlayImage(name: "myLocation")
@@ -137,6 +158,9 @@ extension SearchViewController: CLLocationManagerDelegate {
             print("위치 서비스 Off 상태")
         }
     }
+
+
+    
 }
 
 

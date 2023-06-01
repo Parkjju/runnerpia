@@ -88,8 +88,10 @@ final class ParticularRouteController: UIViewController {
         let firstData = Route(
             user: User(userId: "주영", nickname: "주영"),
             routeName: "송정 뚝방길",
-            distance: 500,
-            arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
+            distance: 20,
+            arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
             runningTime: "",
             review: "성동구에서 가장 안전한 루트를 소개합니다~!",
             runningDate: "",
