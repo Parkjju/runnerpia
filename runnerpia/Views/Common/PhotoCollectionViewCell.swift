@@ -50,7 +50,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    
+    // MARK: Lifecycle functions
     override init(frame: CGRect) {
         super.init(frame: frame)
         setSubViews()
@@ -65,12 +65,23 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         setupUI()
     }
     
+    // MARK: 초기화 후 추가버튼 UI를 어떻게 재조정할지
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+    
     func setupUI(){
         self.clipsToBounds = true
         self.layer.cornerRadius = 10
         
-        if(isAddButton){
+        // MARK: addImage 셀 UI오류 예상후보 1. Constraints 중복 추가 -> 아님
+        if(selectedImage!.isSymbolImage){
             self.backgroundColor = .grey100
+            
+            // MARK: 예상후보 2. 재사용 과정에서 imageView 인스턴스가 addImage 위를 덮음 -> 정답!
+            imageView.snp.removeConstraints()
+            self.contentView.backgroundColor = .grey100
             
             self.addImage.snp.makeConstraints {
                 $0.centerX.equalTo(self.contentView.snp.centerX)
