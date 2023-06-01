@@ -20,11 +20,6 @@ final class ParticularRouteController: UIViewController {
     private let numberOfPhotosToShow = 3
     var selectedImage: UIImage?
     
-    var routeData: [Route] = []{
-        didSet{
-//            tableView.reloadData()
-        }
-    }
     
     // MARK: - LifeCycle
     
@@ -226,6 +221,7 @@ extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
 
 extension ParticularRouteController: ParticularViewDelegate {
     
+    
     func bookmarkButtonTapped(_ particularView: ParticularView) {
         if particularView.bookmarkButton.isSelected {
             particularView.bookmarkButton.isSelected = false
@@ -251,6 +247,10 @@ extension ParticularRouteController: ParticularViewDelegate {
         present(routeViewController, animated: true, completion: nil)
 
         
+    }
+    
+    func locationButtonTapped(_ particularView: ParticularView) {
+        print("로케이션 버튼")
     }
     
 }

@@ -16,7 +16,7 @@ final class SearchViewController: UIViewController {
     
     var searchView = SearchView()
     var locationManager = CLLocationManager()
-
+    
     
     // MARK: - LifeCycle
     
@@ -40,20 +40,20 @@ final class SearchViewController: UIViewController {
     // MARK: - Helpers
     
     private func configureUI() {
-
+        
     }
     
     private func configureNavigation() {
         navigationController?.navigationBar.isHidden = true
-
+        
     }
     
     private func configureDelegate() {
         searchView.searchBar.delegate = self
         locationManager.delegate = self
-        
+        searchView.delegate = self
     }
-
+    
 }
 
 // MARK: - extension SearchBar
@@ -84,7 +84,7 @@ extension SearchViewController: CLLocationManagerDelegate {
     private func configureMap() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-//        searchView.map.showLocationButton = true
+        //        searchView.map.showLocationButton = true
         
         if CLLocationManager.locationServicesEnabled() {
             print("위치 서비스 On 상태")
@@ -100,12 +100,34 @@ extension SearchViewController: CLLocationManagerDelegate {
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
             marker.mapView = searchView.map
-            marker.iconImage = NMFOverlayImage(name: "marker")
-            marker.captionText = "10"
-            marker.captionColor = .grey800
-            marker.subCaptionText = "1.2km"
-            marker.subCaptionColor = .blue500
             
+            let viewMarker: UIView = {
+                let locationMarker = UIImageView()
+                locationMarker.image = UIImage(named: "marker")
+                locationMarker.contentMode = .scaleAspectFit
+
+                locationMarker.sizeToFit() // 이미지의 원본 크기에 맞게 이미지 뷰의 크기 조정
+                
+                let leftLabel = UILabel(frame: CGRect(x: 6, y: 2, width: 49, height: 20))
+                leftLabel.text = "10"
+                leftLabel.textColor = .white
+                leftLabel.textAlignment = .center
+                leftLabel.font = .regular14
+                locationMarker.addSubview(leftLabel)
+
+                let rightLabel = UILabel(frame: CGRect(x: 31, y: 2, width: 49, height: 20))
+                rightLabel.text = "|1km"
+                rightLabel.textColor = .markerColorGreen
+                rightLabel.textAlignment = .center
+                rightLabel.font = .regular14
+                locationMarker.addSubview(rightLabel)
+
+                return locationMarker
+            }()
+            
+
+            marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
+        
             
             // 오버레이
             let locationOverlay = searchView.map.locationOverlay
@@ -118,5 +140,28 @@ extension SearchViewController: CLLocationManagerDelegate {
 }
 
 
+// MARK: - Delegate
 
+extension SearchViewController: SearchViewDelegate {
+    
+    
+    func locationButtonTapped(_ searchView: SearchView) {
+        print("locationButtonTapped !! ")
+        
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+        cameraUpdate.animation = .easeIn
+        searchView.map.moveCamera(cameraUpdate)
+        
+
+//        locationManager.startUpdatingLocation()
+//        let cameraUpdate = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
+//        searchView.map.moveCamera(cameraUpdate)
+
+        
+    }
+    
+    
+}
+
+    
 

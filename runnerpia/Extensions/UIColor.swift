@@ -26,6 +26,9 @@ extension UIColor {
     static let secureTagColor = hexStringToUIColor(hex: "#BBE2FF")
     static let recommendedTagColor = hexStringToUIColor(hex: "#FCDCBE")
     
+    // 경로검색 마커 컬러
+    static let markerColorGreen = hexStringToUIColor(hex: "#7ADA90")
+    
     // 지정컬러 (추후 이 부분 남기고 정리)
     static let blue400 = hexStringToUIColor(hex: "#3B8DED")
     static let blue500 = hexStringToUIColor(hex: "#005EE2")

@@ -8,8 +8,15 @@
 import UIKit
 import SnapKit
 import NMapsMap
+import CoreLocation
+
+protocol SearchViewDelegate: AnyObject {
+    func locationButtonTapped(_ searchView: SearchView)
+}
 
 final class SearchView: UIView {
+    
+    weak var delegate: SearchViewDelegate?
     
     // MARK: - Properties
         
@@ -22,13 +29,12 @@ final class SearchView: UIView {
         return map
     }()
     
-//    lazy var map: NMFNaverMapView = {
-//        let map = NMFNaverMapView()
-////        map.mapType = .basic
-//        map.positionMode = .direction
-//        map.showLocationButton = true
-//        return map
-//    }()
+    private lazy var locationButton: UIButton = {
+       let button = UIButton()
+        button.setImage(UIImage(named: "locationButton"), for: .normal)
+        button.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
+        return button
+    }()
     
     
     // MARK: - LifeCycles
@@ -46,6 +52,14 @@ final class SearchView: UIView {
 
     }
     
+    // MARK: - Selectors
+    
+    @objc private func locationButtonTapped() {
+        delegate?.locationButtonTapped(self)
+    }
+
+
+    
     
     // MARK: - Helpers
     
@@ -62,7 +76,7 @@ final class SearchView: UIView {
 extension SearchView: LayoutProtocol {
     
     func setSubViews() {
-        [searchBar, map].forEach { self.addSubview($0) }
+        [searchBar, map, locationButton].forEach { self.addSubview($0) }
     }
     
     func setLayout() {
@@ -75,6 +89,11 @@ extension SearchView: LayoutProtocol {
         map.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(50)
             $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        locationButton.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(70)
+            $0.trailing.equalToSuperview().offset(-20)
         }
     }
     

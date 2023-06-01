@@ -12,6 +12,7 @@ import CoreLocation
 protocol ParticularViewDelegate: AnyObject {
     func bookmarkButtonTapped(_ particularView: ParticularView)
     func routeButtonTapped(_ particularView: ParticularView)
+
 }
 
 final class ParticularView: UIView {
@@ -186,7 +187,6 @@ final class ParticularView: UIView {
     @objc private func routeButtonTapped() {
         delegate?.routeButtonTapped(self)
     }
-
     
     
     // MARK: - Helpers
@@ -217,7 +217,7 @@ extension ParticularView: LayoutProtocol {
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
         }
-
+        
 //        collectionView.snp.makeConstraints {
 //            $0.centerX.equalToSuperview()
 //            $0.width.equalToSuperview().multipliedBy(0.9)
