@@ -79,7 +79,7 @@ extension SearchViewController: UISearchBarDelegate {
 
 // MARK: - extension Map
 
-extension SearchViewController: CLLocationManagerDelegate {
+extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationControllerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
@@ -165,11 +165,30 @@ extension SearchViewController: CLLocationManagerDelegate {
         // MARK: 마커 여러개 어떻게 표현할지 -> 네이버지도 문서에 따르면 메모리 문제 발생 가능성 존재
         marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
         
+        // Marker 터치이벤트
+        marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
+            print("마커 터치됨")
+            
+            let halfModalViewController = HalfModalPresentationController()
+            halfModalViewController.modalPresentationStyle = .pageSheet
+            
+            if let sheet = halfModalViewController.sheetPresentationController {
+                sheet.detents = [.medium()]
+                sheet.delegate = self
+                sheet.prefersGrabberVisible = true
+            }
+
+            present(halfModalViewController, animated: true, completion: nil)
+            
+            return true
+        }
+        
     
         // 오버레이
         let locationOverlay = searchView.map.locationOverlay
         locationOverlay.icon = NMFOverlayImage(name: "myLocation")
     }
+    
 
 
     
