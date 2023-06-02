@@ -15,6 +15,11 @@ final class ParticularRouteController: UIViewController {
     
     // MARK: - Properties
     private var particularView = ParticularView()
+    var data: Route?{
+        didSet{
+            configureUI()
+        }
+    }
     
     // 추후 수정
     private let numberOfPhotosToShow = 3
@@ -29,9 +34,6 @@ final class ParticularRouteController: UIViewController {
         configureNavigation()
         configureDelegate()
         configureUI()
-        
-        setupData()
-        
     }
     
     override func loadView() {
@@ -57,7 +59,7 @@ final class ParticularRouteController: UIViewController {
         particularView.tagsCollectionView.tag = 2
         
         // ⚠️ 추후 수정
-        let data = setupData()
+        guard let data = data else { return }
         particularView.spotLabel.text = data.routeName
         particularView.locationLabel.text = "성동구 송정동"
         if let distance = data.distance {
