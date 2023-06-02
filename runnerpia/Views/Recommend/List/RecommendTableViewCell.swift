@@ -44,6 +44,8 @@ class RecommendTableViewCell: UITableViewCell {
         map.mapType = .basic
         map.positionMode = .disabled
         map.layer.cornerRadius = 10
+        map.allowsScrolling = false
+        map.allowsZooming = false
         return map
     }()
     
