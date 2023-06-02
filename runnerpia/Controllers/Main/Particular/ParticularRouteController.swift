@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import CoreLocation
+import NMapsMap
 
 final class ParticularRouteController: UIViewController {
     
@@ -69,6 +70,21 @@ final class ParticularRouteController: UIViewController {
         }
         particularView.textView.text = data.review
         
+        setupMap()
+    }
+    
+    func setupMap(){
+        let pathOverlay = NMFPath()
+        let points = data!.arrayOfPos!.map { location in
+            NMGLatLng(lat: location.latitude, lng: location.longitude)
+        }
+        let cameraUpdate = NMFCameraUpdate(scrollTo: points.first!)
+        pathOverlay.path = NMGLineString(points: points)
+        pathOverlay.mapView = particularView.map
+        pathOverlay.color = .polylineColor
+        pathOverlay.outlineColor = .clear
+        pathOverlay.width = 10
+        particularView.map.moveCamera(cameraUpdate)
     }
     
     private func configureNavigation() {

@@ -21,7 +21,7 @@ final class ParticularView: UIView {
     
     // MARK: - Properties
     
-    private lazy var map: NMFMapView = {
+    lazy var map: NMFMapView = {
         let map = NMFMapView()
         map.mapType = .basic
         map.positionMode = .direction
