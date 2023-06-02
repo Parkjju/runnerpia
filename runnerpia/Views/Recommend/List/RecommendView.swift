@@ -106,7 +106,13 @@ extension RecommendView: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 14
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let particularVC = ParticularRouteController()
+        particularVC.data = routeData[indexPath.section]
+        self.parentViewController?.navigationController?.pushViewController(particularVC, animated: false)
     }
 }
 
