@@ -33,4 +33,29 @@ extension UIImage{
         
         return scaledImage
     }
+    
+    
+    // MARK: 가로 또는 세로만 키우기
+    
+    enum Axis{
+        case horizontal
+        case vertical
+    }
+    func scaleWithoutPreserveAspectRatio(targetValue: CGFloat,originalValue: CGFloat ,axis: Axis) -> UIImage{
+        
+        switch axis{
+        case .horizontal:
+            let renderer = UIGraphicsImageRenderer(size: CGSize(width: targetValue, height: originalValue))
+            let scaledImage = renderer.image { _ in
+                self.draw(in: CGRect(origin: .zero, size: CGSize(width: targetValue, height: originalValue)))
+            }
+            return scaledImage
+        case .vertical:
+            let renderer = UIGraphicsImageRenderer(size: CGSize(width: originalValue, height: targetValue))
+            let scaledImage = renderer.image { _ in
+                self.draw(in: CGRect(origin: .zero, size: CGSize(width: originalValue, height: targetValue)))
+            }
+            return scaledImage
+        }
+    }
 }

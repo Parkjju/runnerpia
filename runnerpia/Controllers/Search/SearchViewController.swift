@@ -17,7 +17,6 @@ final class SearchViewController: UIViewController {
     var searchView = SearchView()
     var locationManager = CLLocationManager()
     
-    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -27,6 +26,7 @@ final class SearchViewController: UIViewController {
         configureDelegate()
         configureUI()
         configureSearchBar()
+        requestLocationPermissionAuthorization()
         configureMap()
     }
     
@@ -80,84 +80,95 @@ extension SearchViewController: UISearchBarDelegate {
 // MARK: - extension Map
 
 extension SearchViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+        cameraUpdate.animation = .easeIn
+        searchView.map.moveCamera(cameraUpdate)
+    }
 
     
     private func configureMap() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
-        //        searchView.map.showLocationButton = true
+        // 마커
+        let marker = NMFMarker()
+        marker.position = NMGLatLng(lat: 37.2785, lng: 127.1440)
+        marker.mapView = searchView.map
         
-        if CLLocationManager.locationServicesEnabled() {
-            print("위치 서비스 On 상태")
-            locationManager.startUpdatingLocation() // 현재 위치를 가져옴
-            print(locationManager.location?.coordinate)
-            
-            // 현 위치로 카메라 이동
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
-            cameraUpdate.animation = .easeIn
-            searchView.map.moveCamera(cameraUpdate)
-            
-            // 마커
-            let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
-            marker.mapView = searchView.map
-            
-            
-            // ⚠️ 추후수정
-            let particularRouteController = ParticularRouteController()
-            let data = particularRouteController.setupData()
-            let leftLabelText = "2"
-            let rightLabelText = data.distance
-    
-            
-            let viewMarker: UIView = {
-                let locationMarker = UIImageView() // 최소 사이즈 설정
-                locationMarker.image = UIImage(named: "marker")
-                locationMarker.contentMode = .scaleAspectFit
-                
-                locationMarker.sizeToFit() // 이미지의 원본 크기에 맞게 이미지 뷰의 크기 조정
-                
-                let leftLabel = UILabel(frame: CGRect(x: 4, y: 2, width: 49, height: 20))
-                leftLabel.text = "\(leftLabelText)"
-                leftLabel.textColor = .white
-                leftLabel.textAlignment = .center
-                leftLabel.font = .regular12
-                locationMarker.addSubview(leftLabel)
-                
-                let middleLabel = UILabel(frame: CGRect(x: 13, y: 2, width: 49, height: 20))
-                middleLabel.text = "|"
-                middleLabel.textColor = .markerColorGreen
-                middleLabel.textAlignment = .center
-                middleLabel.font = .regular12
-                locationMarker.addSubview(middleLabel)
-                
-                let rightLabel = UILabel(frame: CGRect(x: 33, y: 2, width: 49, height: 20))
-                
-                if let unwrappedDistance = rightLabelText {
-                    rightLabel.text = "\(unwrappedDistance)km"
-                } else {
-                    rightLabel.text = ""
-                }
-                
-                rightLabel.textColor = .markerColorGreen
-                rightLabel.textAlignment = .center
-                rightLabel.font = .regular12
-                locationMarker.addSubview(rightLabel)
+        // ⚠️ 추후수정
+        let particularRouteController = ParticularRouteController()
+        let data = particularRouteController.setupData()
+        let leftLabelText = "2"
+        let rightLabelText = data.distance
 
-                return locationMarker
-            }()
-            
-            marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
-            
         
-            // 오버레이
-            let locationOverlay = searchView.map.locationOverlay
-            locationOverlay.icon = NMFOverlayImage(name: "myLocation")
+        let viewMarker: UIImageView = {
+            let locationMarker = UIImageView() // 최소 사이즈 설정
+            locationMarker.image = UIImage(named: "marker_plain")
+            locationMarker.contentMode = .scaleAspectFit
+            locationMarker.sizeToFit() // 이미지의 원본 크기에 맞게 이미지 뷰의 크기 조정
             
-        } else {
-            print("위치 서비스 Off 상태")
-        }
+            
+            let checkImage = UIImageView(image: UIImage(named: "check"))
+            checkImage.sizeToFit()
+            locationMarker.addSubview(checkImage)
+            
+            // MARK: position기반으로 위치가 지정되는 NMFMarker는 오토레이아웃으로 레이아웃 설정이 불가능
+            checkImage.frame.origin.y = locationMarker.frame.minY + 5
+            checkImage.frame.origin.x = locationMarker.frame.minX + 8
+            
+            let leftLabel = UILabel()
+            leftLabel.font = .regular12
+            leftLabel.text = "\(leftLabelText)"
+            leftLabel.sizeToFit()
+            leftLabel.textColor = .white
+            leftLabel.frame.origin.x = checkImage.frame.maxX + 5
+            leftLabel.center.y = checkImage.center.y + 1
+            locationMarker.addSubview(leftLabel)
+            
+            let middleLabel = UILabel()
+            middleLabel.text = "|"
+            middleLabel.textColor = .markerColorGreen
+            middleLabel.font = .regular12
+            middleLabel.sizeToFit()
+            middleLabel.frame.origin.x = leftLabel.frame.maxX + 5
+            middleLabel.center.y = leftLabel.center.y
+            locationMarker.addSubview(middleLabel)
+            
+            
+            let rightLabel = UILabel()
+            if let unwrappedDistance = rightLabelText {
+                rightLabel.text = "\(unwrappedDistance)km"
+            } else {
+                rightLabel.text = ""
+            }
+            
+            rightLabel.textColor = .markerColorGreen
+            rightLabel.font = .regular12
+            rightLabel.sizeToFit()
+            rightLabel.frame.origin.x = middleLabel.frame.maxX + 5
+            rightLabel.center.y = leftLabel.center.y
+            locationMarker.addSubview(rightLabel)
+            
+            if(rightLabel.frame.maxX + 5 > locationMarker.frame.maxX){
+                let diff = (rightLabel.frame.maxX + 5) - locationMarker.frame.maxX
+
+                // MARK: 너비 + diff값으로 locationMarker 이미지 크기 확대
+                // MARK: 상수값으로 확대하는건 가능
+                // MARK: 로직에 맞춰 확대하는건
+                locationMarker.image = locationMarker.image?.scaleWithoutPreserveAspectRatio(targetValue: locationMarker.frame.width + diff + 5, originalValue: locationMarker.frame.height, axis: .horizontal)
+            }
+            return locationMarker
+        }()
+        
+        viewMarker.sizeToFit()
+        
+        // MARK: 마커 여러개 어떻게 표현할지 -> 네이버지도 문서에 따르면 메모리 문제 발생 가능성 존재
+        marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
+        
+    
+        // 오버레이
+        let locationOverlay = searchView.map.locationOverlay
+        locationOverlay.icon = NMFOverlayImage(name: "myLocation")
     }
 
 
@@ -183,6 +194,11 @@ extension SearchViewController: SearchViewDelegate {
 //        searchView.map.moveCamera(cameraUpdate)
 
         
+    }
+    
+    func requestLocationPermissionAuthorization(){
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     

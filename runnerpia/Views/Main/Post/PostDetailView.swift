@@ -79,8 +79,8 @@ class PostDetailView: UIView {
     let locationView: UIStackView = {
         let sv = UIStackView()
         
-        let firstMarkerImage = UIImageView(image: UIImage(named: "marker")?.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20)))
-        let secondMarkerImage = UIImageView(image: UIImage(named: "marker")?.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20)))
+        let firstMarkerImage = UIImageView(image: UIImage(named: "locationIcon")?.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20)))
+        let secondMarkerImage = UIImageView(image: UIImage(named: "locationIcon")?.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20)))
         
         let startLocationLabel = UILabel()
         startLocationLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
