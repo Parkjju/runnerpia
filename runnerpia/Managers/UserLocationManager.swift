@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import CoreLocation
+
+class UserLocationManager{
+    static let shared = CLLocationManager()
+    
+    func requestLocationPermissionAuthorization(){
+        UserLocationManager.shared.requestAlwaysAuthorization()
+        UserLocationManager.shared.startUpdatingLocation()
+    }
+}
