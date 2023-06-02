@@ -20,12 +20,21 @@ final class RouteViewController: UIViewController {
         super.viewDidLoad()
         
         self.view = RouteRecordView()
-        self.tabBarController?.tabBar.isHidden = true
+        self.navigationController?.isNavigationBarHidden = false
+        setupNavigationBar()
     }
     
     // MARK: - Selectors
+    @objc func closeButtonTapped(){
+        self.navigationController?.dismiss(animated: true)
+    }
     
     // MARK: - Helpers
+    
+    func setupNavigationBar(){
+        let button = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeButtonTapped))
+        navigationItem.rightBarButtonItem = button
+    }
 }
 
 extension RouteViewController: PostDataDelegate{
