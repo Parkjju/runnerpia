@@ -9,12 +9,23 @@ import UIKit
 
 class HalfModalPresentationController: UIViewController {
     
-   
+    // MARK: - Properties
+    
+    var halfModalView = HalfModalView()
+    
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .blue400
     }
-
+    
+    override func loadView() {
+      view = halfModalView
+  }
+    
+    // MARK: - Selectors
+    
+    // MARK: - Helpers
     
 }

@@ -37,6 +37,7 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Selectors
     
+
     // MARK: - Helpers
     
     private func configureUI() {
@@ -54,6 +55,7 @@ final class SearchViewController: UIViewController {
         searchView.delegate = self
     }
     
+
 }
 
 // MARK: - extension SearchBar
@@ -167,7 +169,6 @@ extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationCo
         
         // Marker 터치이벤트
         marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
-            print("마커 터치됨")
             
             let halfModalViewController = HalfModalPresentationController()
             halfModalViewController.modalPresentationStyle = .pageSheet
@@ -177,7 +178,6 @@ extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationCo
                 sheet.delegate = self
                 sheet.prefersGrabberVisible = true
             }
-
             present(halfModalViewController, animated: true, completion: nil)
             
             return true
@@ -188,7 +188,7 @@ extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationCo
         let locationOverlay = searchView.map.locationOverlay
         locationOverlay.icon = NMFOverlayImage(name: "myLocation")
     }
-    
+
 
 
     
