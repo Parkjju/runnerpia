@@ -39,7 +39,6 @@ final class HalfModalView: UIView {
         label.textAlignment = .left
         label.textColor = .black
         label.font = .semiBold24
-        label.text = "송정뚝방길"
         return label
     }()
     
@@ -83,7 +82,6 @@ final class HalfModalView: UIView {
         label.textAlignment = .left
         label.textColor = .black
         label.font = .regular14
-        label.text = "5.8km"
         return label
     }()
     
@@ -188,9 +186,10 @@ extension HalfModalView: LayoutProtocol {
         }
         
         tagsCollectionView.snp.makeConstraints {
-            $0.top.equalTo(tagsLabel.snp.bottom).offset(10)
             $0.leading.equalTo(tagsLabel.snp.leading)
-            $0.trailing.lessThanOrEqualTo(self.tagsLabel.snp.trailing)
+            $0.trailing.lessThanOrEqualTo(self.scrollView.snp.trailing).offset(-16)
+            $0.top.equalTo(tagsLabel.snp.bottom).offset(10)
+            $0.bottom.equalTo(self.scrollView.snp.bottom).offset(-16)
             $0.height.greaterThanOrEqualTo(80)
         }
         
