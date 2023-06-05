@@ -12,6 +12,24 @@ import CoreLocation
 class RouteRecordView: UIView {
     
     // MARK: Properties
+    var routeData: Route?{
+        didSet{
+            
+            guard let routeData = routeData else { return }
+            
+            let points = routeData.arrayOfPos!.map { location in
+                NMGLatLng(lat: location.latitude, lng: location.longitude)
+            }
+            let pathOverlay = NMFPath()
+            pathOverlay.path = NMGLineString(points: points)
+            pathOverlay.mapView = map
+            pathOverlay.color = .polylineColor
+            pathOverlay.outlineColor = .clear
+            pathOverlay.width = 10
+            
+        }
+    }
+    
     var changeViewDelegate: ChangeViewDelegate?
     let locationManager = UserLocationManager.shared
     let pathOverlay = NMFPath()
