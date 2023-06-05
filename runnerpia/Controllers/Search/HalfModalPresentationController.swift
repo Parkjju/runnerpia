@@ -12,23 +12,38 @@ class HalfModalPresentationController: UIViewController {
     // MARK: - Properties
     
     var halfModalView = HalfModalView()
+    var searchView = SearchView()
+    
+
     
     // MARK: - LifeCycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureUI()
         configureDelegate()
+        
     }
     
     override func loadView() {
       view = halfModalView
   }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchView.map.positionMode = .direction
+        let searchVC = self.presentingViewController as! SearchViewController
+        searchVC.locationManager.startUpdatingLocation()
+    }
+    
     // MARK: - Selectors
     
     // MARK: - Helpers
+    
     
     private func configureUI() {
         // ⚠️ 추후수정

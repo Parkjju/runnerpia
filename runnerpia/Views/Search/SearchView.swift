@@ -20,9 +20,7 @@ final class SearchView: UIView {
     weak var delegate: SearchViewDelegate?
     
     // MARK: - Properties
-    
-    let searchBar = UISearchBar()
-    
+        
     lazy var map: NMFMapView = {
         let map = NMFMapView()
         map.mapType = .basic
@@ -96,23 +94,18 @@ final class SearchView: UIView {
 extension SearchView: LayoutProtocol {
     
     func setSubViews() {
-        [searchBar, map, locationButton, rebrowsingButton].forEach { self.addSubview($0) }
+        [ map, locationButton, rebrowsingButton ].forEach { self.addSubview($0) }
     }
     
     func setLayout() {
-        searchBar.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
-        }
-        
+
         map.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(50)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
         locationButton.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(70)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(30)
             $0.trailing.equalToSuperview().offset(-20)
         }
         

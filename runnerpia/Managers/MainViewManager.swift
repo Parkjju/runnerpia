@@ -28,9 +28,8 @@ class MainViewManager {
         window.backgroundColor = .white
         window.makeKeyAndVisible()
         
-//        setTapBarController()
+        setTapBarController()
         
-        rootViewController = SearchViewController()
 //        rootViewController = HalfModalPresentationController()
 //        rootViewController = ParticularRouteController()
         

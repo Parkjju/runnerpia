@@ -25,7 +25,6 @@ final class SearchViewController: UIViewController {
         configureNavigation()
         configureDelegate()
         configureUI()
-        configureSearchBar()
         requestLocationPermissionAuthorization()
         configureMap()
     }
@@ -37,20 +36,27 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc private func cancelButtonButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
     
     // MARK: - Helpers
     
     private func configureUI() {
-        
+
     }
     
     private func configureNavigation() {
-        navigationController?.navigationBar.isHidden = true
-        
+        navigationController?.navigationBar.tintColor = .black
+        navigationItem.title = "경로 검색"
+        navigationItem.setHidesBackButton(true, animated: false)
+
+        let cancelButton = UIImage(named: "cancelButton")
+        let cancelButtonTapped = UIBarButtonItem(image: cancelButton, style: .plain, target: self, action: #selector(cancelButtonButtonTapped))
+        navigationItem.rightBarButtonItem = cancelButtonTapped
     }
     
     private func configureDelegate() {
-        searchView.searchBar.delegate = self
         locationManager.delegate = self
         searchView.delegate = self
     }
@@ -58,26 +64,6 @@ final class SearchViewController: UIViewController {
     
 }
 
-// MARK: - extension SearchBar
-
-extension SearchViewController: UISearchBarDelegate {
-    
-    private func configureSearchBar() {
-        searchView.searchBar.placeholder = "시/구까지 입력해주세요."
-        searchView.searchBar.showsCancelButton = true
-        searchView.searchBar.backgroundImage = UIImage() // 상, 하단 줄 해제
-        if let cancelButton = searchView.searchBar.value(forKey: "cancelButton") as? UIButton {
-            cancelButton.setTitle("", for: .normal)
-            let cancelButtonImage = UIImage(named: "cancelButton")?.withRenderingMode(.alwaysOriginal)
-            cancelButton.setImage(cancelButtonImage, for: .normal)
-        }
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-        navigationController?.popViewController(animated: true)
-    }
-}
 
 // MARK: - extension Map
 
@@ -104,6 +90,8 @@ extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationCo
         
         marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
             presentHalfModal()
+            locationManager.stopUpdatingLocation()
+            searchView.map.positionMode = .disabled
             return true
         }
     }
@@ -181,13 +169,15 @@ extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationCo
         halfModalViewController.halfModalView.layer.cornerRadius = 40
         
         if let sheet = halfModalViewController.sheetPresentationController {
+
             sheet.detents = [.medium()]
             sheet.delegate = self
             sheet.prefersGrabberVisible = true
         }
+
         present(halfModalViewController, animated: true, completion: nil)
     }
-    
+
     
     func addLocationOverlay() {
         let locationOverlay = searchView.map.locationOverlay
