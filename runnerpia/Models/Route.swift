@@ -14,6 +14,7 @@ struct Route{
     let routeName: String?
     let distance: Int?
     let arrayOfPos: [CLLocationCoordinate2D]?
+    let location: String?
     let runningTime: String?
     let review: String?
     let runningDate: String?
