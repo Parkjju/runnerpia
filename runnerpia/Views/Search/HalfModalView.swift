@@ -11,6 +11,8 @@ final class HalfModalView: UIView {
     
     // MARK: - Properties
     
+    weak var touchDelegate: UIView? = nil
+    
     // -- 0. scrollView
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -27,7 +29,7 @@ final class HalfModalView: UIView {
             
             $0.leading.equalTo(scrollView.frameLayoutGuide.snp.leading)
             $0.trailing.equalTo(scrollView.frameLayoutGuide.snp.trailing)
-            $0.height.equalTo(282)
+            $0.height.equalTo(500)
         }
         return scrollView
     }()
@@ -45,7 +47,7 @@ final class HalfModalView: UIView {
     // -- 2. spotStackView
     private lazy var locationIcon: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(named: "locationIcon")
+        let image = UIImage(named: "locationIcon")!.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20))
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
         imageView.frame = CGRect(x: 0, y: 0, width: 18, height: 18)
@@ -71,7 +73,7 @@ final class HalfModalView: UIView {
     
     private lazy var mapIcon: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(named: "mapIcon")
+        let image = UIImage(named: "mapIcon")!.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20))
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -91,8 +93,8 @@ final class HalfModalView: UIView {
                                                        mapIcon, distanceLabel])
         stackView.axis = .horizontal
         stackView.spacing = 5
-        stackView.alignment = .leading
-        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.distribution = .equalSpacing
         return stackView
     }()
     
@@ -126,6 +128,17 @@ final class HalfModalView: UIView {
     
     // MARK: - LifeCycles
     
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        
+        guard let view = super.hitTest(point, with: event) else {
+            return nil
+        }
+        guard view == self, let point = touchDelegate?.convert(point, from: self) else {
+            return view
+        }
+        return touchDelegate?.hitTest(point, with: event)
+    }
+    
     override init(frame: CGRect) {
         
         super.init(frame: frame)
@@ -142,8 +155,7 @@ final class HalfModalView: UIView {
     
     // MARK: - Helpers
     private func configureUI() {
-        backgroundColor = .white
-    }
+     }
 }
 
 
@@ -163,14 +175,14 @@ extension HalfModalView: LayoutProtocol {
     func setLayout() {
         
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(self.snp.top).offset(20)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
         
         spotLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(35)
+            $0.top.equalTo(scrollView.subviews.first!.snp.top).offset(20)
             $0.leading.equalTo(scrollView.contentLayoutGuide.snp.leading).offset(Constraints.paddingLeftAndRight)
             $0.trailing.equalTo(scrollView.contentLayoutGuide.snp.trailing).offset(-Constraints.paddingLeftAndRight)
         }

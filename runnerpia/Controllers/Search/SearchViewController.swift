@@ -10,12 +10,15 @@ import UIKit
 import NMapsMap
 import CoreLocation
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController, NMFMapViewTouchDelegate {
     
     // MARK: - Properties
     
     var searchView = SearchView()
     var locationManager = CLLocationManager()
+    var halfModalView = HalfModalView()
+    let marker = NMFMarker()
+
     
     // MARK: - LifeCycle
     
@@ -40,6 +43,7 @@ final class SearchViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    
     // MARK: - Helpers
     
     private func configureUI() {
@@ -59,15 +63,27 @@ final class SearchViewController: UIViewController {
     private func configureDelegate() {
         locationManager.delegate = self
         searchView.delegate = self
+        searchView.map.touchDelegate = self
     }
     
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        print(latlng)
+    }
     
 }
 
 
 // MARK: - extension Map
 
-extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationControllerDelegate {
+extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        print(presented)
+        var presented = presented as! HalfModalPresentationController
+        presented.view.frame = CGRect(x: 0, y: UIScreen.main.bounds.height * 2 / 3, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
@@ -81,17 +97,19 @@ extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationCo
     }
     
     func addMarker() {
-        let marker = NMFMarker()
         marker.position = NMGLatLng(lat: 37.2785, lng: 127.1440)
         marker.mapView = searchView.map
         
         let viewMarker = createViewMarker()
         marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
-        
+
         marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
+
             presentHalfModal()
             locationManager.stopUpdatingLocation()
             searchView.map.positionMode = .disabled
+            print(overlay)
+            overlay.globalZIndex = 10
             return true
         }
     }
@@ -165,15 +183,16 @@ extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationCo
     
     func presentHalfModal() {
         let halfModalViewController = HalfModalPresentationController()
-        halfModalViewController.modalPresentationStyle = .pageSheet
+        halfModalViewController.modalPresentationStyle = .custom
         halfModalViewController.halfModalView.layer.cornerRadius = 40
-        
-        if let sheet = halfModalViewController.sheetPresentationController {
-
-            sheet.detents = [.medium()]
-            sheet.delegate = self
-            sheet.prefersGrabberVisible = true
-        }
+        halfModalViewController.transitioningDelegate = self
+        searchView.map.allowsScrolling = false
+//        if let sheet = halfModalViewController.sheetPresentationController {
+//
+//            sheet.detents = [.medium()]
+//            sheet.delegate = self
+//            sheet.prefersGrabberVisible = true
+//        }
 
         present(halfModalViewController, animated: true, completion: nil)
     }

@@ -98,7 +98,7 @@ extension SearchView: LayoutProtocol {
     }
     
     func setLayout() {
-
+        
         map.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             $0.leading.trailing.bottom.equalToSuperview()

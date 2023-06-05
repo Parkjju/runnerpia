@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+import NMapsMap
 
 class HalfModalPresentationController: UIViewController {
     
@@ -14,9 +16,8 @@ class HalfModalPresentationController: UIViewController {
     var halfModalView = HalfModalView()
     var searchView = SearchView()
     
-
-    
     // MARK: - LifeCycle
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -26,7 +27,11 @@ class HalfModalPresentationController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configureDelegate()
-        
+//        halfModalView.snp.makeConstraints {
+//            $0.height.equalTo(300)
+//        }
+        halfModalView.backgroundColor = .white
+
     }
     
     override func loadView() {
@@ -36,12 +41,12 @@ class HalfModalPresentationController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchView.map.positionMode = .direction
-        if let searchVC = self.presentingViewController as? SearchViewController {
-            searchVC.locationManager.startUpdatingLocation()
-        }
+        
+        // updateLocation 
     }
     
     // MARK: - Selectors
+    
     
     // MARK: - Helpers
     
@@ -56,6 +61,7 @@ class HalfModalPresentationController: UIViewController {
         } else {
             halfModalView.distanceLabel.text = ""
         }
+        
     }
     
     private func configureDelegate() {
