@@ -19,8 +19,16 @@ final class ParticularRouteController: UIViewController {
     var data: Route?{
         didSet{
             configureUI()
+            mergedTags[0] = data?.secureTags ?? []
+            mergedTags[1] = data?.recommendedTags ?? []
+            
+            DispatchQueue.main.async {
+                self.particularView.tagsCollectionView.reloadData()
+                self.updateCollectionViewHeight()
+            }
         }
     }
+    var mergedTags: [[String]] = [[], []]
     
     // 추후 수정
     private let numberOfPhotosToShow = 3
@@ -62,13 +70,22 @@ final class ParticularRouteController: UIViewController {
         // ⚠️ 추후 수정
         guard let data = data else { return }
         particularView.spotLabel.text = data.routeName
-        particularView.locationLabel.text = "성동구 송정동"
+        particularView.locationLabel.text = data.location
         if let distance = data.distance {
             particularView.distanceLabel.text = "\(distance)km"
         } else {
             particularView.distanceLabel.text = ""
         }
         particularView.textView.text = data.review
+        
+        guard let _ = data.files else {
+            particularView.collectionView.isHidden = true
+            particularView.collectionView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
+            return
+        }
+        
         
         setupMap()
     }
@@ -101,24 +118,16 @@ final class ParticularRouteController: UIViewController {
         
     }
     
-    
-    func setupData() -> Route {
-        let firstData = Route(
-            user: User(userId: "주영", nickname: "주영"),
-            routeName: "송정 뚝방길",
-            distance: 20,
-            arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),
-                         CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),
-                         CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
-            runningTime: "",
-            review: "성동구에서 가장 안전한 루트를 소개합니다~!",
-            runningDate: "",
-            recommendedTags: ["1", "2"],
-            secureTags: ["1", "2", "3"],
-            files: [#imageLiteral(resourceName: "random6"), #imageLiteral(resourceName: "random4"), #imageLiteral(resourceName: "random5"), #imageLiteral(resourceName: "random1")]
-        )
+    func updateCollectionViewHeight(){
+        // 안심태그 컬렉션뷰 dynamic height
+        particularView.tagsCollectionView.setNeedsLayout()
+        particularView.tagsCollectionView.layoutIfNeeded()
         
-        return firstData
+        if(particularView.tagsCollectionView.contentSize.height > particularView.tagsCollectionView.frame.height){
+            particularView.tagsCollectionView.snp.updateConstraints {
+                $0.height.equalTo(particularView.tagsCollectionView.contentSize.height)
+            }
+        }
     }
     
 
@@ -136,10 +145,10 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
             return 3
             
         } else if collectionView.tag == 2 {
-            return 3
+            return mergedTags[0].count + mergedTags[1].count
+        }else{
+            return 0
         }
-        
-        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -148,8 +157,7 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticularCollectionViewCell.identifier, for: indexPath) as? ParticularCollectionViewCell else { return UICollectionViewCell() }
      
-            let data = setupData()
-            cell.imageView.image = data.files?[indexPath.item]
+            cell.imageView.image = data?.files?[indexPath.item]
             cell.imageView.contentMode = .scaleAspectFill
             cell.imageView.clipsToBounds = true
             cell.imageView.layer.cornerRadius = 10
@@ -157,7 +165,7 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
             if indexPath.item == numberOfPhotosToShow - 1 && numberOfPhotosToShow >= 3 {
                 cell.imageView.alpha = 0.5 // 불투명 효과 적용
                 
-                if let count = data.files?.count {
+                if let count = data?.files?.count {
                     cell.numberLabel.text = "+\(count - 3)"
                 } else {
                     cell.numberLabel.text = ""
@@ -176,18 +184,13 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
             
-            switch(indexPath.item) {
-            case 0:
+            // MARK: 안전태그 / 추천태그 데이터 바인딩 로직 추가 필요
+            if(indexPath.item < mergedTags[0].count){
                 cell.isSecureTag = true
                 cell.tagName = globalSecureTags[indexPath.item]
-            case 1:
+            }else{
                 cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 2:
-                cell.tagName = "+3"
-                cell.isGradient = true
-            default:
-                break
+                cell.tagName = globalRecommendedTags[indexPath.item - mergedTags[0].count]
             }
             
             return cell
@@ -198,8 +201,11 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let photoVC = PhotoViewController()
+        photoVC.data = data
+        
         if collectionView.tag == 1 {
-                    let viewController = UINavigationController(rootViewController: PhotoViewController())
+                    let viewController = UINavigationController(rootViewController: photoVC)
                     viewController.modalPresentationStyle = .fullScreen
                     self.present(viewController, animated: true)
         }
@@ -227,13 +233,16 @@ extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
         }
         return 1.0 // 기본값
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView.tag == 1 {
-            return 1.0 // 원하는 세로 간격 값으로 설정
-        }
-        return 1.0 // 기본값
-    }
+   
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        if collectionView.tag == 1 {
+//            return 1.0 // 원하는 세로 간격 값으로 설정
+//        }else if(collectionView.tag == 2){
+//            return 10
+//        }
+//
+//        return 1.0
+//    }
 }
 
 
@@ -262,11 +271,16 @@ extension ParticularRouteController: ParticularViewDelegate {
     
     func routeButtonTapped(_ particularView: ParticularView) {
         
-        let routeViewController = RouteViewController()
-        routeViewController.modalPresentationStyle = .fullScreen
-        present(routeViewController, animated: true, completion: nil)
+//        let routeViewController = RouteViewController()
+//        routeViewController.modalPresentationStyle = .fullScreen
+//        present(routeViewController, animated: true, completion: nil)
 
-        
+        let routeVC = RouteViewController()
+        let view = routeVC.view as! RouteRecordView
+        view.routeData = data
+        let navigationVC = UINavigationController(rootViewController: routeVC)
+        navigationVC.modalPresentationStyle = .fullScreen
+        self.present(navigationVC, animated: true)
     }
     
     func locationButtonTapped(_ particularView: ParticularView) {
