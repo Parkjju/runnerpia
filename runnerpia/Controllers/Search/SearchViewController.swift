@@ -201,7 +201,6 @@ extension SearchViewController: CLLocationManagerDelegate, UISheetPresentationCo
 
 extension SearchViewController: SearchViewDelegate {
     
-    
     func locationButtonTapped(_ searchView: SearchView) {
         print("locationButtonTapped !! ")
         
@@ -220,6 +219,11 @@ extension SearchViewController: SearchViewDelegate {
     func requestLocationPermissionAuthorization(){
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+    }
+    
+    func rebrowsingButtonTapped(_ searchView: SearchView) {
+        print("현재 지도에서 재 검색")
+
     }
     
     
