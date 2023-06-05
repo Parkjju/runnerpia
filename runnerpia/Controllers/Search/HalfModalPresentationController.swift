@@ -36,8 +36,9 @@ class HalfModalPresentationController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchView.map.positionMode = .direction
-        let searchVC = self.presentingViewController as! SearchViewController
-        searchVC.locationManager.startUpdatingLocation()
+        if let searchVC = self.presentingViewController as? SearchViewController {
+            searchVC.locationManager.startUpdatingLocation()
+        }
     }
     
     // MARK: - Selectors
