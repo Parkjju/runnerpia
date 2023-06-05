@@ -20,11 +20,30 @@ final class ParticularView: UIView {
     weak var delegate: ParticularViewDelegate?
     
     // MARK: - Properties
+    let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        let view = UIView()
+        
+        sv.clipsToBounds = true
+        
+        sv.addSubview(view)
+        view.snp.makeConstraints {
+            $0.top.equalTo(sv.contentLayoutGuide.snp.top)
+            $0.leading.equalTo(sv.contentLayoutGuide.snp.leading)
+            $0.trailing.equalTo(sv.contentLayoutGuide.snp.trailing)
+            $0.bottom.equalTo(sv.contentLayoutGuide.snp.bottom)
+            
+            $0.leading.equalTo(sv.frameLayoutGuide.snp.leading)
+            $0.trailing.equalTo(sv.frameLayoutGuide.snp.trailing)
+            $0.height.greaterThanOrEqualTo(850)
+        }
+        return sv
+    }()
     
     lazy var map: NMFMapView = {
         let map = NMFMapView()
         map.mapType = .basic
-        map.positionMode = .direction
+        map.positionMode = .disabled
         map.layer.cornerRadius = 20
         return map
     }()
@@ -60,17 +79,19 @@ final class ParticularView: UIView {
     
     lazy var spotStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [spotLabel, bookmarkButton])
+        spotLabel.snp.makeConstraints {
+            $0.trailing.equalTo(bookmarkButton.snp.leading).offset(10)
+        }
         stackView.axis = .horizontal
-        stackView.spacing = 0
-        stackView.alignment = .leading
-        stackView.distribution = .fill
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .fill
         return stackView
     }()
     
     // -- 2. locationStackView
     private lazy var locationIcon: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(named: "locationIcon")
+        let image = UIImage(named: "locationIcon")!.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20))
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
         imageView.frame = CGRect(x: 0, y: 0, width: 18, height: 18)
@@ -95,7 +116,7 @@ final class ParticularView: UIView {
     
     private lazy var mapIcon: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(named: "mapIcon")
+        let image = UIImage(named: "mapIcon")!.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20))
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -110,13 +131,12 @@ final class ParticularView: UIView {
     }()
     
     lazy var locationStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [locationIcon, locationLabel,
-                                                       dotIcon,
-                                                       mapIcon, distanceLabel])
+        let stackView = UIStackView(arrangedSubviews: [locationIcon, locationLabel,dotIcon,mapIcon, distanceLabel])
         stackView.axis = .horizontal
         stackView.spacing = 5
-        stackView.alignment = .leading
-        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
+        
         return stackView
     }()
     
@@ -128,6 +148,8 @@ final class ParticularView: UIView {
         textView.isEditable = false
         textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
+         textView.textContainerInset = .zero
+         textView.textContainer.lineFragmentPadding = 0
         textView.font = .regular14
         return textView
     }()
@@ -137,14 +159,11 @@ final class ParticularView: UIView {
         let layout = LeftAlignedCollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = 5
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: "Tag")
-        
-        collectionView.collectionViewLayout = layout
         
         return collectionView
     }()
@@ -170,7 +189,6 @@ final class ParticularView: UIView {
         configureUI()
         setSubViews()
         setLayout()
-        
     }
     
     
@@ -201,75 +219,64 @@ final class ParticularView: UIView {
 extension ParticularView: LayoutProtocol {
     
     func setSubViews() {
-        
+        self.addSubview(scrollView)
         [map, collectionView, spotStackView, locationStackView, textView, tagsCollectionView, routeButton]
-            .forEach { self.addSubview($0) }
+            .forEach { scrollView.subviews.first!.addSubview($0) }
 
     }
     
     func setLayout() {
-        
-        map.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
-            $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.height.equalToSuperview().multipliedBy(0.3)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
         
-//        collectionView.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.width.equalToSuperview().multipliedBy(0.9)
-//            $0.height.equalToSuperview().multipliedBy(0.15)
-//            $0.top.equalTo(map.snp.bottom).offset(10)
-//            $0.leading.equalToSuperview().offset(16)
-//            $0.trailing.equalToSuperview().offset(-16)
-//        }
+        map.snp.makeConstraints {
+            $0.top.equalTo(scrollView.subviews.first!.snp.top).offset(10)
+            $0.height.equalTo(350)
+            $0.leading.equalTo(scrollView.subviews.first!.snp.leading).offset(16)
+            $0.trailing.equalTo(scrollView.subviews.first!.snp.trailing).offset(-16)
+        }
         
         collectionView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.9)
             $0.height.equalTo(120)
             $0.top.equalTo(map.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
         }
 
         spotStackView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.equalTo(collectionView.snp.bottom).offset(15)
-            $0.leading.equalToSuperview().offset(18)
-            $0.trailing.equalToSuperview().offset(-18)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
         }
         
         locationStackView.snp.makeConstraints {
             $0.top.equalTo(spotStackView.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
+            $0.leading.equalTo(map.snp.leading)
             $0.trailing.lessThanOrEqualToSuperview()
         }
         
         textView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.equalTo(locationStackView.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
         }
         
         tagsCollectionView.snp.makeConstraints {
             $0.top.equalTo(textView.snp.bottom).offset(10)
-            $0.leading.equalTo(textView.snp.leading)
-            $0.trailing.lessThanOrEqualTo(self.textView.snp.trailing)
-            $0.height.greaterThanOrEqualTo(80)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing).offset(-10)
+            $0.height.equalTo(80)
         }
         
         routeButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.9) // 너비를 상위 뷰의 90%로 설정
-            $0.height.equalToSuperview().multipliedBy(0.07) // 높이를 상위 뷰의 10%로 설정
+            $0.top.equalTo(tagsCollectionView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-6)
+            $0.height.equalTo(50)
         }
         
     }
