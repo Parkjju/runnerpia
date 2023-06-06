@@ -27,7 +27,7 @@ class TagCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    override var isSelected: Bool{
+    var isChecked: Bool = true{
         didSet{
             setUI()
         }
@@ -58,13 +58,13 @@ class TagCollectionViewCell: UICollectionViewCell {
         self.clipsToBounds = true
         self.layer.cornerRadius = 10
 
-        if(!isSelected && isSecureTag){
-            self.contentView.backgroundColor = hexStringToUIColor(hex: "#B1DEFD").withAlphaComponent(0.3)
-            tagNameLabel.textColor = .grey700.withAlphaComponent(0.3)
+        if(isChecked && isSecureTag){
+            self.contentView.backgroundColor = hexStringToUIColor(hex: "#BBE2FF")
+            tagNameLabel.textColor = .black
             return
-        }else if(!isSelected && !isSecureTag){
-            self.contentView.backgroundColor = .orange200.withAlphaComponent(0.3)
-            tagNameLabel.textColor = .grey700.withAlphaComponent(0.3)
+        }else if(isChecked && !isSecureTag){
+            self.contentView.backgroundColor = hexStringToUIColor(hex: "#FCDCBE")
+            tagNameLabel.textColor = .black
             return
         }
     
