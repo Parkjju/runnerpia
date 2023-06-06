@@ -21,11 +21,14 @@ class HalfSizePresentationController: UIPresentationController {
     
     @objc func dismissController() {
         self.presentedViewController.dismiss(animated: true) {
-            let searchViewController = self.presentingViewController as! SearchViewController
-            searchViewController.pathOverlay.color = .clear
-            searchViewController.locationManager.startUpdatingLocation()
-            searchViewController.searchView.map.positionMode = .direction
-            print(searchViewController)
+            let tabBar = self.presentingViewController as! UITabBarController
+            let homeNavigationVC = tabBar.viewControllers?[1] as! UINavigationController
+            let searchVC = homeNavigationVC.viewControllers[1] as! SearchViewController
+            
+            searchVC.pathOverlay.color = .clear
+            searchVC.locationManager.startUpdatingLocation()
+            searchVC.searchView.map.positionMode = .direction
+            
         }
     }
     
@@ -56,9 +59,10 @@ class HalfSizePresentationController: UIPresentationController {
         self.containerView!.addSubview(blurEffectView)
         self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in self.blurEffectView.alpha = 0.1 }, completion: nil)
         
-        //                var presentingVC = presentingViewController as! HalfModalPresentationController
-        print(self.presentingViewController)
-        var searchVC = self.presentingViewController as! SearchViewController
+        let tabBar = self.presentingViewController as! UITabBarController
+        let homeNavigationVC = tabBar.viewControllers?[1] as! UINavigationController
+        let searchVC = homeNavigationVC.viewControllers[1] as! SearchViewController
+        
         searchVC.pathOverlay.color = .blue400
     }
     
