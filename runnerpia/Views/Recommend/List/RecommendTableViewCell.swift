@@ -42,9 +42,16 @@ class RecommendTableViewCell: UITableViewCell {
     let map: NMFMapView = {
         let map = NMFMapView()
         map.mapType = .basic
-        map.positionMode = .direction
+        map.positionMode = .disabled
         map.layer.cornerRadius = 10
+        map.allowsScrolling = false
+        map.allowsZooming = false
         return map
+    }()
+    
+    let mapImageView: UIImageView = {
+        let iv = UIImageView()
+        return iv
     }()
     
     let summaryLabel: UILabel = {
@@ -97,8 +104,6 @@ class RecommendTableViewCell: UITableViewCell {
         tagCollectionView.dataSource = self
         tagCollectionView.delegate = self
     }
-    
-    
     
     required init?(coder: NSCoder) {
          fatalError("init(coder:) has not been implemented")

@@ -12,8 +12,26 @@ import CoreLocation
 class RouteRecordView: UIView {
     
     // MARK: Properties
+    var routeData: Route?{
+        didSet{
+            
+            guard let routeData = routeData else { return }
+            
+            let points = routeData.arrayOfPos!.map { location in
+                NMGLatLng(lat: location.latitude, lng: location.longitude)
+            }
+            let pathOverlay = NMFPath()
+            pathOverlay.path = NMGLineString(points: points)
+            pathOverlay.mapView = map
+            pathOverlay.color = .polylineColor
+            pathOverlay.outlineColor = .clear
+            pathOverlay.width = 10
+            
+        }
+    }
+    
     var changeViewDelegate: ChangeViewDelegate?
-    let locationManager = CLLocationManager()
+    let locationManager = UserLocationManager.shared
     let pathOverlay = NMFPath()
     
     let map: NMFMapView = {
@@ -245,6 +263,11 @@ class RouteRecordView: UIView {
     // 버튼을 3초보다 덜 누르고 있을때 타이머 초기화 및 뷰 그대로 유지
     @objc func playButtonTouchUpHandler(){
         timer.invalidate()
+        
+        // MARK: UIAlertViewController present 이후에도 버튼을 게속 누르고있으면 alertViewLabel이 예외적으로 나타나는 현상 처리
+        if(pushTime == 0){
+            return
+        }
         pushTime = 0
         
         let alertViewLabel = alertView.subviews.first as! UILabel
@@ -277,16 +300,31 @@ class RouteRecordView: UIView {
             
             timer.invalidate()
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateElapsedLabels), userInfo: nil, repeats: true)
-        }else if(pushTime == 2 && isRecordStarted){
-            self.feedbackGenerator?.notificationOccurred(.success)
-            
-            // 위치업데이트 중단
-            locationManager.stopUpdatingLocation()
-            if(pathCoordinates.count == 0){
-                self.parentViewController?.dismiss(animated: true)
+        }else if(pushTime >= 2 && isRecordStarted){
+            let alert = UIAlertController(title: "경로 기록을 종료할까요?", message: "확인을 누르면 경로 기록이 종료되며, 내 기록으로 저장돼요.", preferredStyle: .alert)
+            let success = UIAlertAction(title: "확인", style: .default) {_ in
+                // 위치업데이트 중단
+                self.locationManager.stopUpdatingLocation()
+                if(self.pathCoordinates.count == 0){
+                    self.parentViewController?.dismiss(animated: true)
+                }
+                
+                self.timer.invalidate()
+                self.feedbackGenerator?.notificationOccurred(.success)
+                self.changeViewDelegate?.nextView()
             }
             
-            changeViewDelegate?.nextView()
+            let failure = UIAlertAction(title: "취소", style: .cancel){_ in
+                self.locationManager.startUpdatingLocation()
+            }
+            alert.addAction(failure)
+            alert.addAction(success)
+            
+            locationManager.stopUpdatingLocation()
+            self.pushTime = 0
+            timer.invalidate()
+            
+            self.parentViewController?.present(alert, animated: true)
         }
     }
     
@@ -478,7 +516,7 @@ extension RouteRecordView: LayoutProtocol{
         map.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
-            $0.top.equalToSuperview()
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.bottom.equalToSuperview()
         }
         

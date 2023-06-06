@@ -15,7 +15,7 @@ final class SearchViewController: UIViewController {
     // MARK: - Properties
     
     var searchView = SearchView()
-    var locationManager = CLLocationManager()
+    var locationManager = UserLocationManager.shared
     
     // MARK: - LifeCycle
     

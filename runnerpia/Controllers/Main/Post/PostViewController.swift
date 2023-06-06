@@ -14,16 +14,27 @@ class PostViewController: UIViewController {
 
         let postView = PostView()
         self.view = postView
+        
+        setupNavigationBar()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
+    // MARK: LifeCycle
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    // MARK: Selectors
+    @objc func closeButtonTapped(){
+        UserLocationManager.shared.stopUpdatingLocation()
+        self.navigationController?.dismiss(animated: true)
+    }
+    
+    // MARK: Helpers
+    func setupNavigationBar(){
+        let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeButtonTapped))
+        self.navigationItem.rightBarButtonItem = closeButton
+        self.navigationItem.setHidesBackButton(true, animated: false)
     }
 }
 
