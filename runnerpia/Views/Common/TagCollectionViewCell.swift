@@ -27,6 +27,12 @@ class TagCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    override var isSelected: Bool{
+        didSet{
+            setUI()
+        }
+    }
+    
     let tagNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
@@ -51,14 +57,14 @@ class TagCollectionViewCell: UICollectionViewCell {
     func setUI(){
         self.clipsToBounds = true
         self.layer.cornerRadius = 10
-        
+
         if(!isSelected && isSecureTag){
-            self.contentView.backgroundColor = hexStringToUIColor(hex: "#B1DEFD")
-            tagNameLabel.textColor = .grey700
+            self.contentView.backgroundColor = hexStringToUIColor(hex: "#B1DEFD").withAlphaComponent(0.3)
+            tagNameLabel.textColor = .grey700.withAlphaComponent(0.3)
             return
         }else if(!isSelected && !isSecureTag){
-            self.contentView.backgroundColor = .orange200
-            tagNameLabel.textColor = .grey700
+            self.contentView.backgroundColor = .orange200.withAlphaComponent(0.3)
+            tagNameLabel.textColor = .grey700.withAlphaComponent(0.3)
             return
         }
     
