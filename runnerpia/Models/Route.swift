@@ -20,5 +20,5 @@ struct Route{
     let runningDate: String?
     let recommendedTags: [String]?
     let secureTags: [String]?
-    let files: [UIImage]?
+    var files: [UIImage]?
 }
