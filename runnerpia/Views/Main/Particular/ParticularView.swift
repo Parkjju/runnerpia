@@ -33,19 +33,19 @@ final class ParticularView: UIView {
             $0.trailing.equalTo(sv.contentLayoutGuide.snp.trailing)
             $0.bottom.equalTo(sv.contentLayoutGuide.snp.bottom)
             
-            $0.leading.equalTo(sv.frameLayoutGuide.snp.leading)
-            $0.trailing.equalTo(sv.frameLayoutGuide.snp.trailing)
-            $0.height.greaterThanOrEqualTo(850)
+            $0.width.equalTo(sv.frameLayoutGuide.snp.width)
+            $0.height.equalTo(sv.frameLayoutGuide.snp.height).priority(.low)
         }
         return sv
     }()
     
     lazy var map: NMFMapView = {
-        let map = NMFMapView()
-        map.mapType = .basic
-        map.positionMode = .disabled
-        map.layer.cornerRadius = 20
-        return map
+        let mv = NMFMapView()
+        mv.mapType = .basic
+        mv.positionMode = .disabled
+        mv.allowsScrolling = false
+        mv.layer.cornerRadius = 20
+        return mv
     }()
     
     // -- collectionView
@@ -277,6 +277,7 @@ extension ParticularView: LayoutProtocol {
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
             $0.height.equalTo(50)
+            $0.bottom.equalTo(scrollView.subviews.first!.snp.bottom).offset(-20)
         }
         
     }
