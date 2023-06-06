@@ -10,6 +10,9 @@ import CoreLocation
 
 class RecommendView: UIView {
     // MARK: Properties
+    let imageCache = NSCache<NSString, UIImage>()
+    var imageHashArray: [String] = []
+    
     let mainLabel: UILabel = {
         let label = UILabel()
         let paragraphStyle = NSMutableParagraphStyle()
@@ -49,6 +52,7 @@ class RecommendView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     // MARK: - Selectors
     
     // MARK: - Helpers

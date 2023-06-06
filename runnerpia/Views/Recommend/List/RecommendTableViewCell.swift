@@ -49,6 +49,11 @@ class RecommendTableViewCell: UITableViewCell {
         return map
     }()
     
+    let mapImageView: UIImageView = {
+        let iv = UIImageView()
+        return iv
+    }()
+    
     let summaryLabel: UILabel = {
         let label = UILabel()
         let paragraphStyle = NSMutableParagraphStyle()
@@ -99,8 +104,6 @@ class RecommendTableViewCell: UITableViewCell {
         tagCollectionView.dataSource = self
         tagCollectionView.delegate = self
     }
-    
-    
     
     required init?(coder: NSCoder) {
          fatalError("init(coder:) has not been implemented")
