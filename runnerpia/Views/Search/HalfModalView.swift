@@ -29,7 +29,7 @@ final class HalfModalView: UIView {
             
             $0.leading.equalTo(scrollView.frameLayoutGuide.snp.leading)
             $0.trailing.equalTo(scrollView.frameLayoutGuide.snp.trailing)
-            $0.height.equalTo(500)
+            $0.height.equalTo(scrollView.frameLayoutGuide.snp.height).priority(.low)
         }
         return scrollView
     }()
@@ -202,7 +202,7 @@ extension HalfModalView: LayoutProtocol {
             $0.trailing.lessThanOrEqualTo(self.scrollView.snp.trailing).offset(-16)
             $0.top.equalTo(tagsLabel.snp.bottom).offset(10)
             $0.bottom.equalTo(self.scrollView.snp.bottom).offset(-16)
-            $0.height.greaterThanOrEqualTo(80)
+            $0.height.equalTo(60)
         }
         
     }
