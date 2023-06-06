@@ -27,11 +27,6 @@ class HalfModalPresentationController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configureDelegate()
-//        halfModalView.snp.makeConstraints {
-//            $0.height.equalTo(300)
-//        }
-        halfModalView.backgroundColor = .white
-
     }
     
     override func loadView() {
@@ -52,6 +47,8 @@ class HalfModalPresentationController: UIViewController {
     
     
     private func configureUI() {
+        halfModalView.backgroundColor = .white
+
         // ⚠️ 추후수정
         let particularRouteController = ParticularRouteController()
         let data = particularRouteController.setupData()
@@ -67,9 +64,7 @@ class HalfModalPresentationController: UIViewController {
     private func configureDelegate() {
         halfModalView.tagsCollectionView.dataSource = self
         halfModalView.tagsCollectionView.delegate = self
-        
     }
-    
 }
 
 

@@ -19,6 +19,8 @@ final class SearchViewController: UIViewController, NMFMapViewTouchDelegate {
     var halfModalView = HalfModalView()
     let marker = NMFMarker()
 
+    var pathCoordinates:[NMGLatLng] = []
+    let pathOverlay = NMFPath()
     
     // MARK: - LifeCycle
     
@@ -79,22 +81,35 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         print(presented)
-        var presented = presented as! HalfModalPresentationController
+        let presented = presented as! HalfModalPresentationController
         presented.view.frame = CGRect(x: 0, y: UIScreen.main.bounds.height * 2 / 3, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
 
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // 1. 카메라 업데이트
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
         cameraUpdate.animation = .easeIn
         searchView.map.moveCamera(cameraUpdate)
+        
+        pathCoordinates.append(NMGLatLng(lat: locationManager.location!.coordinate.latitude, lng: locationManager.location!.coordinate.longitude))
+        
+        // 2. 경로 오버레이 표시
+        pathOverlay.path = NMGLineString(points: pathCoordinates)
+        pathOverlay.color = .blue400
+        pathOverlay.outlineColor = .clear
+        pathOverlay.width = 10
+        pathOverlay.mapView = searchView.map
+        
     }
     
     private func configureMap() {
         addMarker()
         addLocationOverlay()
     }
+
     
     func addMarker() {
         marker.position = NMGLatLng(lat: 37.2785, lng: 127.1440)
@@ -187,13 +202,6 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         halfModalViewController.halfModalView.layer.cornerRadius = 40
         halfModalViewController.transitioningDelegate = self
         searchView.map.allowsScrolling = false
-//        if let sheet = halfModalViewController.sheetPresentationController {
-//
-//            sheet.detents = [.medium()]
-//            sheet.delegate = self
-//            sheet.prefersGrabberVisible = true
-//        }
-
         present(halfModalViewController, animated: true, completion: nil)
     }
 
@@ -201,8 +209,9 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
     func addLocationOverlay() {
         let locationOverlay = searchView.map.locationOverlay
         locationOverlay.icon = NMFOverlayImage(name: "myLocation")
+
     }
-    
+  
 }
 
 

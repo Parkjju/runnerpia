@@ -9,15 +9,20 @@ import UIKit
 
 class HalfSizePresentationController: UIPresentationController {
     
+    // MARK: - Properties
+    
     let blurEffectView = UIView()
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     var check: Bool = false
+    
+    
+    // MARK: - Selectors
     
     @objc func dismissController() {
         self.presentedViewController.dismiss(animated: true, completion: nil)
     }
     
-    
+    // MARK: - LifeCycles
     
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentedViewController)
@@ -31,8 +36,7 @@ class HalfSizePresentationController: UIPresentationController {
     
     // 모달이 없어질 때 검은색 배경을 슈퍼뷰에서 제거
     override func dismissalTransitionWillBegin() {
-        self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in self.blurEffectView.alpha = 0},
-                                                                    completion: { _ in self.blurEffectView.removeFromSuperview()})
+        self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in self.blurEffectView.alpha = 0}, completion: { _ in self.blurEffectView.removeFromSuperview()})
     }
     
     // 모달의 크기가 조절됐을 때 호출되는 함수
@@ -44,8 +48,7 @@ class HalfSizePresentationController: UIPresentationController {
     override func presentationTransitionWillBegin() {
         self.blurEffectView.alpha = 0
         self.containerView!.addSubview(blurEffectView)
-        self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in self.blurEffectView.alpha = 0.7},
-                                                                    completion: nil)
+        self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in self.blurEffectView.alpha = 0.7}, completion: nil)
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
