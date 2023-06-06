@@ -166,7 +166,8 @@ extension PostDetailViewController: UICollectionViewDelegateFlowLayout{
         if(collectionView.tag == 3 && indexPath.item == 0){
             setupImagePicker()
         }else if(collectionView.tag == 2 || collectionView.tag == 1){
-            collectionView.visibleCells[indexPath.item].isSelected = !collectionView.visibleCells[indexPath.item].isSelected
+            let tagCell =  collectionView.visibleCells[indexPath.item] as! TagCollectionViewCell
+            tagCell.isChecked = !tagCell.isChecked
             collectionView.reloadData()
         }
             
