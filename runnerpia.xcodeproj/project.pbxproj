@@ -10,6 +10,9 @@
 		884F6DEE2A120A6E007B7F73 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884F6DED2A120A6E007B7F73 /* UIImage.swift */; };
 		884F6DF02A12244B007B7F73 /* UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884F6DEF2A12244B007B7F73 /* UIControl.swift */; };
 		88566E2B2A2A1953000833A1 /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E2A2A2A1953000833A1 /* UserLocationManager.swift */; };
+		88566E312A2DE6FF000833A1 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E302A2DE6FF000833A1 /* TabBarController.swift */; };
+		88566E352A2F2D56000833A1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E332A2F2D56000833A1 /* PostViewController.swift */; };
+		88566E362A2F2D56000833A1 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E342A2F2D56000833A1 /* PostDetailViewController.swift */; };
 		8898D84D2A29586700EBD50E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84B2A29586700EBD50E /* TagCollectionViewCell.swift */; };
 		8898D84E2A29586700EBD50E /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84C2A29586700EBD50E /* Divider.swift */; };
 		8898D8502A29587900EBD50E /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84F2A29587900EBD50E /* PhotoCollectionViewCell.swift */; };
@@ -58,6 +61,9 @@
 		884F6DED2A120A6E007B7F73 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		884F6DEF2A12244B007B7F73 /* UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControl.swift; sourceTree = "<group>"; };
 		88566E2A2A2A1953000833A1 /* UserLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationManager.swift; sourceTree = "<group>"; };
+		88566E302A2DE6FF000833A1 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		88566E332A2F2D56000833A1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Post/PostViewController.swift; sourceTree = "<group>"; };
+		88566E342A2F2D56000833A1 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Post/PostDetailViewController.swift; sourceTree = "<group>"; };
 		8898D84B2A29586700EBD50E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		8898D84C2A29586700EBD50E /* Divider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		8898D84F2A29587900EBD50E /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -123,6 +129,15 @@
 				FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		88566E322A2F2D4A000833A1 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				88566E342A2F2D56000833A1 /* PostDetailViewController.swift */,
+				88566E332A2F2D56000833A1 /* PostViewController.swift */,
+			);
+			name = Post;
 			sourceTree = "<group>";
 		};
 		8898D8522A2958C000EBD50E /* Post */ = {
@@ -195,6 +210,7 @@
 				C847CC9C2A1E43FC00F0639C /* Recommend */,
 				C9AD727D2A10675E005B9B5B /* Main */,
 				C8F833C72A24B16100ED146A /* Search */,
+				88566E302A2DE6FF000833A1 /* TabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -367,6 +383,7 @@
 		C9AD727D2A10675E005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				88566E322A2F2D4A000833A1 /* Post */,
 				8898D85F2A295C9D00EBD50E /* Route */,
 				C847CCAF2A1E4F5D00F0639C /* Home */,
 				C847CCB02A1E4F7200F0639C /* My */,
@@ -517,10 +534,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8F833C92A24B17500ED146A /* SearchViewController.swift in Sources */,
+				88566E362A2F2D56000833A1 /* PostDetailViewController.swift in Sources */,
 				C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */,
 				C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */,
 				C847CC992A1E43CD00F0639C /* Tags.swift in Sources */,
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
+				88566E352A2F2D56000833A1 /* PostViewController.swift in Sources */,
 				C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */,
 				8898D84E2A29586700EBD50E /* Divider.swift in Sources */,
 				C847CCAC2A1E44A000F0639C /* Route.swift in Sources */,
@@ -549,6 +568,7 @@
 				8898D85D2A29594200EBD50E /* UITextField.swift in Sources */,
 				8898D8552A2958CD00EBD50E /* PostView.swift in Sources */,
 				8898D84D2A29586700EBD50E /* TagCollectionViewCell.swift in Sources */,
+				88566E312A2DE6FF000833A1 /* TabBarController.swift in Sources */,
 				C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */,
 				C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */,
 				C89A26F72A249570006FD929 /* UIFont.swift in Sources */,

@@ -269,11 +269,6 @@ extension ParticularRouteController: ParticularViewDelegate {
     }
     
     func routeButtonTapped(_ particularView: ParticularView) {
-        
-//        let routeViewController = RouteViewController()
-//        routeViewController.modalPresentationStyle = .fullScreen
-//        present(routeViewController, animated: true, completion: nil)
-
         let routeVC = RouteViewController()
         let view = routeVC.view as! RouteRecordView
         view.routeData = data
