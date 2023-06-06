@@ -12,6 +12,7 @@ import CoreLocation
 
 protocol SearchViewDelegate: AnyObject {
     func locationButtonTapped(_ searchView: SearchView)
+    func rebrowsingButtonTapped(_ searchView: SearchView)
 }
 
 final class SearchView: UIView {
@@ -20,8 +21,6 @@ final class SearchView: UIView {
     
     // MARK: - Properties
         
-    let searchBar = UISearchBar()
-    
     lazy var map: NMFMapView = {
         let map = NMFMapView()
         map.mapType = .basic
@@ -30,12 +29,27 @@ final class SearchView: UIView {
     }()
     
     private lazy var locationButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setImage(UIImage(named: "locationButton"), for: .normal)
         button.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
         return button
     }()
     
+    private lazy var rebrowsingButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue400
+        button.layer.cornerRadius = 8
+        button.clipsToBounds = true
+        let iconImage = UIImage(named: "rebrowsingButton")
+        button.setImage(iconImage, for: .normal)
+        button.setTitle("현재 지도에서 재 검색", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .semiBold14
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 8)
+        button.addTarget(self, action: #selector(rebrowsingButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     
     // MARK: - LifeCycles
     
@@ -57,6 +71,10 @@ final class SearchView: UIView {
     @objc private func locationButtonTapped() {
         delegate?.locationButtonTapped(self)
     }
+    
+    @objc private func rebrowsingButtonTapped() {
+        delegate?.rebrowsingButtonTapped(self)
+    }
 
 
     
@@ -76,24 +94,26 @@ final class SearchView: UIView {
 extension SearchView: LayoutProtocol {
     
     func setSubViews() {
-        [searchBar, map, locationButton].forEach { self.addSubview($0) }
+        [ map, locationButton, rebrowsingButton ].forEach { self.addSubview($0) }
     }
     
     func setLayout() {
-        searchBar.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
-        }
         
         map.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(50)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
         locationButton.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(70)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(30)
             $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        rebrowsingButton.snp.makeConstraints {
+            $0.top.equalTo(locationButton.snp.bottom).offset(14)
+            $0.trailing.equalTo(locationButton)
+            $0.height.equalTo(36)
+            $0.width.equalTo(177)
         }
     }
     

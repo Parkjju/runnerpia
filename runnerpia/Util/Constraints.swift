@@ -11,3 +11,4 @@ struct Constraints{
     static let paddingLeftAndRight = 16
     static let fontSize = 20
 }
+ 
