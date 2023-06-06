@@ -17,7 +17,7 @@ class PostView: UIView {
     let map: NMFMapView = {
         let map = NMFMapView()
         map.mapType = .basic
-        map.positionMode = .direction
+        map.positionMode = .disabled
         
         // 맵 스크롤링 고정
         map.allowsScrolling = false
@@ -154,7 +154,9 @@ class PostView: UIView {
     override func didMoveToSuperview() {
         // MARK: 데이터 전달을 위한 델리게이트 지정
         
-        let navigationVC = self.parentViewController?.parent as! UINavigationController
+        guard let navigationVC = self.parentViewController?.parent as? UINavigationController else {
+            return
+        }
         
         self.delegate = navigationVC.viewControllers[0] as! RouteViewController
         
@@ -176,6 +178,12 @@ class PostView: UIView {
         map.layer.cornerRadius = 10
         
         let (date, elapsedTime, distance, coordinates) = delegate!.getData()
+        
+        if(coordinates.count == 0){
+            guard let navigationVC =  self.parentViewController?.parent as? UINavigationController else {return}
+            navigationVC.popViewController(animated: true)
+            return
+        }
         
         bindingStartLocation(coordinates)
         bindingEndLocation(coordinates)
@@ -291,7 +299,7 @@ extension PostView: LayoutProtocol{
         map.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(20)
+            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             $0.height.equalTo(self.frame.height / 2)
         }
         dateLabel.snp.makeConstraints {

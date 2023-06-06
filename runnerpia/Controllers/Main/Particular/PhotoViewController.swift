@@ -73,8 +73,9 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func addContentScrollView() {
-        let data = particularRouteController.setupData()
-        let files = data.files ?? []
+//        let data = particularRouteController.setupData()
+        
+        let files = data?.files ?? []
         
         for i in 0..<files.count {
             let imageView = UIImageView()
@@ -91,8 +92,7 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
 
     // 페이지 갯수
     private func setPageControl() {
-        let data = particularRouteController.setupData()
-        if let filesCount = data.files?.count {
+        if let filesCount = data?.files?.count {
             let currentIndex = min(pageControl.currentPage, filesCount - 1)
             pageControl.currentPage = currentIndex
         } else {
@@ -102,7 +102,6 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     
     // 현재 선택된 페이지
     private func setPageControlSelectedPage(currentPage:Int) {
-        data = particularRouteController.setupData()
         guard let filesCount = data?.files?.count else {
             pageControl.numberOfPages = 0
             return

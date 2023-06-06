@@ -21,6 +21,7 @@ final class SearchViewController: UIViewController, NMFMapViewTouchDelegate {
 
     var pathCoordinates:[NMGLatLng] = []
     let pathOverlay = NMFPath()
+
     
     // MARK: - LifeCycle
     

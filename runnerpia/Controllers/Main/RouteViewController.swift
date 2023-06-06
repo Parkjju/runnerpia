@@ -6,26 +6,34 @@
 //
 
 import UIKit
-import CoreLocation
 import NMapsMap
 
 final class RouteViewController: UIViewController {
     
     // MARK: - Properties
-    let locationManager = CLLocationManager()
     
     // MARK: - LifeCycle
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view = RouteRecordView()
-        self.tabBarController?.tabBar.isHidden = true
+        self.navigationController?.isNavigationBarHidden = false
+        setupNavigationBar()
     }
     
     // MARK: - Selectors
+    @objc func closeButtonTapped(){
+        UserLocationManager.shared.stopUpdatingLocation()
+        self.navigationController?.dismiss(animated: true)
+    }
     
     // MARK: - Helpers
+    
+    func setupNavigationBar(){
+        let button = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeButtonTapped))
+        navigationItem.rightBarButtonItem = button
+    }
 }
 
 extension RouteViewController: PostDataDelegate{

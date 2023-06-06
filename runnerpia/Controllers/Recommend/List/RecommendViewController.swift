@@ -15,5 +15,10 @@ class RecommendViewController: UIViewController {
         let recommendView = RecommendView()
         self.view = recommendView
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UserLocationManager.shared.stopUpdatingLocation()
+    }
 
 }

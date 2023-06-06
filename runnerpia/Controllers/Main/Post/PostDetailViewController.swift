@@ -34,6 +34,8 @@ class PostDetailViewController: UIViewController {
 
         let postDetailView = PostDetailView()
         self.view = postDetailView
+        
+        setupNavigationBar()
     }
     
     // MARK: objc methods
@@ -61,6 +63,16 @@ class PostDetailViewController: UIViewController {
 
         // 화면에 띄우기
         present(picker, animated: true)
+    }
+    
+    @objc func closeButtonTapped(){
+        UserLocationManager.shared.stopUpdatingLocation()
+        self.navigationController?.dismiss(animated: true)
+    }
+    
+    func setupNavigationBar(){
+        let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeButtonTapped))
+        self.navigationItem.rightBarButtonItem = closeButton
     }
 
 
@@ -151,9 +163,13 @@ extension PostDetailViewController: UICollectionViewDelegateFlowLayout{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if(indexPath.item == 0){
+        if(collectionView.tag == 3 && indexPath.item == 0){
             setupImagePicker()
+        }else if(collectionView.tag == 2 || collectionView.tag == 1){
+            collectionView.visibleCells[indexPath.item].isSelected = !collectionView.visibleCells[indexPath.item].isSelected
+            collectionView.reloadData()
         }
+            
     }
 }
 
