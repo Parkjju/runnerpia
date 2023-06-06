@@ -132,12 +132,12 @@ class PostView: UIView {
     
     let registerButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.backgroundColor = hexStringToUIColor(hex: "#21A345")
+        btn.backgroundColor = hexStringToUIColor(hex: "#3B8DED")
         btn.setTitleColor(.white, for: .normal)
-        btn.setTitle("추천 경로로 등록", for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        btn.setTitle("경로 등록하기", for: .normal)
+        btn.titleLabel?.font = .semiBold16
         btn.clipsToBounds = true
-        btn.layer.cornerRadius = 10
+        btn.layer.cornerRadius = 30
         btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         return btn
     }()
@@ -251,7 +251,7 @@ class PostView: UIView {
         
         let timeText = NSMutableAttributedString(string: completeDateFormatter.string(from: date), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard), NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
-        let text = NSMutableAttributedString(string: "러닝을 완료", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard), NSAttributedString.Key.foregroundColor: hexStringToUIColor(hex: "#21A345")])
+        let text = NSMutableAttributedString(string: "러닝을 완료", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard), NSAttributedString.Key.foregroundColor: UIColor.blue400])
         
         let remainText = NSMutableAttributedString(string: "했어요!", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard)])
         
