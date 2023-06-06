@@ -13,7 +13,6 @@ class HalfSizePresentationController: UIPresentationController {
     // MARK: - Properties
     
     let blurEffectView = UIView()
-
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     var check: Bool = false
     
@@ -21,11 +20,21 @@ class HalfSizePresentationController: UIPresentationController {
     
     @objc func dismissController() {
         self.presentedViewController.dismiss(animated: true) {
-            let searchViewController = self.presentingViewController as! SearchViewController
-            searchViewController.pathOverlay.color = .clear
-            searchViewController.locationManager.startUpdatingLocation()
-            searchViewController.searchView.map.positionMode = .direction
-            print(searchViewController)
+            
+            // ⭐️ 수정
+            
+            if let searchViewController = self.presentingViewController as? SearchViewController {
+                searchViewController.pathOverlay.color = .clear
+                searchViewController.locationManager.startUpdatingLocation()
+                searchViewController.searchView.map.positionMode = .direction
+            } else {
+
+            }
+
+//            let searchViewController = self.presentingViewController as! SearchViewController
+//            searchViewController.pathOverlay.color = .clear
+//            searchViewController.locationManager.startUpdatingLocation()
+//            searchViewController.searchView.map.positionMode = .direction
         }
     }
     
@@ -56,10 +65,16 @@ class HalfSizePresentationController: UIPresentationController {
         self.containerView!.addSubview(blurEffectView)
         self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in self.blurEffectView.alpha = 0.1 }, completion: nil)
         
+        // ⭐️ 수정
         //                var presentingVC = presentingViewController as! HalfModalPresentationController
-        print(self.presentingViewController)
-        var searchVC = self.presentingViewController as! SearchViewController
-        searchVC.pathOverlay.color = .blue400
+//        var searchVC = self.presentingViewController as! SearchViewController
+        if let searchVC = self.presentingViewController as? SearchViewController {
+            searchVC.pathOverlay.color = .blue400
+
+        } else {
+ 
+        }
+
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
