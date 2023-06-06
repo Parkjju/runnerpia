@@ -28,9 +28,9 @@ class MainViewManager {
         window.backgroundColor = .white
         window.makeKeyAndVisible()
         
-        setTapBarController()
+//        setTapBarController()
         
-//        rootViewController = HalfModalPresentationController()
+        rootViewController = SearchViewController()
 //        rootViewController = ParticularRouteController()
         
         // 로그인메서드 추가

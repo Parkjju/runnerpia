@@ -80,7 +80,6 @@ final class SearchViewController: UIViewController, NMFMapViewTouchDelegate {
 extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        print(presented)
         let presented = presented as! HalfModalPresentationController
         presented.view.frame = CGRect(x: 0, y: UIScreen.main.bounds.height * 2 / 3, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
@@ -98,16 +97,18 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         
         // 2. 경로 오버레이 표시
         pathOverlay.path = NMGLineString(points: pathCoordinates)
-        pathOverlay.color = .blue400
+        pathOverlay.color = .clear
         pathOverlay.outlineColor = .clear
         pathOverlay.width = 10
         pathOverlay.mapView = searchView.map
+        
+        let locationOverlay = searchView.map.locationOverlay
+        locationOverlay.icon = NMFOverlayImage(name: "myLocation")
         
     }
     
     private func configureMap() {
         addMarker()
-        addLocationOverlay()
     }
 
     
@@ -118,13 +119,15 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         let viewMarker = createViewMarker()
         marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
 
+        // 마커 터치핸들러
         marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
-
             presentHalfModal()
             locationManager.stopUpdatingLocation()
             searchView.map.positionMode = .disabled
-            print(overlay)
             overlay.globalZIndex = 10
+            pathOverlay.color = .white
+            pathOverlay.mapView = searchView.map
+            
             return true
         }
     }
@@ -192,8 +195,7 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
             locationMarker.image = locationMarker.image?.scaleWithoutPreserveAspectRatio(targetValue: locationMarker.frame.width + diff + 5, originalValue: locationMarker.frame.height, axis: .horizontal)
         }
         return locationMarker
-        
-        
+
     }
     
     func presentHalfModal() {
@@ -202,16 +204,10 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         halfModalViewController.halfModalView.layer.cornerRadius = 40
         halfModalViewController.transitioningDelegate = self
         searchView.map.allowsScrolling = false
+        
         present(halfModalViewController, animated: true, completion: nil)
     }
 
-    
-    func addLocationOverlay() {
-        let locationOverlay = searchView.map.locationOverlay
-        locationOverlay.icon = NMFOverlayImage(name: "myLocation")
-
-    }
-  
 }
 
 
@@ -225,13 +221,7 @@ extension SearchViewController: SearchViewDelegate {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
         cameraUpdate.animation = .easeIn
         searchView.map.moveCamera(cameraUpdate)
-        
-        
-        //        locationManager.startUpdatingLocation()
-        //        let cameraUpdate = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
-        //        searchView.map.moveCamera(cameraUpdate)
-        
-        
+
     }
     
     func requestLocationPermissionAuthorization(){
