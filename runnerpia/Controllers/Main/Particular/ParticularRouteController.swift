@@ -28,12 +28,13 @@ final class ParticularRouteController: UIViewController {
             }
         }
     }
+
+    
     var mergedTags: [[String]] = [[], []]
     
     // 추후 수정
     private let numberOfPhotosToShow = 3
     var selectedImage: UIImage?
-    
     
     // MARK: - LifeCycle
     
@@ -86,7 +87,6 @@ final class ParticularRouteController: UIViewController {
             return
         }
         
-        
         setupMap()
     }
     
@@ -129,7 +129,6 @@ final class ParticularRouteController: UIViewController {
             }
         }
     }
-    
 
     
 }
@@ -156,8 +155,8 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
         if collectionView.tag == 1 {
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticularCollectionViewCell.identifier, for: indexPath) as? ParticularCollectionViewCell else { return UICollectionViewCell() }
-     
-            cell.imageView.image = data?.files?[indexPath.item]
+            
+            cell.imageView.image = data?.files?[indexPath.item].scalePreservingAspectRatio(targetSize: CGSize(width: 100, height: 100))
             cell.imageView.contentMode = .scaleAspectFill
             cell.imageView.clipsToBounds = true
             cell.imageView.layer.cornerRadius = 10
