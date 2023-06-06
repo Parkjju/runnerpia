@@ -42,7 +42,7 @@ class MainViewManager {
     // MARK: - Helpers
     
     private func setTapBarController() {
-        let tabBarViewController = UITabBarController()
+        let tabBarViewController = TabBarController()
         
         let vc1 = UINavigationController(rootViewController: RecommendViewController())
         let vc2 = UINavigationController(rootViewController: HomeViewController())
