@@ -27,7 +27,7 @@ class TagCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var isChecked: Bool = true{
+    var isChecked: Bool = false{
         didSet{
             setUI()
         }
@@ -74,13 +74,16 @@ class TagCollectionViewCell: UICollectionViewCell {
             gradientLayer.frame = self.contentView.bounds
             gradientLayer.colors = [hexStringToUIColor(hex: "#FCDCBE").cgColor,hexStringToUIColor(hex: "#BBE2FF").cgColor]
             self.contentView.layer.addSublayer(gradientLayer)
+            tagNameLabel.textColor = .black
             return
         }
         
         if(isSecureTag){
-            self.contentView.backgroundColor = .secureTagColor
+            self.contentView.backgroundColor = hexStringToUIColor(hex: "#B1DEFD").withAlphaComponent(0.3)
+            tagNameLabel.textColor = .grey700.withAlphaComponent(0.3)
         }else{
-            self.contentView.backgroundColor = .recommendedTagColor
+            self.contentView.backgroundColor = .orange200.withAlphaComponent(0.3)
+            tagNameLabel.textColor = .grey700.withAlphaComponent(0.3)
         }
     }
 }
@@ -95,10 +98,6 @@ extension TagCollectionViewCell: LayoutProtocol{
             $0.trailing.equalTo(self.snp.trailing).offset(-12)
             $0.top.equalTo(self.snp.top).offset(6)
             $0.bottom.equalTo(self.snp.bottom).offset(-6)
-        }
-        
-        self.snp.makeConstraints {
-            $0.height.equalTo(30)
         }
     }
 }
