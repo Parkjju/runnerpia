@@ -159,7 +159,7 @@ final class ParticularView: UIView {
         let layout = LeftAlignedCollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 5
+        layout.minimumLineSpacing = 10
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -268,7 +268,7 @@ extension ParticularView: LayoutProtocol {
         tagsCollectionView.snp.makeConstraints {
             $0.top.equalTo(textView.snp.bottom).offset(10)
             $0.leading.equalTo(map.snp.leading)
-            $0.trailing.equalTo(map.snp.trailing).offset(-10)
+            $0.trailing.equalTo(map.snp.trailing)
             $0.height.equalTo(80)
         }
         
