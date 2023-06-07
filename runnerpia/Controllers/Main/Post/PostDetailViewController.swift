@@ -82,6 +82,10 @@ extension PostDetailViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(collectionView.tag == 3){
             return selectedImages.count
+        }else if(collectionView.tag == 1){
+            return globalSecureTags.count
+        }else if(collectionView.tag == 2){
+            return globalRecommendedTags.count
         }
         return 6
     }
@@ -93,53 +97,13 @@ extension PostDetailViewController: UICollectionViewDataSource{
         // 서브뷰 인덱싱으로 하면 추후 뷰가 추가될 경우 코드가 꼬임 -> tag속성으로 처리
         if(collectionView.tag == 1){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
-            switch(indexPath.item){
-            case 0:
-                cell.isSecureTag = true
-                cell.tagName = globalSecureTags[indexPath.item]
-            case 1:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 2:
-                cell.tagName = "+3"
-                cell.isGradient = true
-            case 3:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 4:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[2]
-            case 5:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[3]
-            default:
-                break
-            }
+            cell.isSecureTag = true
+            cell.tagName = globalSecureTags[indexPath.item]
             return cell
         }else if(collectionView.tag == 2){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
-            switch(indexPath.item){
-            case 0:
-                cell.isSecureTag = true
-                cell.tagName = globalSecureTags[indexPath.item]
-            case 1:
-                cell.isSecureTag = true
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 2:
-                cell.tagName = "+3"
-                cell.isGradient = true
-            case 3:
-                cell.isSecureTag = true
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 4:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[2]
-            case 5:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[3]
-            default:
-                break
-            }
+            cell.isSecureTag = false
+            cell.tagName = globalRecommendedTags[indexPath.item]
             return cell
         }else if(collectionView.tag == 3){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Photo", for: indexPath) as! PhotoCollectionViewCell
@@ -168,7 +132,7 @@ extension PostDetailViewController: UICollectionViewDelegateFlowLayout{
         }else if(collectionView.tag == 2 || collectionView.tag == 1){
             let tagCell =  collectionView.visibleCells[indexPath.item] as! TagCollectionViewCell
             tagCell.isChecked = !tagCell.isChecked
-            collectionView.reloadData()
+//            collectionView.reloadData()
         }
             
     }
