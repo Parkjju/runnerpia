@@ -55,6 +55,53 @@ final class MyPageView: UIView {
         button.backgroundColor = .blue200
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
+        
+        // 첫 번째 라벨 (상단)
+        let titleLabel = UILabel()
+        titleLabel.text = "추천 경로 등록 내역"
+        titleLabel.font = .semiBold18
+        titleLabel.textColor = .black
+        titleLabel.textAlignment = .left
+        
+        // 두 번째 라벨 (하단)
+        let subtitleLabel = UILabel()
+        subtitleLabel.text = "총 124회의 러닝 경로 기록으로 \n 데일리 마라토너 뱃지를 얻었어요"
+        subtitleLabel.numberOfLines = 0
+        subtitleLabel.font = .regular14
+        subtitleLabel.textColor = .black
+        subtitleLabel.textAlignment = .left
+        
+        // 아이콘 이미지뷰
+        let iconImageView = UIImageView()
+        let iconImage = UIImage(named: "rightArrow")
+        iconImageView.image = iconImage
+        iconImageView.contentMode = .scaleAspectFit
+        
+        button.addSubview(titleLabel)
+        button.addSubview(subtitleLabel)
+        button.addSubview(iconImageView)
+        
+        // 오토레이아웃 설정
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+        }
+
+        subtitleLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(5)
+            $0.leading.equalTo(titleLabel.snp.leading)
+        }
+
+        iconImageView.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel.snp.centerY)
+            $0.right.equalToSuperview().offset(-18)
+            $0.width.equalTo(20)
+            $0.height.equalTo(20)
+        }
+
+        // 버튼 크기 조정
+        button.sizeToFit()
+
 //        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -67,6 +114,53 @@ final class MyPageView: UIView {
         button.backgroundColor = .white
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
+        button.layer.shadowColor = UIColor.grey500.cgColor
+        button.layer.masksToBounds = false
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
+        button.layer.shadowRadius = 3
+        
+        // 이미지뷰 (왼쪽 이미지)
+        let leftImageView = UIImageView()
+        let leftImage = UIImage(named: "mapIcon")
+        leftImageView.image = leftImage
+        leftImageView.contentMode = .scaleAspectFit
+        
+        
+        // 이미지뷰 (오른쪽 이미지)
+        let rightImageView = UIImageView()
+        let rightImage = UIImage(named: "nextButton")
+        rightImageView.image = rightImage
+        rightImageView.contentMode = .scaleAspectFit
+        
+        let label = UILabel()
+        label.text = "러닝 기록 내역"
+        label.font = .semiBold14
+        label.textColor = .black
+        label.textAlignment = .left
+        
+        button.addSubview(leftImageView)
+        button.addSubview(rightImageView)
+        button.addSubview(label)
+        
+        leftImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+        }
+        
+        label.snp.makeConstraints {
+            $0.centerY.equalTo(leftImageView.snp.centerY)
+            $0.leading.equalTo(leftImageView.snp.trailing).offset(12)
+        }
+
+        rightImageView.snp.makeConstraints {
+            $0.centerY.equalTo(label.snp.centerY)
+            $0.trailing.equalToSuperview().offset(-23)
+        }
+
+        // 버튼 크기 조정
+        button.sizeToFit()
+        
 //        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -76,6 +170,53 @@ final class MyPageView: UIView {
         button.backgroundColor = .white
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
+        button.layer.shadowColor = UIColor.grey500.cgColor
+        button.layer.masksToBounds = false
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
+        button.layer.shadowRadius = 3
+        
+        // 이미지뷰 (왼쪽 이미지)
+        let leftImageView = UIImageView()
+        let leftImage = UIImage(named: "reviewIcon")
+        leftImageView.image = leftImage
+        leftImageView.contentMode = .scaleAspectFit
+        
+        
+        // 이미지뷰 (오른쪽 이미지)
+        let rightImageView = UIImageView()
+        let rightImage = UIImage(named: "nextButton")
+        rightImageView.image = rightImage
+        rightImageView.contentMode = .scaleAspectFit
+        
+        let label = UILabel()
+        label.text = "작성한 리뷰"
+        label.font = .semiBold14
+        label.textColor = .black
+        label.textAlignment = .left
+        
+        button.addSubview(leftImageView)
+        button.addSubview(rightImageView)
+        button.addSubview(label)
+        
+        leftImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+        }
+        
+        label.snp.makeConstraints {
+            $0.centerY.equalTo(leftImageView.snp.centerY)
+            $0.leading.equalTo(leftImageView.snp.trailing).offset(12)
+        }
+
+        rightImageView.snp.makeConstraints {
+            $0.centerY.equalTo(label.snp.centerY)
+            $0.trailing.equalToSuperview().offset(-23)
+        }
+
+        // 버튼 크기 조정
+        button.sizeToFit()
+        
 //        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -86,7 +227,11 @@ final class MyPageView: UIView {
         let button = UIButton()
         button.backgroundColor = .clear
         button.setTitle("로그아웃", for: .normal)
+        button.setTitleColor(.grey500, for: .normal)
         button.titleLabel?.font = .regular14
+        let iconImage = UIImage(named: "logoutButton")
+        button.setImage(iconImage, for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 8)
 //        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -139,22 +284,23 @@ extension MyPageView: LayoutProtocol {
         }
         
         runningRecodeButton.snp.makeConstraints {
-            $0.top.equalTo(recommendButton.snp.bottom).offset(25)
+            $0.top.equalTo(recommendButton.snp.bottom).offset(10)
             $0.leading.equalTo(recommendButton.snp.leading)
             $0.trailing.equalTo(recommendButton.snp.trailing)
+            $0.height.equalTo(58)
         }
         
         reviewButton.snp.makeConstraints {
-            $0.top.equalTo(runningRecodeButton.snp.bottom).offset(25)
+            $0.top.equalTo(runningRecodeButton.snp.bottom).offset(10)
             $0.leading.equalTo(runningRecodeButton.snp.leading)
             $0.trailing.equalTo(runningRecodeButton.snp.trailing)
+            $0.height.equalTo(58)
         }
         
         logoutButton.snp.makeConstraints {
-            // ⭐️ 수정
-            $0.bottom.equalToSuperview().offset(30)
-            $0.leading.equalTo(reviewButton.snp.leading)
-            $0.trailing.equalTo(reviewButton.snp.trailing)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-30)
+            $0.leading.equalToSuperview().offset(32)
+            $0.height.equalTo(50)
         }
         
     }
