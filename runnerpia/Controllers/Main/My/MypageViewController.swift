@@ -65,6 +65,30 @@ final class MyPageViewController: UIViewController {
     }
     
     private func configureDelegate() {
+        myPageView.delegate = self
     }
+    
+}
+
+// MARK: -  Delegate
+
+extension MyPageViewController: MyPageViewDelegate {
+    
+    func recommendButtonTapped(_ myPageView: MyPageView) {
+        print("추천 경로 등록 내역")
+    }
+    
+    func runningRecodeButtonTapped(_ myPageView: MyPageView) {
+        print("러닝 기록 내역")
+    }
+    
+    func reviewButtonTapped(_ myPageView: MyPageView) {
+        print("작성한 리뷰")
+    }
+    
+    func logoutButtonTapped(_ myPageView: MyPageView) {
+        print("로그아웃")
+    }
+    
     
 }

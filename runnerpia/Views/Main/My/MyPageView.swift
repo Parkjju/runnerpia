@@ -7,7 +7,16 @@
 
 import UIKit
 
+protocol MyPageViewDelegate: AnyObject {
+    func recommendButtonTapped(_ myPageView: MyPageView)
+    func runningRecodeButtonTapped(_ myPageView: MyPageView)
+    func reviewButtonTapped(_ myPageView: MyPageView)
+    func logoutButtonTapped(_ myPageView: MyPageView)
+}
+
 final class MyPageView: UIView {
+    
+    weak var delegate: MyPageViewDelegate?
     
     // MARK: - Properties
     
@@ -102,7 +111,7 @@ final class MyPageView: UIView {
         // 버튼 크기 조정
         button.sizeToFit()
 
-//        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -161,7 +170,7 @@ final class MyPageView: UIView {
         // 버튼 크기 조정
         button.sizeToFit()
         
-//        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(runningRecodeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -216,8 +225,7 @@ final class MyPageView: UIView {
 
         // 버튼 크기 조정
         button.sizeToFit()
-        
-//        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(reviewButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -232,7 +240,7 @@ final class MyPageView: UIView {
         let iconImage = UIImage(named: "logoutButton")
         button.setImage(iconImage, for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 8)
-//        button.addTarget(self, action: #selector(recommendButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -252,6 +260,24 @@ final class MyPageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Selectors
+    
+    @objc private func recommendButtonTapped() {
+        delegate?.recommendButtonTapped(self)
+    }
+    
+    @objc private func runningRecodeButtonTapped() {
+        delegate?.runningRecodeButtonTapped(self)
+    }
+    
+    @objc private func reviewButtonTapped() {
+        delegate?.reviewButtonTapped(self)
+    }
+    
+    @objc private func logoutButtonTapped() {
+        delegate?.logoutButtonTapped(self)
+    }
+
     
     // MARK: - Helpers
     private func configureUI() {
