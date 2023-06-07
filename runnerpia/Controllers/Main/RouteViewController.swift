@@ -51,8 +51,18 @@ extension RouteViewController: PostDataDelegate{
 
 extension RouteViewController: ChangeViewDelegate{
     func nextView() {
-        let postVC = PostViewController()
-        postVC.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(postVC, animated: false)
+        let routeRecordView = self.view as! RouteRecordView
+        
+        guard let routeData = routeRecordView.routeData else{
+            let postVC = PostViewController()
+            postVC.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(postVC, animated: false)
+            return
+        }
+        
+        let reviewVC = ReviewMainViewController()
+        reviewVC.routeData = routeData
+        reviewVC.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(reviewVC, animated: false)
     }
 }
