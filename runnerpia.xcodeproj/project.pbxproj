@@ -13,6 +13,8 @@
 		88566E312A2DE6FF000833A1 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E302A2DE6FF000833A1 /* TabBarController.swift */; };
 		88566E352A2F2D56000833A1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E332A2F2D56000833A1 /* PostViewController.swift */; };
 		88566E362A2F2D56000833A1 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E342A2F2D56000833A1 /* PostDetailViewController.swift */; };
+		88566E462A30CBED000833A1 /* ReviewMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E452A30CBED000833A1 /* ReviewMainViewController.swift */; };
+		88566E482A30CC00000833A1 /* ReviewMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E472A30CC00000833A1 /* ReviewMainView.swift */; };
 		8898D84D2A29586700EBD50E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84B2A29586700EBD50E /* TagCollectionViewCell.swift */; };
 		8898D84E2A29586700EBD50E /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84C2A29586700EBD50E /* Divider.swift */; };
 		8898D8502A29587900EBD50E /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84F2A29587900EBD50E /* PhotoCollectionViewCell.swift */; };
@@ -67,6 +69,8 @@
 		88566E302A2DE6FF000833A1 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		88566E332A2F2D56000833A1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Post/PostViewController.swift; sourceTree = "<group>"; };
 		88566E342A2F2D56000833A1 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Post/PostDetailViewController.swift; sourceTree = "<group>"; };
+		88566E452A30CBED000833A1 /* ReviewMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMainViewController.swift; sourceTree = "<group>"; };
+		88566E472A30CC00000833A1 /* ReviewMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMainView.swift; sourceTree = "<group>"; };
 		8898D84B2A29586700EBD50E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		8898D84C2A29586700EBD50E /* Divider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		8898D84F2A29587900EBD50E /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -144,6 +148,22 @@
 				88566E332A2F2D56000833A1 /* PostViewController.swift */,
 			);
 			name = Post;
+			sourceTree = "<group>";
+		};
+		88566E432A30CBBD000833A1 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				88566E452A30CBED000833A1 /* ReviewMainViewController.swift */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
+		88566E442A30CBC5000833A1 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				88566E472A30CC00000833A1 /* ReviewMainView.swift */,
+			);
+			path = Review;
 			sourceTree = "<group>";
 		};
 		8898D8522A2958C000EBD50E /* Post */ = {
@@ -392,6 +412,7 @@
 		C9AD727D2A10675E005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				88566E432A30CBBD000833A1 /* Review */,
 				88566E322A2F2D4A000833A1 /* Post */,
 				8898D85F2A295C9D00EBD50E /* Route */,
 				C847CCAF2A1E4F5D00F0639C /* Home */,
@@ -404,6 +425,7 @@
 		C9AD727F2A106769005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				88566E442A30CBC5000833A1 /* Review */,
 				8898D8522A2958C000EBD50E /* Post */,
 				C847CCAD2A1E4F2B00F0639C /* Home */,
 				C9AD72802A10676D005B9B5B /* Route */,
@@ -564,6 +586,7 @@
 				C8A684512A2A1F4B00698DA9 /* HalfModalView.swift in Sources */,
 				C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */,
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
+				88566E482A30CC00000833A1 /* ReviewMainView.swift in Sources */,
 				C8F833CC2A24B1C600ED146A /* SearchView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88566E2B2A2A1953000833A1 /* UserLocationManager.swift in Sources */,
@@ -579,6 +602,7 @@
 				8898D85D2A29594200EBD50E /* UITextField.swift in Sources */,
 				8898D8552A2958CD00EBD50E /* PostView.swift in Sources */,
 				8898D84D2A29586700EBD50E /* TagCollectionViewCell.swift in Sources */,
+				88566E462A30CBED000833A1 /* ReviewMainViewController.swift in Sources */,
 				88566E312A2DE6FF000833A1 /* TabBarController.swift in Sources */,
 				C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */,
 				C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */,
