@@ -75,7 +75,8 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController: MyPageViewDelegate {
     
     func recommendButtonTapped(_ myPageView: MyPageView) {
-        print("추천 경로 등록 내역")
+        let emptyRecommendPageController = EmptyRecommendPageController()
+        navigationController?.pushViewController(emptyRecommendPageController, animated: true)
     }
     
     func runningRecodeButtonTapped(_ myPageView: MyPageView) {
@@ -84,6 +85,9 @@ extension MyPageViewController: MyPageViewDelegate {
     
     func reviewButtonTapped(_ myPageView: MyPageView) {
         print("작성한 리뷰")
+        let emptyReviewController = EmptyReviewController()
+        navigationController?.pushViewController(emptyReviewController, animated: true)
+
     }
     
     func logoutButtonTapped(_ myPageView: MyPageView) {

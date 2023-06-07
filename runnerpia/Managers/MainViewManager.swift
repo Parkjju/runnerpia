@@ -30,7 +30,7 @@ class MainViewManager {
         
         setTapBarController()
         
-//        rootViewController = SearchViewController()
+//        rootViewController = EmptyRecommendPageController()
 //        rootViewController = ParticularRouteController()
         
         // 로그인메서드 추가

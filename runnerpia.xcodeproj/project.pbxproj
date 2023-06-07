@@ -43,6 +43,11 @@
 		C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */; };
 		C850CB932A1CC605002C2FD5 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */; };
 		C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB942A1CD56F002C2FD5 /* PhotoView.swift */; };
+		C86550CD2A306AA800DE2904 /* EmptyRecommendPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550CC2A306AA800DE2904 /* EmptyRecommendPageController.swift */; };
+		C86550CF2A306E2900DE2904 /* MyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550CE2A306E2900DE2904 /* MyEmptyView.swift */; };
+		C86550D12A306F2400DE2904 /* EmptyReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D02A306F2400DE2904 /* EmptyReviewController.swift */; };
+		C86550D42A306F6300DE2904 /* MyRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D32A306F6300DE2904 /* MyRunningViewController.swift */; };
+		C86550D62A306F6E00DE2904 /* MyReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */; };
 		C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B42A10BBB100A4E12A /* HomeViewController.swift */; };
 		C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B62A10BBB900A4E12A /* HomeView.swift */; };
 		C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */; };
@@ -98,6 +103,11 @@
 		C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticularCollectionViewCell.swift; sourceTree = "<group>"; };
 		C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = runnerpia/Controllers/Main/Particular/PhotoViewController.swift; sourceTree = SOURCE_ROOT; };
 		C850CB942A1CD56F002C2FD5 /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
+		C86550CC2A306AA800DE2904 /* EmptyRecommendPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRecommendPageController.swift; sourceTree = "<group>"; };
+		C86550CE2A306E2900DE2904 /* MyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyView.swift; sourceTree = "<group>"; };
+		C86550D02A306F2400DE2904 /* EmptyReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyReviewController.swift; sourceTree = "<group>"; };
+		C86550D32A306F6300DE2904 /* MyRunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningViewController.swift; sourceTree = "<group>"; };
+		C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewViewController.swift; sourceTree = "<group>"; };
 		C86646B42A10BBB100A4E12A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = runnerpia/Controllers/Main/Home/HomeViewController.swift; sourceTree = SOURCE_ROOT; };
 		C86646B62A10BBB900A4E12A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = runnerpia/Views/Main/Home/HomeView.swift; sourceTree = SOURCE_ROOT; };
 		C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutProtocols.swift; sourceTree = "<group>"; };
@@ -350,6 +360,9 @@
 			isa = PBXGroup;
 			children = (
 				C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */,
+				C86550D32A306F6300DE2904 /* MyRunningViewController.swift */,
+				C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */,
+				C86550D22A306F2C00DE2904 /* EmptyView */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -361,6 +374,15 @@
 				C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */,
 			);
 			path = Particular;
+			sourceTree = "<group>";
+		};
+		C86550D22A306F2C00DE2904 /* EmptyView */ = {
+			isa = PBXGroup;
+			children = (
+				C86550CC2A306AA800DE2904 /* EmptyRecommendPageController.swift */,
+				C86550D02A306F2400DE2904 /* EmptyReviewController.swift */,
+			);
+			path = EmptyView;
 			sourceTree = "<group>";
 		};
 		C86646BA2A10BCFC00A4E12A /* Managers */ = {
@@ -376,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				C8C7041F2A2F69A2004D3A26 /* MyPageView.swift */,
+				C86550CE2A306E2900DE2904 /* MyEmptyView.swift */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -554,13 +577,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8F833C92A24B17500ED146A /* SearchViewController.swift in Sources */,
+				C86550D62A306F6E00DE2904 /* MyReviewViewController.swift in Sources */,
 				88566E362A2F2D56000833A1 /* PostDetailViewController.swift in Sources */,
 				C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */,
 				C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */,
 				C847CC992A1E43CD00F0639C /* Tags.swift in Sources */,
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
 				88566E352A2F2D56000833A1 /* PostViewController.swift in Sources */,
+				C86550CF2A306E2900DE2904 /* MyEmptyView.swift in Sources */,
 				C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */,
+				C86550CD2A306AA800DE2904 /* EmptyRecommendPageController.swift in Sources */,
 				8898D84E2A29586700EBD50E /* Divider.swift in Sources */,
 				C847CCAC2A1E44A000F0639C /* Route.swift in Sources */,
 				C8A6844F2A2A17C400698DA9 /* HalfModalPresentationController.swift in Sources */,
@@ -575,6 +601,7 @@
 				C8A684512A2A1F4B00698DA9 /* HalfModalView.swift in Sources */,
 				C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */,
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
+				C86550D12A306F2400DE2904 /* EmptyReviewController.swift in Sources */,
 				C8F833CC2A24B1C600ED146A /* SearchView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88566E2B2A2A1953000833A1 /* UserLocationManager.swift in Sources */,
@@ -582,6 +609,7 @@
 				C847CC972A1E43CD00F0639C /* Constraints.swift in Sources */,
 				C847CCA72A1E447000F0639C /* RecommendTableViewCell.swift in Sources */,
 				8898D8502A29587900EBD50E /* PhotoCollectionViewCell.swift in Sources */,
+				C86550D42A306F6300DE2904 /* MyRunningViewController.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
 				C847CC922A1E43BF00F0639C /* UIView.swift in Sources */,
 				C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */,
