@@ -57,8 +57,8 @@ final class ParticularRouteController: UIViewController {
         let cornerRadius = particularView.routeButton.frame.height / 2
         particularView.routeButton.layer.masksToBounds = true
         particularView.routeButton.layer.cornerRadius = cornerRadius
+
     }
-    
     
     // MARK: - Selectors
     
@@ -191,6 +191,7 @@ extension ParticularRouteController: UICollectionViewDelegate, UICollectionViewD
                 cell.isSecureTag = false
                 cell.tagName = globalRecommendedTags[indexPath.item - mergedTags[0].count]
             }
+            cell.isChecked = true
             
             return cell
         }
@@ -222,6 +223,7 @@ extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
             let width: CGFloat = (collectionView.frame.width / 3) - 7
             return CGSize(width: width, height: width)
         }
+
         return CGSize(width: 100, height: 50)
     }
     
@@ -232,16 +234,6 @@ extension ParticularRouteController: UICollectionViewDelegateFlowLayout  {
         }
         return 1.0 // 기본값
     }
-   
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        if collectionView.tag == 1 {
-//            return 1.0 // 원하는 세로 간격 값으로 설정
-//        }else if(collectionView.tag == 2){
-//            return 10
-//        }
-//
-//        return 1.0
-//    }
 }
 
 
