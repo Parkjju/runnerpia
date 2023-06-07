@@ -48,6 +48,9 @@
 		C86550D12A306F2400DE2904 /* EmptyReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D02A306F2400DE2904 /* EmptyReviewController.swift */; };
 		C86550D42A306F6300DE2904 /* MyRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D32A306F6300DE2904 /* MyRunningViewController.swift */; };
 		C86550D62A306F6E00DE2904 /* MyReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */; };
+		C86550D92A3089BC00DE2904 /* MyRunningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D82A3089BC00DE2904 /* MyRunningView.swift */; };
+		C86550DB2A308F8C00DE2904 /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550DA2A308F8C00DE2904 /* MyReviewView.swift */; };
+		C86550DE2A30917100DE2904 /* MyRunningViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550DD2A30917100DE2904 /* MyRunningViewTableViewCell.swift */; };
 		C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B42A10BBB100A4E12A /* HomeViewController.swift */; };
 		C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B62A10BBB900A4E12A /* HomeView.swift */; };
 		C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */; };
@@ -108,6 +111,9 @@
 		C86550D02A306F2400DE2904 /* EmptyReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyReviewController.swift; sourceTree = "<group>"; };
 		C86550D32A306F6300DE2904 /* MyRunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningViewController.swift; sourceTree = "<group>"; };
 		C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewViewController.swift; sourceTree = "<group>"; };
+		C86550D82A3089BC00DE2904 /* MyRunningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningView.swift; sourceTree = "<group>"; };
+		C86550DA2A308F8C00DE2904 /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
+		C86550DD2A30917100DE2904 /* MyRunningViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningViewTableViewCell.swift; sourceTree = "<group>"; };
 		C86646B42A10BBB100A4E12A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = runnerpia/Controllers/Main/Home/HomeViewController.swift; sourceTree = SOURCE_ROOT; };
 		C86646B62A10BBB900A4E12A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = runnerpia/Views/Main/Home/HomeView.swift; sourceTree = SOURCE_ROOT; };
 		C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutProtocols.swift; sourceTree = "<group>"; };
@@ -385,6 +391,14 @@
 			path = EmptyView;
 			sourceTree = "<group>";
 		};
+		C86550DC2A30916500DE2904 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C86550DD2A30917100DE2904 /* MyRunningViewTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		C86646BA2A10BCFC00A4E12A /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,8 +411,11 @@
 		C8C7041E2A2F6994004D3A26 /* My */ = {
 			isa = PBXGroup;
 			children = (
+				C86550DC2A30916500DE2904 /* Cell */,
 				C8C7041F2A2F69A2004D3A26 /* MyPageView.swift */,
 				C86550CE2A306E2900DE2904 /* MyEmptyView.swift */,
+				C86550D82A3089BC00DE2904 /* MyRunningView.swift */,
+				C86550DA2A308F8C00DE2904 /* MyReviewView.swift */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -584,6 +601,7 @@
 				C847CC992A1E43CD00F0639C /* Tags.swift in Sources */,
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
 				88566E352A2F2D56000833A1 /* PostViewController.swift in Sources */,
+				C86550D92A3089BC00DE2904 /* MyRunningView.swift in Sources */,
 				C86550CF2A306E2900DE2904 /* MyEmptyView.swift in Sources */,
 				C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */,
 				C86550CD2A306AA800DE2904 /* EmptyRecommendPageController.swift in Sources */,
@@ -596,6 +614,8 @@
 				8898D8562A2958CD00EBD50E /* PostDetailView.swift in Sources */,
 				8898D85B2A29591300EBD50E /* PostViewController.swift in Sources */,
 				C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */,
+				C86550DB2A308F8C00DE2904 /* MyReviewView.swift in Sources */,
+				C86550DE2A30917100DE2904 /* MyRunningViewTableViewCell.swift in Sources */,
 				8898D85A2A29591300EBD50E /* PostDetailViewController.swift in Sources */,
 				C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */,
 				C8A684512A2A1F4B00698DA9 /* HalfModalView.swift in Sources */,

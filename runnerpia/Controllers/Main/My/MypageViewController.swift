@@ -53,7 +53,7 @@ final class MyPageViewController: UIViewController {
         titleLabel.textColor = .black
         titleLabel.font = .semiBold16
         titleLabel.sizeToFit()
-
+        
         let leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         navigationItem.leftBarButtonItem = leftBarButtonItem
         
@@ -61,7 +61,7 @@ final class MyPageViewController: UIViewController {
         let renderedImage = image?.withRenderingMode(.alwaysOriginal)
         let rightBarButtonItem = UIBarButtonItem(image: renderedImage, style: .plain, target: self, action: #selector(settingButtonTapped))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-
+        
     }
     
     private func configureDelegate() {
@@ -81,13 +81,15 @@ extension MyPageViewController: MyPageViewDelegate {
     
     func runningRecodeButtonTapped(_ myPageView: MyPageView) {
         print("러닝 기록 내역")
+        let myRunningViewController = MyRunningViewController()
+        navigationController?.pushViewController(myRunningViewController, animated: true)
     }
     
     func reviewButtonTapped(_ myPageView: MyPageView) {
         print("작성한 리뷰")
         let emptyReviewController = EmptyReviewController()
         navigationController?.pushViewController(emptyReviewController, animated: true)
-
+        
     }
     
     func logoutButtonTapped(_ myPageView: MyPageView) {
