@@ -24,6 +24,8 @@
 		8898D85B2A29591300EBD50E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D8592A29591300EBD50E /* PostViewController.swift */; };
 		8898D85D2A29594200EBD50E /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D85C2A29594200EBD50E /* UITextField.swift */; };
 		88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A603032A119DF100CBB6B8 /* RouteRecordView.swift */; };
+		88B7560A2A31E22000B701C6 /* ReviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B756092A31E22000B701C6 /* ReviewDetailViewController.swift */; };
+		88B7560C2A31E22E00B701C6 /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B7560B2A31E22E00B701C6 /* ReviewDetailView.swift */; };
 		88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DB2A02985900A240BD /* AppDelegate.swift */; };
 		88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DD2A02985A00A240BD /* SceneDelegate.swift */; };
 		88C189E02A02985A00A240BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DF2A02985A00A240BD /* ViewController.swift */; };
@@ -80,6 +82,8 @@
 		8898D8592A29591300EBD50E /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Main/Post/PostViewController.swift; sourceTree = "<group>"; };
 		8898D85C2A29594200EBD50E /* UITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		88A603032A119DF100CBB6B8 /* RouteRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteRecordView.swift; sourceTree = "<group>"; };
+		88B756092A31E22000B701C6 /* ReviewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewController.swift; sourceTree = "<group>"; };
+		88B7560B2A31E22E00B701C6 /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		88C189D82A02985900A240BD /* runnerpia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = runnerpia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88C189DB2A02985900A240BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88C189DD2A02985A00A240BD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				88566E452A30CBED000833A1 /* ReviewMainViewController.swift */,
+				88B756092A31E22000B701C6 /* ReviewDetailViewController.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				88566E472A30CC00000833A1 /* ReviewMainView.swift */,
+				88B7560B2A31E22E00B701C6 /* ReviewDetailView.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -572,6 +578,7 @@
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
 				88566E352A2F2D56000833A1 /* PostViewController.swift in Sources */,
 				C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */,
+				88B7560C2A31E22E00B701C6 /* ReviewDetailView.swift in Sources */,
 				8898D84E2A29586700EBD50E /* Divider.swift in Sources */,
 				C847CCAC2A1E44A000F0639C /* Route.swift in Sources */,
 				C8A6844F2A2A17C400698DA9 /* HalfModalPresentationController.swift in Sources */,
@@ -594,6 +601,7 @@
 				C847CC972A1E43CD00F0639C /* Constraints.swift in Sources */,
 				C847CCA72A1E447000F0639C /* RecommendTableViewCell.swift in Sources */,
 				8898D8502A29587900EBD50E /* PhotoCollectionViewCell.swift in Sources */,
+				88B7560A2A31E22000B701C6 /* ReviewDetailViewController.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
 				C847CC922A1E43BF00F0639C /* UIView.swift in Sources */,
 				C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */,
