@@ -230,6 +230,18 @@ class ReviewMainView: UIView {
         return cv
     }()
     
+    let registerButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = hexStringToUIColor(hex: "#3B8DED")
+        btn.setTitleColor(.white, for: .normal)
+        btn.setTitle("러닝 등록하기", for: .normal)
+        btn.titleLabel?.font = .semiBold16
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 30
+        btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        return btn
+    }()
+    
     // MARK: - LifeCycles
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -240,25 +252,60 @@ class ReviewMainView: UIView {
     }
     
     override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        
         setSubViews()
+        
+        // MARK: push 전에 반드시 레이아웃 전부 삭제하고 다시 추가해야됨
+        // MARK: 아니면 오토레이아웃 중복되어 적용이 안됨
+        secureTagCollectionView.snp.removeConstraints()
+        normalTagCollectionView.snp.removeConstraints()
+        
         setLayout()
         
         // MARK: 러닝현황 정보 불러오기
         setupController()
     }
     
+    // MARK: Selectors
+    @objc func registerButtonTapped(){
+        delegate?.nextView()
+    }
+    
     // MARK: Helpers
+    func updateCollectionViewHeight(){
+        // 안심태그 컬렉션뷰 dynamic height
+        secureTagCollectionView.setNeedsLayout()
+        secureTagCollectionView.layoutIfNeeded()
+        
+        if(secureTagCollectionView.contentSize.height > secureTagCollectionView.frame.height){
+            secureTagCollectionView.snp.updateConstraints {
+                $0.height.equalTo(secureTagCollectionView.contentSize.height)
+            }
+        }
+        
+        normalTagCollectionView.setNeedsLayout()
+        normalTagCollectionView.layoutIfNeeded()
+        
+        if(normalTagCollectionView.contentSize.height > normalTagCollectionView.frame.height){
+            normalTagCollectionView.snp.updateConstraints {
+                $0.height.equalTo(normalTagCollectionView.contentSize.height)
+            }
+        }
+    }
+    
+    
     func setupController(){
         delegate = self.parentViewController as! ReviewMainViewController
         self.runningData = delegate?.getData()
         
         secureTagCollectionView.delegate = self.parentViewController as! ReviewMainViewController
+        secureTagCollectionView.dataSource = self.parentViewController as! ReviewMainViewController
+        
+        normalTagCollectionView.delegate = self.parentViewController as! ReviewMainViewController
+        normalTagCollectionView.dataSource = self.parentViewController as! ReviewMainViewController
     }
     
     func bindingData(){
-        guard let routeData = routeData, let runningData = runningData else {
+        guard let _ = routeData, let runningData = runningData else {
             return
         }
         
@@ -274,7 +321,7 @@ class ReviewMainView: UIView {
     }
     func bindingMap(_ coordinates: [NMGLatLng]){
         // MARK: 맵 카메라 이동
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinates.first!.lat, lng: coordinates.first!.lng))
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinates.first?.lat ?? 0, lng: coordinates.first?.lng ?? 0))
         map.moveCamera(cameraUpdate)
         
         // MARK: 오버레이
@@ -287,7 +334,7 @@ class ReviewMainView: UIView {
         pathOverlay.width = 10
     }
     func bindingStartLocation(_ coordinates: [NMGLatLng]){
-        let startLocation = CLLocation(latitude: coordinates.first!.lat, longitude: coordinates.first!.lng)
+        let startLocation = CLLocation(latitude: coordinates.first?.lat ?? 0, longitude: coordinates.first?.lng ?? 0)
         
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "ko")
@@ -302,12 +349,12 @@ class ReviewMainView: UIView {
             let startLocationLabel = self.locationView.subviews[1] as! UILabel
             
             DispatchQueue.main.async {
-                startLocationLabel.text = "\(address.locality!) \(address.subLocality!)"
+                startLocationLabel.text = "\(address.locality ?? "") \(address.subLocality ?? "")"
             }
         }
     }
     func bindingEndLocation(_ coordinates: [NMGLatLng]){
-        let endLocation = CLLocation(latitude: coordinates.last!.lat, longitude: coordinates.last!.lng)
+        let endLocation = CLLocation(latitude: coordinates.last?.lat ?? 0, longitude: coordinates.last?.lng ?? 0)
         
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "ko")
@@ -322,7 +369,7 @@ class ReviewMainView: UIView {
             let endLocationLabel = self.locationView.subviews.last as! UILabel
             
             DispatchQueue.main.async {
-                endLocationLabel.text = "\(address.locality!) \(address.subLocality!)"
+                endLocationLabel.text = "\(address.locality ?? "") \(address.subLocality ?? "")"
             }
         }
     }
@@ -373,14 +420,20 @@ class ReviewMainView: UIView {
 extension ReviewMainView: LayoutProtocol{
     func setSubViews() {
         self.addSubview(scrollView)
-        [map, completeLabel, locationView , dateView, timeView, distanceView, divider, rateLabel, secureTagSectionLabel].forEach { scrollView.subviews.first!.addSubview($0) }
+        [map, completeLabel, locationView , dateView, timeView, distanceView, divider, rateLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, registerButton].forEach { scrollView.subviews.first!.addSubview($0) }
     }
     
     func setLayout() {
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.leading.equalTo(self.snp.leading)
+            $0.trailing.equalTo(self.snp.trailing)
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+        }
         map.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(scrollView.subviews.first!.snp.top)
             $0.height.equalTo(self.frame.height / 3)
         }
         
@@ -438,9 +491,30 @@ extension ReviewMainView: LayoutProtocol{
             $0.trailing.equalTo(map.snp.trailing)
             $0.height.equalTo(60)
         }
+
+        normalTagSectionLabel.snp.makeConstraints {
+            $0.top.equalTo(secureTagCollectionView.snp.bottom).offset(20)
+            $0.leading.equalTo(secureTagCollectionView.snp.leading)
+        }
+
+        normalTagCollectionView.snp.makeConstraints {
+            $0.top.equalTo(normalTagSectionLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+            $0.height.equalTo(60)
+        }
+
+        registerButton.snp.makeConstraints {
+            $0.top.equalTo(normalTagCollectionView.snp.bottom).offset(40)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+            $0.height.equalTo(56)
+            $0.bottom.equalTo(scrollView.snp.bottom).offset(-20)
+        }
     }
 }
 
 protocol ReviewDataDelegate{
     func getData() -> (Date,(TimeInterval,TimeInterval), (Int, Int), [NMGLatLng])
+    func nextView()
 }
