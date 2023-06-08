@@ -26,6 +26,26 @@ class ReviewMainView: UIView {
         }
     }
     
+    let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        let view = UIView()
+        
+        sv.clipsToBounds = true
+        
+        sv.addSubview(view)
+        view.snp.makeConstraints {
+            $0.top.equalTo(sv.contentLayoutGuide.snp.top)
+            $0.leading.equalTo(sv.contentLayoutGuide.snp.leading)
+            $0.trailing.equalTo(sv.contentLayoutGuide.snp.trailing)
+            $0.bottom.equalTo(sv.contentLayoutGuide.snp.bottom)
+            
+            $0.leading.equalTo(sv.frameLayoutGuide.snp.leading)
+            $0.trailing.equalTo(sv.frameLayoutGuide.snp.trailing)
+            $0.height.equalTo(sv.frameLayoutGuide.snp.height).priority(.low)
+        }
+        return sv
+    }()
+    
     let map: NMFMapView = {
         let map = NMFMapView()
         map.positionMode = .disabled
@@ -158,6 +178,58 @@ class ReviewMainView: UIView {
         return d
     }()
     
+    let rateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "다녀오신 경로를 평가해주세요!"
+        label.font = .semiBold18
+        return label
+    }()
+    
+    let secureTagSectionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "안심태그"
+        label.font = .medium16
+        return label
+    }()
+    
+    let secureTagCollectionView: UICollectionView = {
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: "Tag")
+        cv.tag = 1
+        
+        return cv
+    }()
+    
+    let normalTagSectionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "일반태그"
+        label.font = UIFont.medium16
+        label.textColor = .grey800
+        return label
+    }()
+    
+    let normalTagCollectionView: UICollectionView = {
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: "Tag")
+        cv.tag = 2
+        
+        return cv
+    }()
+    
     // MARK: - LifeCycles
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -174,11 +246,17 @@ class ReviewMainView: UIView {
         setLayout()
         
         // MARK: 러닝현황 정보 불러오기
-        delegate = self.parentViewController as! ReviewMainViewController
-        self.runningData = delegate?.getData()
+        setupController()
     }
     
     // MARK: Helpers
+    func setupController(){
+        delegate = self.parentViewController as! ReviewMainViewController
+        self.runningData = delegate?.getData()
+        
+        secureTagCollectionView.delegate = self.parentViewController as! ReviewMainViewController
+    }
+    
     func bindingData(){
         guard let routeData = routeData, let runningData = runningData else {
             return
@@ -194,7 +272,6 @@ class ReviewMainView: UIView {
         bindingElapsedTime(elapsedTime)
         bindingDistance(distance)
     }
-    
     func bindingMap(_ coordinates: [NMGLatLng]){
         // MARK: 맵 카메라 이동
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinates.first!.lat, lng: coordinates.first!.lng))
@@ -209,7 +286,6 @@ class ReviewMainView: UIView {
         pathOverlay.outlineColor = .clear
         pathOverlay.width = 10
     }
-    
     func bindingStartLocation(_ coordinates: [NMGLatLng]){
         let startLocation = CLLocation(latitude: coordinates.first!.lat, longitude: coordinates.first!.lng)
         
@@ -296,7 +372,8 @@ class ReviewMainView: UIView {
 
 extension ReviewMainView: LayoutProtocol{
     func setSubViews() {
-        [map, completeLabel, locationView , dateView, timeView, distanceView, divider].forEach { self.addSubview($0) }
+        self.addSubview(scrollView)
+        [map, completeLabel, locationView , dateView, timeView, distanceView, divider, rateLabel, secureTagSectionLabel].forEach { scrollView.subviews.first!.addSubview($0) }
     }
     
     func setLayout() {
@@ -343,6 +420,23 @@ extension ReviewMainView: LayoutProtocol{
             $0.top.equalTo(distanceView.snp.bottom).offset(20)
             $0.leading.equalTo(map.snp.leading)
             $0.trailing.equalTo(map.snp.trailing)
+        }
+        
+        rateLabel.snp.makeConstraints {
+            $0.top.equalTo(divider.snp.bottom).offset(20)
+            $0.leading.equalTo(map.snp.leading)
+        }
+        
+        secureTagSectionLabel.snp.makeConstraints {
+            $0.top.equalTo(rateLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(rateLabel.snp.leading)
+        }
+        
+        secureTagCollectionView.snp.makeConstraints {
+            $0.top.equalTo(secureTagSectionLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(secureTagSectionLabel.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+            $0.height.equalTo(60)
         }
     }
 }
