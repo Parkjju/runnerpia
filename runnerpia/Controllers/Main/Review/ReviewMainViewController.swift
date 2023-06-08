@@ -28,7 +28,9 @@ class ReviewMainViewController: UIViewController {
         let view = ReviewMainView()
         self.view = view 
     }
-    
+}
+
+extension ReviewMainViewController: UICollectionViewDataSource{
     
 }
 
