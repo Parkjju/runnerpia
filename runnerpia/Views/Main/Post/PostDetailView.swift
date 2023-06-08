@@ -42,7 +42,7 @@ class PostDetailView: UIView {
             
             $0.leading.equalTo(sv.frameLayoutGuide.snp.leading)
             $0.trailing.equalTo(sv.frameLayoutGuide.snp.trailing)
-            $0.height.equalTo(1500)
+            $0.height.equalTo(sv.frameLayoutGuide.snp.height).priority(.low)
         }
         return sv
     }()
@@ -604,6 +604,7 @@ extension PostDetailView: LayoutProtocol{
             $0.leading.equalTo(map.snp.leading)
             $0.trailing.equalTo(map.snp.trailing)
             $0.height.equalTo(60)
+            $0.bottom.equalTo(scrollView.snp.bottom).offset(-20)
         }
     }
 }
