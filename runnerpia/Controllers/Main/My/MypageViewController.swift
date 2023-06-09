@@ -87,8 +87,11 @@ extension MyPageViewController: MyPageViewDelegate {
     
     func reviewButtonTapped(_ myPageView: MyPageView) {
         print("작성한 리뷰")
-        let emptyReviewController = EmptyReviewController()
-        navigationController?.pushViewController(emptyReviewController, animated: true)
+//        let emptyReviewController = EmptyReviewController()
+//        navigationController?.pushViewController(emptyReviewController, animated: true)
+        
+        let myReviewViewController = MyReviewViewController()
+        navigationController?.pushViewController(myReviewViewController, animated: true)
         
     }
     

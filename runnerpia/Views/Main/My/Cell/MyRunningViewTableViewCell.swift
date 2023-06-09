@@ -144,6 +144,8 @@ class MyRunningViewTableViewCell: UITableViewCell, UICollectionViewDelegate, UIC
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         tagsCollectionView.dataSource = self
         tagsCollectionView.delegate = self
+        setSubViews()
+        setLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -161,22 +163,23 @@ class MyRunningViewTableViewCell: UITableViewCell, UICollectionViewDelegate, UIC
 
 }
 
-// MARK: - Extensions
+
+// MARK: - Layout
 
 extension MyRunningViewTableViewCell: LayoutProtocol {
     
     func setSubViews() {
         [ map, firstStackView, secondStackView, tagsCollectionView ]
             .forEach { self.addSubview($0) }
+        
     }
     
     func setLayout() {
 
         map.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(10)
+            $0.top.equalTo(self.contentView.snp.top).offset(10)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
-            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(10)
+            $0.bottom.equalTo(self.contentView.snp.bottom).offset(-10)
         }
 
         firstStackView.snp.makeConstraints {
@@ -192,8 +195,9 @@ extension MyRunningViewTableViewCell: LayoutProtocol {
         tagsCollectionView.snp.makeConstraints {
             $0.top.equalTo(secondStackView.snp.top).offset(12)
             $0.leading.equalTo(secondStackView.snp.leading)
-            $0.bottom.equalToSuperview().offset(-12)
-            
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.height.greaterThanOrEqualTo(80)
+
         }
 
 
