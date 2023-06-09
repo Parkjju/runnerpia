@@ -8,34 +8,8 @@
 import UIKit
 import NMapsMap
 
-class MyRunningViewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = tagsCollectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
-        
-        switch(indexPath.item){
-        case 0:
-            cell.isSecureTag = true
-            cell.tagName = globalSecureTags[indexPath.item]
-        case 1:
-            cell.isSecureTag = false
-            cell.tagName = globalRecommendedTags[indexPath.item]
-        case 2:
-            cell.tagName = "+3"
-            cell.isGradient = true
-        default:
-            break
-        }
-        
-        
-        return cell
-    }
-    
-    
+class MyRunningViewTableViewCell: UITableViewCell {
+
     // MARK: - Properties
     
     let map: NMFMapView = {
@@ -180,10 +154,11 @@ extension MyRunningViewTableViewCell: LayoutProtocol {
             $0.top.equalTo(self.contentView.snp.top).offset(10)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
             $0.bottom.equalTo(self.contentView.snp.bottom).offset(-10)
+//            $0.width.equalToSuperview().offset(80)
         }
 
         firstStackView.snp.makeConstraints {
-            $0.top.equalTo(map.snp.top)
+            $0.top.equalTo(self.contentView.snp.top).offset(10)
             $0.leading.equalTo(map.snp.leading).offset(10)
         }
 
@@ -195,13 +170,46 @@ extension MyRunningViewTableViewCell: LayoutProtocol {
         tagsCollectionView.snp.makeConstraints {
             $0.top.equalTo(secondStackView.snp.top).offset(12)
             $0.leading.equalTo(secondStackView.snp.leading)
-            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
-            $0.height.greaterThanOrEqualTo(80)
-
+            $0.trailing.lessThanOrEqualTo(self.contentView.snp.trailing).offset(-16)
+            $0.bottom.equalTo(self.contentView.snp.bottom).offset(10)
+            $0.height.greaterThanOrEqualTo(36)
         }
 
 
     }
     
     
+}
+
+extension MyRunningViewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: 200, height: 50)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = tagsCollectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
+        
+        switch(indexPath.item){
+        case 0:
+            cell.isSecureTag = true
+            cell.tagName = globalSecureTags[indexPath.item]
+        case 1:
+            cell.isSecureTag = false
+            cell.tagName = globalRecommendedTags[indexPath.item]
+        case 2:
+            cell.tagName = "+3"
+            cell.isGradient = true
+        default:
+            break
+        }
+    
+        return cell
+    }
 }
