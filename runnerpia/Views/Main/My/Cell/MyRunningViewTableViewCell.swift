@@ -148,35 +148,35 @@ class MyRunningViewTableViewCell: UITableViewCell {
 extension MyRunningViewTableViewCell: LayoutProtocol {
     
     func setSubViews() {
-        [ firstStackView, secondStackView, tagsCollectionView ]
+        [ map, firstStackView, secondStackView, tagsCollectionView ]
             .forEach { self.addSubview($0) }
         
     }
     
     func setLayout() {
 
-//        map.snp.makeConstraints {
-//            $0.top.equalTo(self.contentView.snp.bottom).offset(10)
-//            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
-//            $0.bottom.equalTo(self.contentView.snp.top).offset(-10)
-////            $0.width.equalToSuperview().offset(80)
-//        }
+        map.snp.makeConstraints {
+            $0.top.equalTo(self.contentView.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.bottom.equalTo(self.contentView.snp.top).offset(-10)
+            $0.height.equalTo(136)
+            $0.width.equalTo(80)
+        }
 
         firstStackView.snp.makeConstraints {
             $0.top.equalTo(self.contentView.snp.top).offset(16)
-            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.leading.equalTo(map.snp.trailing).offset(10)
         }
 
         secondStackView.snp.makeConstraints {
             $0.top.equalTo(firstStackView.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.leading.equalTo(map.snp.trailing).offset(10)
         }
 
         tagsCollectionView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
-            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
             $0.top.equalTo(secondStackView.snp.bottom).offset(10)
-//            $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
+            $0.leading.equalTo(map.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
             $0.height.greaterThanOrEqualTo(36)
         }
     }
