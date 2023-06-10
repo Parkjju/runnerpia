@@ -31,7 +31,8 @@ class MyRunningViewTableViewCell: UITableViewCell {
     let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "12월 31일 토요일 오후 6~9시"
-        label.font = UIFont.regular14
+        label.font = .regular14
+        label.textColor = .grey700
         return label
     }()
     
@@ -48,7 +49,8 @@ class MyRunningViewTableViewCell: UITableViewCell {
     let locationLabel: UILabel = {
         let label = UILabel()
         label.text = "서울시 성동구 다람쥐동"
-        label.font = UIFont.regular14
+        label.font = .regular14
+        label.textColor = .grey700
         return label
     }()
     
@@ -56,14 +58,16 @@ class MyRunningViewTableViewCell: UITableViewCell {
     let distanceLabel: UILabel = {
         let label = UILabel()
         label.text = "8.2km"
-        label.font = UIFont.regular14
+        label.font = .regular14
+        label.textColor = .grey700
         return label
     }()
     
     let lineLabel: UILabel = {
         let label = UILabel()
         label.text = "|"
-        label.font = UIFont.regular14
+        label.font = .regular14
+        label.textColor = .grey700
         return label
     }()
     
@@ -71,13 +75,14 @@ class MyRunningViewTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "102분"
         label.font = UIFont.regular14
+        label.textColor = .grey700
         return label
     }()
     
     lazy var horizontalStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [distanceLabel, lineLabel, timeLabel])
         stackView.axis = .horizontal
-        stackView.spacing = 6
+        stackView.spacing = 5
         stackView.alignment = .center
         stackView.distribution = .fill
         return stackView
@@ -86,7 +91,7 @@ class MyRunningViewTableViewCell: UITableViewCell {
     lazy var secondStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [locationLabel, horizontalStackView])
         stackView.axis = .vertical
-        stackView.spacing = 10
+        stackView.spacing = 6
         stackView.alignment = .leading
         stackView.distribution = .fill
         return stackView
@@ -143,39 +148,37 @@ class MyRunningViewTableViewCell: UITableViewCell {
 extension MyRunningViewTableViewCell: LayoutProtocol {
     
     func setSubViews() {
-        [ map, firstStackView, secondStackView, tagsCollectionView ]
+        [ firstStackView, secondStackView, tagsCollectionView ]
             .forEach { self.addSubview($0) }
         
     }
     
     func setLayout() {
 
-        map.snp.makeConstraints {
-            $0.top.equalTo(self.contentView.snp.top).offset(10)
-            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
-            $0.bottom.equalTo(self.contentView.snp.bottom).offset(-10)
-//            $0.width.equalToSuperview().offset(80)
-        }
+//        map.snp.makeConstraints {
+//            $0.top.equalTo(self.contentView.snp.bottom).offset(10)
+//            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+//            $0.bottom.equalTo(self.contentView.snp.top).offset(-10)
+////            $0.width.equalToSuperview().offset(80)
+//        }
 
         firstStackView.snp.makeConstraints {
-            $0.top.equalTo(self.contentView.snp.top).offset(10)
-            $0.leading.equalTo(map.snp.leading).offset(10)
+            $0.top.equalTo(self.contentView.snp.top).offset(16)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
         }
 
         secondStackView.snp.makeConstraints {
-            $0.top.equalTo(map.snp.top).offset(10)
-            $0.leading.equalTo(firstStackView.snp.leading)
+            $0.top.equalTo(firstStackView.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
         }
 
         tagsCollectionView.snp.makeConstraints {
-            $0.top.equalTo(secondStackView.snp.top).offset(12)
-            $0.leading.equalTo(secondStackView.snp.leading)
-            $0.trailing.lessThanOrEqualTo(self.contentView.snp.trailing).offset(-16)
-            $0.bottom.equalTo(self.contentView.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
+            $0.top.equalTo(secondStackView.snp.bottom).offset(10)
+//            $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
             $0.height.greaterThanOrEqualTo(36)
         }
-
-
     }
     
     
