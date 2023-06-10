@@ -12,7 +12,6 @@ final class MyReviewCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     static let identifier = "MyReviewCollectionViewCell"
-    let myReviewCollectionViewCell = MyReviewCollectionViewCell()
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()

@@ -14,11 +14,21 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     
     // MARK: - Properties
     
+    // --- 0. 제목
+    let locationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "한강 잠실 러닝길"
+        label.font = .semiBold18
+        label.textColor = .black
+        return label
+    }()
+    
+    
     // ----- 1. 가로 스택뷰
     let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "12월 31일 토요일 오후 6~9시"
-        label.font = UIFont.regular12
+        label.font = .regular12
         label.textColor = .grey700
         return label
     }()
@@ -26,7 +36,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     let firstLineLabel: UILabel = {
         let label = UILabel()
         label.text = "|"
-        label.font = UIFont.regular12
+        label.font = .regular12
         label.textColor = .grey700
         return label
     }()
@@ -34,7 +44,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     let timeLabel: UILabel = {
         let label = UILabel()
         label.text = "500분"
-        label.font = UIFont.regular12
+        label.font = .regular12
         label.textColor = .grey700
         return label
     }()
@@ -80,10 +90,13 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
-        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 100) / 4, height: (UIScreen.main.bounds.width - 100) / 4)
+        
+        let numberOfColumns: CGFloat = 3
+        let itemWidth = (UIScreen.main.bounds.width - 100 - (numberOfColumns - 1) * layout.minimumInteritemSpacing) / numberOfColumns
+        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 100) / 3, height: (UIScreen.main.bounds.width - 100) / 3)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "Photo")
+        collectionView.register(MyReviewCollectionViewCell.self, forCellWithReuseIdentifier: MyReviewCollectionViewCell.identifier)
         collectionView.tag = 1
         return collectionView
     }()
@@ -92,14 +105,11 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     
     let introduceTextField: UITextView = {
         let textView = UITextView()
-        textView.text = "300자가 얼마나 되는지 보려고 쓰는 글 300자가 얼마나 되는지 보려고 쓰는 글 300자가 얼마나 되는지 보려고 쓰는 글 300자가 얼마나 되는지 보려고 쓰는 글 300자가 얼마나 되는지 보려고 쓰는 글"
+        textView.text = "300자가 얼마나 되는지 보려고 쓰는 글 300자가 얼마나 되는지 보려고 쓰는 글 300자가 얼마나 되는지 보려고 쓰는 글"
         textView.font = UIFont.regular14
         textView.textColor = .textGrey02
-        textView.clipsToBounds = true
-        textView.layer.cornerRadius = 10
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.grey200.cgColor
-        textView.textContainerInset = .init(top: 12, left: 16, bottom: 12, right: 16)
+        textView.textContainer.maximumNumberOfLines = 2
+        textView.textContainer.lineBreakMode = .byTruncatingTail
         return textView
     }()
     
@@ -129,11 +139,15 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        photoCollectionView.dataSource = self
+        photoCollectionView.delegate = self
         tagsCollectionView.dataSource = self
         tagsCollectionView.delegate = self
         introduceTextField.delegate = self
         setSubViews()
         setLayout()
+        photoCollectionView.setNeedsLayout()
+        photoCollectionView.layoutIfNeeded()
     }
     
     required init?(coder: NSCoder) {
@@ -151,18 +165,24 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
 
 extension MyReviewTableViewCell: LayoutProtocol {
     func setSubViews() {
-        [ dateStackView, nextButton, photoCollectionView, introduceTextField, tagsCollectionView ]
+        [ locationLabel, dateStackView, nextButton, photoCollectionView, introduceTextField, tagsCollectionView ]
             .forEach { self.addSubview($0) }
     }
     
     func setLayout() {
-        dateStackView.snp.makeConstraints {
+        
+        locationLabel.snp.makeConstraints {
             $0.top.equalTo(self.contentView.snp.top).offset(10)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
         }
         
+        dateStackView.snp.makeConstraints {
+            $0.top.equalTo(locationLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+        }
+        
         nextButton.snp.makeConstraints {
-            $0.top.equalTo(self.contentView.snp.top).offset(5)
+            $0.top.equalTo(locationLabel.snp.bottom).offset(5)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
         }
         
@@ -170,12 +190,14 @@ extension MyReviewTableViewCell: LayoutProtocol {
             $0.top.equalTo(dateStackView.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
+            $0.height.equalTo(108)
         }
         
         introduceTextField.snp.makeConstraints {
             $0.top.equalTo(photoCollectionView.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
+            $0.height.equalTo(40)
         }
         
         tagsCollectionView.snp.makeConstraints {
@@ -183,7 +205,7 @@ extension MyReviewTableViewCell: LayoutProtocol {
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
             $0.top.equalTo(introduceTextField.snp.bottom).offset(10)
             $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
-            $0.height.greaterThanOrEqualTo(80)
+            $0.height.greaterThanOrEqualTo(40)
         }
     }
 }
@@ -207,7 +229,7 @@ extension MyReviewTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyReviewCollectionViewCell.identifier, for: indexPath) as? MyReviewCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.imageView.image = files[indexPath.item]
+            cell.imageView.image = files[indexPath.item].scalePreservingAspectRatio(targetSize: CGSize(width: 100, height: 100))
             cell.imageView.contentMode = .scaleAspectFill
             cell.imageView.clipsToBounds = true
             cell.imageView.layer.cornerRadius = 10
