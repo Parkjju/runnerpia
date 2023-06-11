@@ -12,9 +12,18 @@ class PostDetailView: UIView {
     
     
     // MARK: properties
+    
+    // MARK: 경로 생성시 RouteView로부터 새롭게 생성되어 바인딩되는 데이터
     var bindingData: (Date, (TimeInterval, TimeInterval), (Int, Int), [NMGLatLng])?{
         didSet{
             updateUI()
+        }
+    }
+    
+    // MARK: 경로 따라가기에서 생성되어 바인딩되는 데이터
+    var followRouteData: Route?{
+        didSet{
+            updateWithFollowingData()
         }
     }
     
@@ -307,6 +316,101 @@ class PostDetailView: UIView {
         pathOverlay.color = .polylineColor
         pathOverlay.outlineColor = .clear
         pathOverlay.width = 10
+        
+        // 3. 경로 정보 바인딩
+        let (date, elapsedTime, distance, coordinates) = bindingData
+        bindingStartLocation(coordinates)
+        bindingEndLocation(coordinates)
+        bindingTime(date)
+        bindingElapsedTime(elapsedTime)
+        bindingDistance(distance)
+    }
+    
+    func bindingStartLocation(_ coordinates: [NMGLatLng]){
+        let startLocation = CLLocation(latitude: coordinates.first!.lat, longitude: coordinates.first!.lng)
+        
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "ko")
+        
+        geocoder.reverseGeocodeLocation(startLocation, preferredLocale: locale) { placemarks, _ in
+            guard let placemarks = placemarks, let address = placemarks.last else {
+                return
+            }
+            // MARK: address.locality - 군/구
+            // MARK: address.subLocality - 동
+            
+            let startLocationLabel = self.locationView.subviews[1] as! UILabel
+            
+            DispatchQueue.main.async {
+                startLocationLabel.text = "\(address.locality!) \(address.subLocality!)"
+            }
+        }
+    }
+    func bindingEndLocation(_ coordinates: [NMGLatLng]){
+        let endLocation = CLLocation(latitude: coordinates.last!.lat, longitude: coordinates.last!.lng)
+        
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "ko")
+        
+        geocoder.reverseGeocodeLocation(endLocation, preferredLocale: locale) { placemarks, _ in
+            guard let placemarks = placemarks, let address = placemarks.last else {
+                return
+            }
+            // MARK: address.locality - 군/구
+            // MARK: address.subLocality - 동
+            
+            let endLocationLabel = self.locationView.subviews.last as! UILabel
+            
+            DispatchQueue.main.async {
+                endLocationLabel.text = "\(address.locality!) \(address.subLocality!)"
+            }
+        }
+    }
+    func bindingTime(_ date: Date){
+        let label = dateView.subviews.last as! UILabel
+        
+        // MARK: 한국시간으로 변경
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko")
+        dateFormatter.dateFormat = "M월 dd일 E요일 a h시 m분 시작"
+        
+        // MARK: 러닝 완료 레이블
+        let completeDateFormatter = DateFormatter()
+        completeDateFormatter.locale = Locale(identifier: "ko")
+        completeDateFormatter.dateFormat = "M월 d일, \n"
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+        
+        let timeText = NSMutableAttributedString(string: completeDateFormatter.string(from: date), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard), NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        
+        let text = NSMutableAttributedString(string: "러닝을 완료", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard), NSAttributedString.Key.foregroundColor: UIColor.blue400])
+        
+        let remainText = NSMutableAttributedString(string: "했어요!", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard)])
+        
+        
+        timeText.append(text)
+        timeText.append(remainText)
+        let dateLabel = dateView.subviews.last as! UILabel
+        dateLabel.attributedText = timeText
+        
+        // MARK: 날짜 바인딩
+        label.text = dateFormatter.string(from: date)
+    }
+    func bindingElapsedTime(_ elapsedTime: (TimeInterval, TimeInterval)){
+        let (elapsedMinute, elapsedSecond) = elapsedTime
+        
+        let label = timeView.subviews[1] as! UILabel
+        label.text = elapsedMinute > 0 ? "\(Int(elapsedMinute))분 \(Int(elapsedSecond))초" : "\(Int(elapsedSecond))초"
+    }
+    func bindingDistance(_ distance: (Int, Int)){
+        let (km, meter) = distance
+        let distanceLabel = distanceView.subviews.last as! UILabel
+        distanceLabel.text = meter / 10 > 0 ? "\(km).\(meter)km" : "\(km).0\(meter)km"
+    }
+    
+    func updateWithFollowingData(){
+        
     }
     
     // MARK: 텍스트뷰 notification 추가 후, 텍스트뷰 editing 진입에 따라 뷰 조정해줘야함

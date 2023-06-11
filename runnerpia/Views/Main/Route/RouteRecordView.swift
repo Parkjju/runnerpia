@@ -26,7 +26,6 @@ class RouteRecordView: UIView {
             pathOverlay.color = .polylineColor
             pathOverlay.outlineColor = .clear
             pathOverlay.width = 10
-            
         }
     }
     
@@ -140,7 +139,7 @@ class RouteRecordView: UIView {
     let playButtonDuringRecord: UIButton = {
         let btn = UIButton(type:.system)
         
-        btn.backgroundColor = hexStringToUIColor(hex: "#21A345")
+        btn.backgroundColor = hexStringToUIColor(hex: "#0083E2")
         btn.layer.cornerRadius = 45
         btn.clipsToBounds = true
         
