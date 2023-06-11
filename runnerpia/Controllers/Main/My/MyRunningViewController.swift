@@ -20,8 +20,8 @@ final class MyRunningViewController: UIViewController {
         super.viewDidLoad()
         
         configureNavigation()
-        configureDelegate()
         configureUI()
+        configureDelegate()
         
     }
     

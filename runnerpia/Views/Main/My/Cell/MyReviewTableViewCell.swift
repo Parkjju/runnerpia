@@ -86,14 +86,13 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     // ----- 2. collectionView (사진)
     
     let photoCollectionView: UICollectionView = {
-        let layout = LeftAlignedCollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
         
         let numberOfColumns: CGFloat = 3
-        let itemWidth = (UIScreen.main.bounds.width - 100 - (numberOfColumns - 1) * layout.minimumInteritemSpacing) / numberOfColumns
-        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 100) / 3, height: (UIScreen.main.bounds.width - 100) / 3)
+        let itemWidth = (UIScreen.main.bounds.width - (numberOfColumns - 1) * layout.minimumInteritemSpacing) / numberOfColumns
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(MyReviewCollectionViewCell.self, forCellWithReuseIdentifier: MyReviewCollectionViewCell.identifier)
@@ -144,10 +143,14 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         tagsCollectionView.dataSource = self
         tagsCollectionView.delegate = self
         introduceTextField.delegate = self
-        setSubViews()
-        setLayout()
         photoCollectionView.setNeedsLayout()
         photoCollectionView.layoutIfNeeded()
+    }
+    
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        setSubViews()
+        setLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -188,9 +191,9 @@ extension MyReviewTableViewCell: LayoutProtocol {
         
         photoCollectionView.snp.makeConstraints {
             $0.top.equalTo(dateStackView.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
-            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
-            $0.height.equalTo(108)
+            $0.leading.equalTo(self.snp.leading)
+            $0.trailing.equalTo(self.snp.trailing)
+            $0.height.equalTo((UIScreen.main.bounds.width - 32 - 20) / 3)
         }
         
         introduceTextField.snp.makeConstraints {
@@ -210,7 +213,11 @@ extension MyReviewTableViewCell: LayoutProtocol {
     }
 }
 
-extension MyReviewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MyReviewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (UIScreen.main.bounds.width - 32 - 20) / 3, height: (UIScreen.main.bounds.width - 32 - 20) / 3)
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
