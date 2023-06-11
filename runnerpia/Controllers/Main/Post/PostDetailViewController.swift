@@ -26,7 +26,6 @@ class PostDetailViewController: UIViewController {
     // MARK: 리로드시 이미지 추가 셀 위치가 변경되어버리는 문제
     // MARK: 컬렉션뷰 리로드에 인덱스를 유지하지 못하는 이 유
     // MARK: didSet이 한번만 호출될 수 있는 조건을 찾아보기
-    var isLoadEnded: Bool = false
     var selectedImages: [UIImage] = [UIImage(systemName: "plus")!]
 
     override func viewDidLoad() {
@@ -163,8 +162,6 @@ extension PostDetailViewController: PHPickerViewControllerDelegate{
         
         let group = DispatchGroup()
         let imageQueue = DispatchQueue(label: "imageQueue", attributes: .concurrent)
-        
-        isLoadEnded = false
         
         // MARK: DispatchGroup으로 모든 작업 끝마친 뒤 리로드 비동기작업 하나만 붙이기
         // MARK: didSet으로 배열에 매번 비동기 실행할 경우 경쟁상황 심함

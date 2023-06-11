@@ -120,7 +120,13 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     func setupDelegate(){
-        self.delegate = self.parentViewController as! PostDetailViewController
+        if let postDetailVC = self.parentViewController as? PostDetailViewController{
+            self.delegate = postDetailVC
+        }
+        
+        if let reviewDetailVC = self.parentViewController as? ReviewDetailViewController{
+            self.delegate = reviewDetailVC
+        }
     }
 }
 

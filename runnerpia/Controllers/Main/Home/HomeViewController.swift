@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import CoreLocation
 
 final class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
     var homeView = HomeView()
+    let locationManager = UserLocationManager.shared
 
     // MARK: - LifeCycle
     
@@ -44,7 +46,13 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Helpers
     
-    private func configureUI() {
+    func configureUI(){
+        requestLocationPermissionAuthorization()
+    }
+    
+    func requestLocationPermissionAuthorization(){
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     private func configureNavigationBar() {

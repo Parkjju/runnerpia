@@ -1,29 +1,28 @@
 //
-//  PostDetailView.swift
+//  ReviewMainView.swift
 //  runnerpia
 //
-//  Created by 박경준 on 2023/05/25.
+//  Created by Jun on 2023/06/07.
 //
 
 import UIKit
 import NMapsMap
 
-class PostDetailView: UIView {
+class ReviewMainView: UIView {
     
+    // MARK: Properties
+    var delegate: ReviewDataDelegate?
     
-    // MARK: properties
-    
-    // MARK: 경로 생성시 RouteView로부터 새롭게 생성되어 바인딩되는 데이터
-    var bindingData: (Date, (TimeInterval, TimeInterval), (Int, Int), [NMGLatLng])?{
+    var routeData: Route?{
         didSet{
-            updateUI()
+            bindingData()
         }
     }
     
-    // MARK: 경로 따라가기에서 생성되어 바인딩되는 데이터
-    var followRouteData: Route?{
+    // MARK: 경로 생성시 RouteView로부터 새롭게 생성되어 바인딩되는 데이터
+    var runningData: (Date, (TimeInterval, TimeInterval), (Int, Int), [NMGLatLng])?{
         didSet{
-            updateWithFollowingData()
+            bindingData()
         }
     }
     
@@ -49,39 +48,31 @@ class PostDetailView: UIView {
     
     let map: NMFMapView = {
         let map = NMFMapView()
+        map.positionMode = .disabled
         map.allowsScrolling = false
-        map.layer.cornerRadius = 10
+        map.allowsZooming = false
         return map
     }()
-    
-    let pathSectionLabel: UILabel = {
+
+    let completeLabel: UILabel = {
         let label = UILabel()
-        label.text = "러닝 경로 이름"
-        label.font = UIFont.semiBold18
-        return label
-    }()
-    
-    let pathNameTextField: UITextField = {
-        let tf = UITextField()
-        tf.borderStyle = .roundedRect
-        tf.layer.borderColor = UIColor.grey300.cgColor
-        tf.layer.borderWidth = 1
-        tf.font = UIFont.semiBold18
-        tf.placeholder = "송정뚝방길"
-        tf.layer.cornerRadius = 10
-        tf.clipsToBounds = true
-        tf.setLeftPaddingPoints(4)
-        tf.setRightPaddingPoints(4)
         
-        // 클리어버튼 아이콘 커스텀 가능 여부 서치
-        tf.clearButtonMode = .whileEditing
-        return tf
-    }()
-    
-    let pathInformationSectionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "경로 정보"
-        label.font = UIFont.semiBold18
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.numberOfLines = 0
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        
+        let runningTitleText = NSMutableAttributedString(string: "송정뚝방길\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard), NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        
+        let text = NSMutableAttributedString(string: "러닝을 완료", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard), NSAttributedString.Key.foregroundColor: UIColor.blue400])
+        
+        let remainText = NSMutableAttributedString(string: "했어요!", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .semibold, width: .standard)])
+        
+        runningTitleText.append(text)
+        runningTitleText.append(remainText)
+        
+        label.attributedText = runningTitleText
         return label
     }()
     
@@ -187,18 +178,17 @@ class PostDetailView: UIView {
         return d
     }()
     
-    let rateSectionLabel: UILabel = {
+    let rateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.semiBold18
         label.text = "다녀오신 경로를 평가해주세요!"
+        label.font = .semiBold18
         return label
     }()
     
     let secureTagSectionLabel: UILabel = {
         let label = UILabel()
         label.text = "안심태그"
-        label.font = UIFont.medium16
-        label.textColor = .grey800
+        label.font = .medium16
         return label
     }()
     
@@ -240,94 +230,111 @@ class PostDetailView: UIView {
         return cv
     }()
     
-    let dividerAfterTag: UIView = {
-        let d = Divider()
-        return d
+    let registerButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = hexStringToUIColor(hex: "#3B8DED")
+        btn.setTitleColor(.white, for: .normal)
+        btn.setTitle("러닝 등록하기", for: .normal)
+        btn.titleLabel?.font = .semiBold16
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 30
+        btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        return btn
     }()
     
-    let introduceSectionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "추천하는 경로에 대해 소개해 주세요!"
-        label.font = UIFont.semiBold18
-        return label
-    }()
-
-    let introduceTextField: UITextView = {
-        let tv = UITextView()
-        tv.text = "최소 30자 이상 작성해주세요. (비방, 욕설을 포함한 관련없는 내용은 통보 없이 삭제될 수 있습니다."
-        tv.font = UIFont.regular14
-        tv.textColor = .textGrey02
-        tv.clipsToBounds = true
-        tv.layer.cornerRadius = 10
-        tv.layer.borderWidth = 1
-        tv.layer.borderColor = UIColor.grey200.cgColor
-        tv.textContainerInset = .init(top: 12, left: 16, bottom: 12, right: 16)
-        return tv
-    }()
+    // MARK: - LifeCycles
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
     
-    let numberOfTextInput: UILabel = {
-        let label = UILabel()
-        label.text = "0 / 300"
-        label.font = .medium14
-        label.textColor = .textGrey01
-        return label
-    }()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    let photoSectionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "경험했던 경로의 사진을 등록해주세요"
-        label.font = .semiBold18
-        return label
-    }()
-    
-    let photoCollectionView: UICollectionView = {
-        let layout = LeftAlignedCollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
-        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 100) / 4, height: (UIScreen.main.bounds.width - 100) / 4)
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "Photo")
-        cv.tag = 3
-        return cv
-    }()
-    
-    // MARK: LifeCycles
     override func didMoveToSuperview() {
         setSubViews()
+        
+        // MARK: push 전에 반드시 레이아웃 전부 삭제하고 다시 추가해야됨
+        // MARK: 아니면 오토레이아웃 중복되어 적용이 안됨
+        secureTagCollectionView.snp.removeConstraints()
+        normalTagCollectionView.snp.removeConstraints()
+        
         setLayout()
+        
+        // MARK: 러닝현황 정보 불러오기
         setupController()
-        updateCollectionViewHeight()
-        setupScrollViewTapGesture()
+    }
+    
+    // MARK: Selectors
+    @objc func registerButtonTapped(){
+        delegate?.nextView()
     }
     
     // MARK: Helpers
-    func updateUI(){
-        guard let bindingData = bindingData else {return}
+    func updateCollectionViewHeight(){
+        // 안심태그 컬렉션뷰 dynamic height
+        secureTagCollectionView.setNeedsLayout()
+        secureTagCollectionView.layoutIfNeeded()
         
-        // 1. 카메라 이동
-        map.moveCamera(NMFCameraUpdate(scrollTo: bindingData.3.first!))
+        if(secureTagCollectionView.contentSize.height > secureTagCollectionView.frame.height){
+            secureTagCollectionView.snp.updateConstraints {
+                $0.height.equalTo(secureTagCollectionView.contentSize.height)
+            }
+        }
         
-        // 2. 폴리라인 제작
-        let pathOverlay = NMFPath()
-        pathOverlay.path = NMGLineString(points: bindingData.3)
-        pathOverlay.mapView = map
-        pathOverlay.color = .polylineColor
-        pathOverlay.outlineColor = .clear
-        pathOverlay.width = 10
+        normalTagCollectionView.setNeedsLayout()
+        normalTagCollectionView.layoutIfNeeded()
         
-        // 3. 경로 정보 바인딩
-        let (date, elapsedTime, distance, coordinates) = bindingData
+        if(normalTagCollectionView.contentSize.height > normalTagCollectionView.frame.height){
+            normalTagCollectionView.snp.updateConstraints {
+                $0.height.equalTo(normalTagCollectionView.contentSize.height)
+            }
+        }
+    }
+    
+    
+    func setupController(){
+        delegate = self.parentViewController as! ReviewMainViewController
+        self.runningData = delegate?.getData()
+        
+        secureTagCollectionView.delegate = self.parentViewController as! ReviewMainViewController
+        secureTagCollectionView.dataSource = self.parentViewController as! ReviewMainViewController
+        
+        normalTagCollectionView.delegate = self.parentViewController as! ReviewMainViewController
+        normalTagCollectionView.dataSource = self.parentViewController as! ReviewMainViewController
+    }
+    
+    func bindingData(){
+        guard let _ = routeData, let runningData = runningData else {
+            return
+        }
+        
+        let (date, elapsedTime, distance, coordinates) = runningData
+        
+        // MARK: startLocation & endLocation 분리되어 있어야됨
+        bindingMap(coordinates)
         bindingStartLocation(coordinates)
         bindingEndLocation(coordinates)
         bindingTime(date)
         bindingElapsedTime(elapsedTime)
         bindingDistance(distance)
     }
-    
+    func bindingMap(_ coordinates: [NMGLatLng]){
+        // MARK: 맵 카메라 이동
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinates.first?.lat ?? 0, lng: coordinates.first?.lng ?? 0))
+        map.moveCamera(cameraUpdate)
+        
+        // MARK: 오버레이
+        // 2. 폴리라인 제작
+        let pathOverlay = NMFPath()
+        pathOverlay.path = NMGLineString(points: coordinates)
+        pathOverlay.mapView = map
+        pathOverlay.color = .polylineColor
+        pathOverlay.outlineColor = .clear
+        pathOverlay.width = 10
+    }
     func bindingStartLocation(_ coordinates: [NMGLatLng]){
-        let startLocation = CLLocation(latitude: coordinates.first!.lat, longitude: coordinates.first!.lng)
+        let startLocation = CLLocation(latitude: coordinates.first?.lat ?? 0, longitude: coordinates.first?.lng ?? 0)
         
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "ko")
@@ -342,12 +349,12 @@ class PostDetailView: UIView {
             let startLocationLabel = self.locationView.subviews[1] as! UILabel
             
             DispatchQueue.main.async {
-                startLocationLabel.text = "\(address.locality!) \(address.subLocality!)"
+                startLocationLabel.text = "\(address.locality ?? "") \(address.subLocality ?? "")"
             }
         }
     }
     func bindingEndLocation(_ coordinates: [NMGLatLng]){
-        let endLocation = CLLocation(latitude: coordinates.last!.lat, longitude: coordinates.last!.lng)
+        let endLocation = CLLocation(latitude: coordinates.last?.lat ?? 0, longitude: coordinates.last?.lng ?? 0)
         
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "ko")
@@ -362,7 +369,7 @@ class PostDetailView: UIView {
             let endLocationLabel = self.locationView.subviews.last as! UILabel
             
             DispatchQueue.main.async {
-                endLocationLabel.text = "\(address.locality!) \(address.subLocality!)"
+                endLocationLabel.text = "\(address.locality ?? "") \(address.subLocality ?? "")"
             }
         }
     }
@@ -408,107 +415,35 @@ class PostDetailView: UIView {
         let distanceLabel = distanceView.subviews.last as! UILabel
         distanceLabel.text = meter / 10 > 0 ? "\(km).\(meter)km" : "\(km).0\(meter)km"
     }
-    
-    func updateWithFollowingData(){
-        
-    }
-    
-    // MARK: 텍스트뷰 notification 추가 후, 텍스트뷰 editing 진입에 따라 뷰 조정해줘야함
-    func setupController(){
-        secureTagCollectionView.delegate = self.parentViewController as! PostDetailViewController
-        secureTagCollectionView.dataSource = self.parentViewController as! PostDetailViewController
-        
-        normalTagCollectionView.delegate = self.parentViewController as! PostDetailViewController
-        normalTagCollectionView.dataSource = self.parentViewController as! PostDetailViewController
-        
-        introduceTextField.delegate = self.parentViewController as! PostDetailViewController
-        
-        photoCollectionView.delegate = self.parentViewController as! PostDetailViewController
-        photoCollectionView.dataSource = self.parentViewController as! PostDetailViewController
-    }
-    
-    // MARK: 컬렉션뷰들이 수퍼뷰에 부착된 후 사이즈 재계산 진행
-    // MARK: 초기에 하드코딩으로 지정해둔 컬렉션뷰 height 오토레이아웃 값을 컨텐츠 사이즈 height에 맞춰 동적 계산이 이루어지는 로직
-    func updateCollectionViewHeight(){
-        // 안심태그 컬렉션뷰 dynamic height
-        secureTagCollectionView.setNeedsLayout()
-        secureTagCollectionView.layoutIfNeeded()
-        
-        if(secureTagCollectionView.contentSize.height > secureTagCollectionView.frame.height){
-            secureTagCollectionView.snp.updateConstraints {
-                $0.height.equalTo(secureTagCollectionView.contentSize.height)
-            }
-        }
-        
-        normalTagCollectionView.setNeedsLayout()
-        normalTagCollectionView.layoutIfNeeded()
-        
-        if(normalTagCollectionView.contentSize.height > normalTagCollectionView.frame.height){
-            normalTagCollectionView.snp.updateConstraints {
-                $0.height.equalTo(normalTagCollectionView.contentSize.height)
-            }
-        }
-        
-        photoCollectionView.setNeedsLayout()
-        photoCollectionView.layoutIfNeeded()
-        
-        if(photoCollectionView.contentSize.height > photoCollectionView.frame.height){
-            photoCollectionView.snp.updateConstraints {
-                $0.height.equalTo(photoCollectionView.contentSize.height)
-            }
-        }
-    }
-    
-    func setupScrollViewTapGesture(){
-        let tapGesture = UITapGestureRecognizer(target: self.parentViewController, action: #selector(PostDetailViewController.scrollViewTapHandler(sender:)))
-        tapGesture.numberOfTapsRequired = 1
-        tapGesture.isEnabled = true
-        tapGesture.cancelsTouchesInView = false
-        scrollView.addGestureRecognizer(tapGesture)
-    }
-    
-   
 }
 
-extension PostDetailView: LayoutProtocol{
+extension ReviewMainView: LayoutProtocol{
     func setSubViews() {
         self.addSubview(scrollView)
-        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField, numberOfTextInput, photoSectionLabel, photoCollectionView].forEach { scrollView.subviews.first!.addSubview($0) }
+        [map, completeLabel, locationView , dateView, timeView, distanceView, divider, rateLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, registerButton].forEach { scrollView.subviews.first!.addSubview($0) }
     }
+    
     func setLayout() {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
+            $0.leading.equalTo(self.snp.leading)
+            $0.trailing.equalTo(self.snp.trailing)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
-        
         map.snp.makeConstraints {
-            $0.leading.equalTo(scrollView.contentLayoutGuide.snp.leading).offset(Constraints.paddingLeftAndRight)
-            $0.trailing.equalTo(scrollView.contentLayoutGuide.snp.trailing).offset(-Constraints.paddingLeftAndRight)
-            $0.top.equalTo(scrollView.contentLayoutGuide.snp.top)
-            $0.height.equalTo(self.frame.height / 4)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
+            $0.top.equalTo(scrollView.subviews.first!.snp.top)
+            $0.height.equalTo(self.frame.height / 3)
         }
         
-        pathSectionLabel.snp.makeConstraints {
-            $0.top.equalTo(map.snp.bottom).offset(20)
-            $0.leading.equalTo(map.snp.leading)
-        }
-        
-        pathNameTextField.snp.makeConstraints {
-            $0.top.equalTo(pathSectionLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(map.snp.leading)
-            $0.trailing.equalTo(map.snp.trailing)
-            $0.height.equalTo(40)
-        }
-        
-        pathInformationSectionLabel.snp.makeConstraints {
-            $0.top.equalTo(pathNameTextField.snp.bottom).offset(20)
+        completeLabel.snp.makeConstraints {
+            $0.top.equalTo(map.snp.bottom).offset(16)
             $0.leading.equalTo(map.snp.leading)
         }
         
         locationView.snp.makeConstraints {
-            $0.top.equalTo(pathInformationSectionLabel.snp.bottom).offset(10)
+            $0.top.equalTo(completeLabel.snp.bottom).offset(16)
             $0.leading.greaterThanOrEqualTo(map.snp.leading)
         }
         
@@ -540,71 +475,46 @@ extension PostDetailView: LayoutProtocol{
             $0.trailing.equalTo(map.snp.trailing)
         }
         
-        rateSectionLabel.snp.makeConstraints {
+        rateLabel.snp.makeConstraints {
             $0.top.equalTo(divider.snp.bottom).offset(20)
             $0.leading.equalTo(map.snp.leading)
         }
         
         secureTagSectionLabel.snp.makeConstraints {
-            $0.top.equalTo(rateSectionLabel.snp.bottom).offset(16)
-            $0.leading.equalTo(map.snp.leading)
+            $0.top.equalTo(rateLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(rateLabel.snp.leading)
         }
         
         secureTagCollectionView.snp.makeConstraints {
-            $0.leading.equalTo(map.snp.leading)
-            $0.trailing.equalTo(map.snp.trailing)
             $0.top.equalTo(secureTagSectionLabel.snp.bottom).offset(10)
-            
-            // 다이나믹 height 오토레이아웃 지정 가능?
+            $0.leading.equalTo(secureTagSectionLabel.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
             $0.height.equalTo(60)
         }
-        
+
         normalTagSectionLabel.snp.makeConstraints {
             $0.top.equalTo(secureTagCollectionView.snp.bottom).offset(20)
-            $0.leading.equalTo(map.snp.leading)
+            $0.leading.equalTo(secureTagCollectionView.snp.leading)
         }
-        
+
         normalTagCollectionView.snp.makeConstraints {
-            $0.leading.equalTo(map.snp.leading)
-            $0.trailing.equalTo(map.snp.trailing)
             $0.top.equalTo(normalTagSectionLabel.snp.bottom).offset(10)
-            $0.height.equalTo(60)
-        }
-        
-        dividerAfterTag.snp.makeConstraints {
-            $0.top.equalTo(normalTagCollectionView.snp.bottom).offset(20)
-            $0.leading.equalTo(map.snp.leading)
-            $0.trailing.equalTo(map.snp.trailing)
-        }
-        
-        introduceSectionLabel.snp.makeConstraints {
-            $0.top.equalTo(dividerAfterTag.snp.bottom).offset(20)
-            $0.leading.equalTo(map.snp.leading)
-        }
-        
-        introduceTextField.snp.makeConstraints {
-            $0.top.equalTo(introduceSectionLabel.snp.bottom).offset(12)
-            $0.leading.equalTo(map.snp.leading)
-            $0.trailing.equalTo(map.snp.trailing)
-            $0.height.equalTo(200)
-        }
-        
-        numberOfTextInput.snp.makeConstraints {
-            $0.top.equalTo(introduceTextField.snp.bottom).offset(10)
-            $0.trailing.equalTo(map.snp.trailing)
-        }
-        
-        photoSectionLabel.snp.makeConstraints {
-            $0.top.equalTo(numberOfTextInput.snp.bottom).offset(30)
-            $0.leading.equalTo(map.snp.leading)
-        }
-        
-        photoCollectionView.snp.makeConstraints {
-            $0.top.equalTo(photoSectionLabel.snp.bottom).offset(12)
             $0.leading.equalTo(map.snp.leading)
             $0.trailing.equalTo(map.snp.trailing)
             $0.height.equalTo(60)
+        }
+
+        registerButton.snp.makeConstraints {
+            $0.top.equalTo(normalTagCollectionView.snp.bottom).offset(40)
+            $0.leading.equalTo(map.snp.leading)
+            $0.trailing.equalTo(map.snp.trailing)
+            $0.height.equalTo(56)
             $0.bottom.equalTo(scrollView.snp.bottom).offset(-20)
         }
     }
+}
+
+protocol ReviewDataDelegate{
+    func getData() -> (Date,(TimeInterval,TimeInterval), (Int, Int), [NMGLatLng])
+    func nextView()
 }
