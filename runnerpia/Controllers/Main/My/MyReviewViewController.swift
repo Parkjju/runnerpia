@@ -15,11 +15,12 @@ final class MyReviewViewController: UIViewController {
     
     var myReviewView = MyReviewView()
     
-    var data: Route? {
+    var routeData: [Route] = []  {
         didSet {
             self.myReviewView.tableView.reloadData()
         }
     }
+    
     
     // MARK: - LifeCycle
     
@@ -29,7 +30,9 @@ final class MyReviewViewController: UIViewController {
         configureNavigation()
         configureDelegate()
         configureUI()
-        data = setUpData()
+        
+        // ⭐️ 추후 수정
+        setUpData()
     }
     
     override func loadView() {
@@ -42,7 +45,7 @@ final class MyReviewViewController: UIViewController {
     // MARK: - Helpers
     
     // ⭐️ 추후 수정
-    func setUpData() -> Route {
+    func setUpData() {
         let firstData = Route(
             user: User(userId: "주영", nickname: "Jess"),
             routeName: "한강 잠실 러닝길",
@@ -50,14 +53,47 @@ final class MyReviewViewController: UIViewController {
             arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),
                          CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),
                          CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
-            location: "한강 잠실 러닝길",
+            location: "송파구 잠실동",
             runningTime: "100",
             review: "300자가 어느 정도 되나",
             runningDate: "12월 31일 토요일 오후 6~9시",
             recommendedTags: ["1", "2"],
             secureTags: ["1", "2", "3"]
         )
-        return firstData
+        
+        let secondData = Route(
+            user: User(userId: "주영", nickname: "Jess"),
+            routeName: "송정 뚝방로",
+            distance: 200,
+            arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
+            location: "성동구 송정도",
+            runningTime: "100",
+            review: "300자가 어느 정도 되나 1",
+            runningDate: "6월 12일 월요일 오후 6~9시",
+            recommendedTags: ["1", "2"],
+            secureTags: ["1", "2", "3"]
+        )
+        
+        let thirdData = Route(
+            user: User(userId: "주영", nickname: "Jess"),
+            routeName: "용인시 수지구",
+            distance: 100,
+            arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
+            location: "수지구청역",
+            runningTime: "100",
+            review: "300자가 어느 정도 되나3",
+            runningDate: "6월 11일 일요일 오후 6~9시",
+            recommendedTags: ["1", "2"],
+            secureTags: ["1", "2", "3"]
+        )
+        
+        routeData.append(firstData)
+        routeData.append(secondData)
+        routeData.append(thirdData)
     }
     
     private func configureUI() {
@@ -85,30 +121,19 @@ final class MyReviewViewController: UIViewController {
 
 extension MyReviewViewController: UITableViewDataSource, UITableViewDelegate {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return routeData.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyReviewCell", for: indexPath) as! MyReviewTableViewCell
         
-        cell.locationLabel.text = data?.location
-        cell.dateLabel.text = data?.runningDate
-
-        if let runningTime = data?.runningTime {
-            cell.timeLabel.text = "\(runningTime)분"
-        } else {
-            cell.timeLabel.text = nil
-        }
-
-        if let distance = data?.distance {
-            let formattedDistance = String(format: "%.0f", distance)
-            cell.distanceLabel.text = "\(formattedDistance)km"
-        } else {
-            cell.distanceLabel.text = nil
-        }
-        
-        cell.introduceTextField.text = data?.review
+        let rowData = routeData[indexPath.section]
+        cell.cellData = rowData
         
         return cell
     }

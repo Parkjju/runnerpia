@@ -12,6 +12,12 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     
     var files = [#imageLiteral(resourceName: "random6"), #imageLiteral(resourceName: "random4"), #imageLiteral(resourceName: "random5"), #imageLiteral(resourceName: "random1")]
     
+    var cellData: Route? {
+        didSet {
+            setData()
+        }
+    }
+    
     // MARK: - Properties
     
     // --- 0. 제목
@@ -165,6 +171,29 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     // MARK: - Selectors
     
     // MARK: - Helpers
+    
+    func setData() {
+        guard let data = cellData else {
+            return
+        }
+        
+        locationLabel.text = data.routeName
+        dateLabel.text = data.runningDate
+        
+        if let runningTime = data.runningTime {
+            timeLabel.text = "\(runningTime)분"
+        } else {
+            timeLabel.text = nil
+        }
+        
+        if let distance = data.distance {
+            let formattedDistance = String(format: "%.0f", distance)
+            distanceLabel.text = "\(formattedDistance)km"
+        } else {
+            distanceLabel.text = nil
+        }
+        
+    }
     
 }
 
