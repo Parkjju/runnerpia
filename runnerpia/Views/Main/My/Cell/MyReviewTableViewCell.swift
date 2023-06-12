@@ -22,9 +22,12 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         label.textColor = .black
         return label
     }()
+
     
+    let labelsContainerView = UIView()
+
     
-    // ----- 1. 가로 스택뷰
+//     ----- 1. 첫번째줄
     let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "12월 31일 토요일 오후 6~9시"
@@ -32,7 +35,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         label.textColor = .grey700
         return label
     }()
-    
+
     let firstLineLabel: UILabel = {
         let label = UILabel()
         label.text = "|"
@@ -40,7 +43,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         label.textColor = .grey700
         return label
     }()
-    
+
     let timeLabel: UILabel = {
         let label = UILabel()
         label.text = "500분"
@@ -48,7 +51,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         label.textColor = .grey700
         return label
     }()
-    
+
     let secondLineLabel: UILabel = {
         let label = UILabel()
         label.text = "|"
@@ -56,7 +59,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         label.textColor = .grey700
         return label
     }()
-    
+
     let distanceLabel: UILabel = {
         let label = UILabel()
         label.text = "100km"
@@ -64,15 +67,16 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         label.textColor = .grey700
         return label
     }()
-    
+
     lazy var dateStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [ dateLabel,firstLineLabel, timeLabel, secondLineLabel, distanceLabel])
+        let stackView = UIStackView(arrangedSubviews: [ dateLabel,firstLineLabel, timeLabel, secondLineLabel, distanceLabel ])
         stackView.axis = .horizontal
-        stackView.spacing = 8
+        stackView.spacing = 5
         stackView.alignment = .center
         stackView.distribution = .fill
         return stackView
     }()
+    
     
     lazy var nextButton: UIButton = {
         let button = UIButton()
@@ -168,6 +172,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
 
 extension MyReviewTableViewCell: LayoutProtocol {
     func setSubViews() {
+        
         [ locationLabel, dateStackView, nextButton, photoCollectionView, introduceTextField, tagsCollectionView ]
             .forEach { self.addSubview($0) }
     }
@@ -178,7 +183,7 @@ extension MyReviewTableViewCell: LayoutProtocol {
             $0.top.equalTo(self.contentView.snp.top).offset(10)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
         }
-        
+                
         dateStackView.snp.makeConstraints {
             $0.top.equalTo(locationLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)

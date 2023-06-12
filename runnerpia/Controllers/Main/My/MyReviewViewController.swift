@@ -7,12 +7,19 @@
 
 
 import UIKit
+import CoreLocation
 
 final class MyReviewViewController: UIViewController {
     
     // MARK: - Properties
     
     var myReviewView = MyReviewView()
+    
+    var data: Route? {
+        didSet {
+            self.myReviewView.tableView.reloadData()
+        }
+    }
     
     // MARK: - LifeCycle
     
@@ -22,7 +29,7 @@ final class MyReviewViewController: UIViewController {
         configureNavigation()
         configureDelegate()
         configureUI()
-        
+        data = setUpData()
     }
     
     override func loadView() {
@@ -34,10 +41,30 @@ final class MyReviewViewController: UIViewController {
     
     // MARK: - Helpers
     
+    // ⭐️ 추후 수정
+    func setUpData() -> Route {
+        let firstData = Route(
+            user: User(userId: "주영", nickname: "Jess"),
+            routeName: "한강 잠실 러닝길",
+            distance: 100,
+            arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),
+                         CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
+            location: "한강 잠실 러닝길",
+            runningTime: "100",
+            review: "300자가 어느 정도 되나",
+            runningDate: "12월 31일 토요일 오후 6~9시",
+            recommendedTags: ["1", "2"],
+            secureTags: ["1", "2", "3"]
+        )
+        return firstData
+    }
+    
     private func configureUI() {
         myReviewView.tableView.register(MyReviewTableViewCell.self, forCellReuseIdentifier: "MyReviewCell")
         myReviewView.tableView.estimatedRowHeight = 167
         myReviewView.tableView.rowHeight = UITableView.automaticDimension
+
     }
     
     private func configureNavigation() {
@@ -64,6 +91,25 @@ extension MyReviewViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyReviewCell", for: indexPath) as! MyReviewTableViewCell
+        
+        cell.locationLabel.text = data?.location
+        cell.dateLabel.text = data?.runningDate
+
+        if let runningTime = data?.runningTime {
+            cell.timeLabel.text = "\(runningTime)분"
+        } else {
+            cell.timeLabel.text = nil
+        }
+
+        if let distance = data?.distance {
+            let formattedDistance = String(format: "%.0f", distance)
+            cell.distanceLabel.text = "\(formattedDistance)km"
+        } else {
+            cell.distanceLabel.text = nil
+        }
+        
+        cell.introduceTextField.text = data?.review
+        
         return cell
     }
     
