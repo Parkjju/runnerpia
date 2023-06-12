@@ -9,6 +9,12 @@ import UIKit
 import NMapsMap
 
 class MyRunningViewTableViewCell: UITableViewCell {
+    
+    var cellData: Route? {
+        didSet {
+            setData()
+        }
+    }
 
     // MARK: - Properties
     
@@ -23,7 +29,6 @@ class MyRunningViewTableViewCell: UITableViewCell {
     // --- 1. 첫번쨰 스택뷰
     let routeLabel: UILabel = {
         let label = UILabel()
-        label.text = "송정뚝방길"
         label.font = UIFont.semiBold18
         label.textColor = .black
         return label
@@ -31,7 +36,6 @@ class MyRunningViewTableViewCell: UITableViewCell {
     
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "12월 31일 토요일 오후 6~9시"
         label.font = .regular14
         label.textColor = .grey700
         return label
@@ -49,7 +53,6 @@ class MyRunningViewTableViewCell: UITableViewCell {
     // --- 2. 두번째 스택뷰
     let locationLabel: UILabel = {
         let label = UILabel()
-        label.text = "서울시 성동구 다람쥐동"
         label.font = .regular14
         label.textColor = .grey700
         return label
@@ -58,7 +61,6 @@ class MyRunningViewTableViewCell: UITableViewCell {
     // ---- 2-1. 가로스택뷰
     let distanceLabel: UILabel = {
         let label = UILabel()
-        label.text = "8.2km"
         label.font = .regular14
         label.textColor = .grey700
         return label
@@ -74,7 +76,6 @@ class MyRunningViewTableViewCell: UITableViewCell {
     
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.text = "102분"
         label.font = UIFont.regular14
         label.textColor = .grey700
         return label
@@ -124,6 +125,10 @@ class MyRunningViewTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         tagsCollectionView.dataSource = self
         tagsCollectionView.delegate = self
+    }
+    
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
         setSubViews()
         setLayout()
     }
@@ -140,7 +145,29 @@ class MyRunningViewTableViewCell: UITableViewCell {
     // MARK: - Selectors
     
     // MARK: - Helpers
-
+    
+    func setData() {
+        guard let data = cellData else {
+            return
+        }
+        
+        routeLabel.text = data.routeName
+        dateLabel.text = data.runningDate
+        locationLabel.text = data.location
+        
+        if let distance = data.distance {
+            let formattedDistance = String(format: "%.0f", distance)
+            distanceLabel.text = "\(formattedDistance)km"
+        } else {
+            distanceLabel.text = nil
+        }
+        
+        if let runningTime = data.runningTime {
+            timeLabel.text = "\(runningTime)분"
+        } else {
+            timeLabel.text = nil
+        }
+    }
 }
 
 

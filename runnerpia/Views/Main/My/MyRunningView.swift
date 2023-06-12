@@ -8,7 +8,7 @@
 import UIKit
 
 final class MyRunningView: UIView {
-    
+        
     // MARK: - Properties
     
     lazy var commentLabel: UILabel = {
@@ -46,7 +46,6 @@ final class MyRunningView: UIView {
     // MARK: - Helpers
     private func configureUI() {
         backgroundColor = .white
- 
     }
 }
 

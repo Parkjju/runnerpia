@@ -23,7 +23,6 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     // --- 0. 제목
     let locationLabel: UILabel = {
         let label = UILabel()
-        label.text = "한강 잠실 러닝길"
         label.font = .semiBold18
         label.textColor = .black
         return label
@@ -36,7 +35,6 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
 //     ----- 1. 첫번째줄
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "12월 31일 토요일 오후 6~9시"
         label.font = .regular12
         label.textColor = .grey700
         return label
@@ -52,7 +50,6 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
 
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.text = "500분"
         label.font = .regular12
         label.textColor = .grey700
         return label
@@ -68,7 +65,6 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
 
     let distanceLabel: UILabel = {
         let label = UILabel()
-        label.text = "100km"
         label.font = UIFont.regular12
         label.textColor = .grey700
         return label
@@ -112,6 +108,8 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     
     // ----- 3.
     
+    
+    
     let introduceTextField: UITextView = {
         let textView = UITextView()
         textView.text = "300자가 얼마나 되는지 보려고 쓰는 글 300자가 얼마나 되는지 보려고 쓰는 글 300자가 얼마나 되는지 보려고 쓰는 글"
@@ -119,6 +117,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         textView.textColor = .textGrey02
         textView.textContainer.maximumNumberOfLines = 2
         textView.textContainer.lineBreakMode = .byTruncatingTail
+        
         return textView
     }()
     
@@ -193,6 +192,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
             distanceLabel.text = nil
         }
         
+        introduceTextField.text = data.review
     }
     
 }
@@ -225,11 +225,9 @@ extension MyReviewTableViewCell: LayoutProtocol {
         
         photoCollectionView.snp.makeConstraints {
             $0.top.equalTo(dateStackView.snp.bottom).offset(10)
-//                        $0.leading.equalTo(self.snp.leading)
-//                        $0.trailing.equalTo(self.snp.trailing)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
-            $0.height.equalTo((UIScreen.main.bounds.width - 32 - 20) / 3)
+            $0.height.equalTo((UIScreen.main.bounds.width - 32 - 50) / 3)
         }
         
         introduceTextField.snp.makeConstraints {
@@ -244,7 +242,6 @@ extension MyReviewTableViewCell: LayoutProtocol {
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
             $0.top.equalTo(introduceTextField.snp.bottom).offset(10)
             $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
-            $0.height.greaterThanOrEqualTo(40)
         }
     }
 }
