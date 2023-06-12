@@ -88,11 +88,11 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     let photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 7
+        layout.minimumLineSpacing = 7
         
         let numberOfColumns: CGFloat = 3
-        let itemWidth = (UIScreen.main.bounds.width - (numberOfColumns - 1) * layout.minimumInteritemSpacing) / numberOfColumns
+//        let itemWidth = (UIScreen.main.bounds.width - (numberOfColumns) * layout.minimumInteritemSpacing) / numberOfColumns
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(MyReviewCollectionViewCell.self, forCellWithReuseIdentifier: MyReviewCollectionViewCell.identifier)
@@ -191,8 +191,10 @@ extension MyReviewTableViewCell: LayoutProtocol {
         
         photoCollectionView.snp.makeConstraints {
             $0.top.equalTo(dateStackView.snp.bottom).offset(10)
-            $0.leading.equalTo(self.snp.leading)
-            $0.trailing.equalTo(self.snp.trailing)
+//                        $0.leading.equalTo(self.snp.leading)
+//                        $0.trailing.equalTo(self.snp.trailing)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
             $0.height.equalTo((UIScreen.main.bounds.width - 32 - 20) / 3)
         }
         
@@ -214,9 +216,10 @@ extension MyReviewTableViewCell: LayoutProtocol {
 }
 
 extension MyReviewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (UIScreen.main.bounds.width - 32 - 20) / 3, height: (UIScreen.main.bounds.width - 32 - 20) / 3)
+        
+        return CGSize(width: (UIScreen.main.bounds.width - 32 - 50) / 3, height: (UIScreen.main.bounds.width - 32 - 50) / 3)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
