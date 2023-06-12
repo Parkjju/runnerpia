@@ -10,7 +10,7 @@ import SnapKit
 
 class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     
-    var files = [#imageLiteral(resourceName: "random6"), #imageLiteral(resourceName: "random4"), #imageLiteral(resourceName: "random5"), #imageLiteral(resourceName: "random1")]
+    var files = [#imageLiteral(resourceName: "random6"), #imageLiteral(resourceName: "random4")]
     
     var cellData: Route? {
         didSet {
@@ -269,8 +269,13 @@ extension MyReviewTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
         if collectionView.tag == 1 {
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyReviewCollectionViewCell.identifier, for: indexPath) as? MyReviewCollectionViewCell else { return UICollectionViewCell() }
+    
+            if indexPath.item < files.count {
+                cell.imageView.image = files[indexPath.item].scalePreservingAspectRatio(targetSize: CGSize(width: 100, height: 100))
+            } else {
+                cell.imageView.image = UIImage(named: "placeholderImage")
+            }
             
-            cell.imageView.image = files[indexPath.item].scalePreservingAspectRatio(targetSize: CGSize(width: 100, height: 100))
             cell.imageView.contentMode = .scaleAspectFill
             cell.imageView.clipsToBounds = true
             cell.imageView.layer.cornerRadius = 10
