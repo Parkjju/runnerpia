@@ -26,7 +26,6 @@ class RouteRecordView: UIView {
             pathOverlay.color = .polylineColor
             pathOverlay.outlineColor = .clear
             pathOverlay.width = 10
-            
         }
     }
     
@@ -140,7 +139,7 @@ class RouteRecordView: UIView {
     let playButtonDuringRecord: UIButton = {
         let btn = UIButton(type:.system)
         
-        btn.backgroundColor = hexStringToUIColor(hex: "#21A345")
+        btn.backgroundColor = hexStringToUIColor(hex: "#0083E2")
         btn.layer.cornerRadius = 45
         btn.clipsToBounds = true
         
@@ -330,6 +329,9 @@ class RouteRecordView: UIView {
     
     // 레코드 이후 두개로 쪼개진 재생 - 멈춤버튼 중 재생버튼에 해당되는 부분
     @objc func playButtonDuringRecordTouchUpHandler(){
+        locationManager.startUpdatingLocation()
+        map.positionMode = .direction
+        
         isRecordPaused = false
         
         playButtonDuringRecord.isHidden = true
@@ -346,6 +348,10 @@ class RouteRecordView: UIView {
             self.isRecordPaused = false
             return
         }
+        
+        // MARK: guard let 이후 일시정지 버튼 클릭시 아래 코드들 실행됨
+        locationManager.stopUpdatingLocation()
+        map.positionMode = .disabled
         
         self.isRecordPaused = !isPaused
         

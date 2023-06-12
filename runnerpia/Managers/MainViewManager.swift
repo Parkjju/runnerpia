@@ -30,9 +30,7 @@ class MainViewManager {
         
         setTapBarController()
         
-//        rootViewController = EmptyRecommendPageController()
-//        rootViewController = ParticularRouteController()
-        
+  
         // 로그인메서드 추가
     }
 
@@ -42,7 +40,7 @@ class MainViewManager {
     // MARK: - Helpers
     
     private func setTapBarController() {
-        let tabBarViewController = UITabBarController()
+        let tabBarViewController = TabBarController()
         
         let vc1 = UINavigationController(rootViewController: RecommendViewController())
         let vc2 = UINavigationController(rootViewController: HomeViewController())

@@ -12,7 +12,7 @@ import UIKit
 struct Route{
     let user: User?
     let routeName: String?
-    let distance: Int?
+    let distance: Double?
     let arrayOfPos: [CLLocationCoordinate2D]?
     let location: String?
     let runningTime: String?

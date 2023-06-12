@@ -16,6 +16,20 @@ class HalfModalPresentationController: UIViewController {
     var halfModalView = HalfModalView()
     var searchView = SearchView()
     
+    var data: Route?{
+        didSet{
+            configureUI()
+            
+            mergedTags[0] = data?.secureTags ?? []
+            mergedTags[1] = data?.recommendedTags ?? []
+            
+            DispatchQueue.main.async {
+                self.halfModalView.tagsCollectionView.reloadData()
+                self.updateCollectionViewHeight()
+            }
+        }
+    }
+    var mergedTags: [[String]] = [[], []]
     // MARK: - LifeCycle
     
     
@@ -51,10 +65,10 @@ class HalfModalPresentationController: UIViewController {
         halfModalView.backgroundColor = .white
 
         // ⚠️ 추후수정
-        let particularRouteController = ParticularRouteController()
-        let data = particularRouteController.setupData()
-        halfModalView.spotLabel.text = data.routeName
-        if let distance = data.distance {
+        halfModalView.spotLabel.text = data?.routeName
+        halfModalView.locationLabel.text = data?.location
+        halfModalView.tagsCollectionView.allowsMultipleSelection = true
+        if let distance = data?.distance {
             halfModalView.distanceLabel.text = "\(distance)km"
         } else {
             halfModalView.distanceLabel.text = ""
@@ -66,6 +80,18 @@ class HalfModalPresentationController: UIViewController {
         halfModalView.tagsCollectionView.dataSource = self
         halfModalView.tagsCollectionView.delegate = self
     }
+    
+    func updateCollectionViewHeight(){
+        // 안심태그 컬렉션뷰 dynamic height
+        halfModalView.tagsCollectionView.setNeedsLayout()
+        halfModalView.tagsCollectionView.layoutIfNeeded()
+        
+        if(halfModalView.tagsCollectionView.contentSize.height > halfModalView.tagsCollectionView.frame.height){
+            halfModalView.tagsCollectionView.snp.updateConstraints {
+                $0.height.equalTo(halfModalView.tagsCollectionView.contentSize.height)
+            }
+        }
+    }
 }
 
 
@@ -76,26 +102,22 @@ extension HalfModalPresentationController: UICollectionViewDelegate, UICollectio
 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return mergedTags[0].count + mergedTags[1].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
         
-        switch(indexPath.item) {
-        case 0:
+        // MARK: 안전태그 / 추천태그 데이터 바인딩 로직 추가 필요
+        if(indexPath.item < mergedTags[0].count){
             cell.isSecureTag = true
             cell.tagName = globalSecureTags[indexPath.item]
-        case 1:
+        }else{
             cell.isSecureTag = false
-            cell.tagName = globalRecommendedTags[indexPath.item]
-        case 2:
-            cell.tagName = "+3"
-            cell.isGradient = true
-        default:
-            break
+            cell.tagName = globalRecommendedTags[indexPath.item - mergedTags[0].count]
         }
+        cell.isChecked = true
         
         return cell
     }

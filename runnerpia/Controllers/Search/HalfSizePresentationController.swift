@@ -35,6 +35,7 @@ class HalfSizePresentationController: UIPresentationController {
 //            searchViewController.pathOverlay.color = .clear
 //            searchViewController.locationManager.startUpdatingLocation()
 //            searchViewController.searchView.map.positionMode = .direction
+
         }
     }
     
@@ -74,6 +75,7 @@ class HalfSizePresentationController: UIPresentationController {
         } else {
  
         }
+
 
     }
     

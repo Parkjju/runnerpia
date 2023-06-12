@@ -57,6 +57,10 @@
 		C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */; };
 		C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */; };
 		C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */; };
+		C87A56A02A36A46E00F20448 /* ReviewMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A569E2A36A46E00F20448 /* ReviewMainView.swift */; };
+		C87A56A12A36A46E00F20448 /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A569F2A36A46E00F20448 /* ReviewDetailView.swift */; };
+		C87A56A82A36A50B00F20448 /* ReviewMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A56A62A36A50B00F20448 /* ReviewMainViewController.swift */; };
+		C87A56A92A36A50B00F20448 /* ReviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A56A72A36A50B00F20448 /* ReviewDetailViewController.swift */; };
 		C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */; };
 		C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886B9112A1B8933006BE2CD /* ParticularView.swift */; };
 		C89A26F72A249570006FD929 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89A26F62A249570006FD929 /* UIFont.swift */; };
@@ -122,6 +126,10 @@
 		C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewManager.swift; sourceTree = "<group>"; };
 		C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MypageViewController.swift; path = runnerpia/Controllers/Main/My/MypageViewController.swift; sourceTree = SOURCE_ROOT; };
 		C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RouteViewController.swift; path = runnerpia/Controllers/Main/RouteViewController.swift; sourceTree = SOURCE_ROOT; };
+		C87A569E2A36A46E00F20448 /* ReviewMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewMainView.swift; path = Review/ReviewMainView.swift; sourceTree = "<group>"; };
+		C87A569F2A36A46E00F20448 /* ReviewDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewDetailView.swift; path = Review/ReviewDetailView.swift; sourceTree = "<group>"; };
+		C87A56A62A36A50B00F20448 /* ReviewMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewMainViewController.swift; path = Review/ReviewMainViewController.swift; sourceTree = "<group>"; };
+		C87A56A72A36A50B00F20448 /* ReviewDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewDetailViewController.swift; path = Review/ReviewDetailViewController.swift; sourceTree = "<group>"; };
 		C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ParticularRouteController.swift; path = runnerpia/Controllers/Main/Particular/ParticularRouteController.swift; sourceTree = SOURCE_ROOT; };
 		C886B9112A1B8933006BE2CD /* ParticularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticularView.swift; sourceTree = "<group>"; };
 		C89A26F62A249570006FD929 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
@@ -414,6 +422,24 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		C87A56942A36A36E00F20448 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				C87A569F2A36A46E00F20448 /* ReviewDetailView.swift */,
+				C87A569E2A36A46E00F20448 /* ReviewMainView.swift */,
+			);
+			name = Review;
+			sourceTree = "<group>";
+		};
+		C87A56992A36A3A000F20448 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				C87A56A72A36A50B00F20448 /* ReviewDetailViewController.swift */,
+				C87A56A62A36A50B00F20448 /* ReviewMainViewController.swift */,
+			);
+			name = Review;
+			sourceTree = "<group>";
+		};
 		C8C7041E2A2F6994004D3A26 /* My */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +474,7 @@
 		C9AD727D2A10675E005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				C87A56992A36A3A000F20448 /* Review */,
 				88566E322A2F2D4A000833A1 /* Post */,
 				8898D85F2A295C9D00EBD50E /* Route */,
 				C847CCAF2A1E4F5D00F0639C /* Home */,
@@ -460,6 +487,7 @@
 		C9AD727F2A106769005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				C87A56942A36A36E00F20448 /* Review */,
 				C8C7041E2A2F6994004D3A26 /* My */,
 				8898D8522A2958C000EBD50E /* Post */,
 				C847CCAD2A1E4F2B00F0639C /* Home */,
@@ -629,6 +657,7 @@
 				C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */,
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
 				C86550D12A306F2400DE2904 /* EmptyReviewController.swift in Sources */,
+				C87A56A92A36A50B00F20448 /* ReviewDetailViewController.swift in Sources */,
 				C8F833CC2A24B1C600ED146A /* SearchView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88566E2B2A2A1953000833A1 /* UserLocationManager.swift in Sources */,
@@ -641,9 +670,11 @@
 				C847CC922A1E43BF00F0639C /* UIView.swift in Sources */,
 				C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */,
 				C8C9A0572A31F261004B33FF /* MyReviewTableViewCell.swift in Sources */,
+				C87A56A02A36A46E00F20448 /* ReviewMainView.swift in Sources */,
 				884F6DEE2A120A6E007B7F73 /* UIImage.swift in Sources */,
 				C8C704202A2F69A2004D3A26 /* MyPageView.swift in Sources */,
 				C847CC982A1E43CD00F0639C /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
+				C87A56A82A36A50B00F20448 /* ReviewMainViewController.swift in Sources */,
 				8898D85D2A29594200EBD50E /* UITextField.swift in Sources */,
 				8898D8552A2958CD00EBD50E /* PostView.swift in Sources */,
 				8898D84D2A29586700EBD50E /* TagCollectionViewCell.swift in Sources */,
@@ -653,6 +684,7 @@
 				C89A26F72A249570006FD929 /* UIFont.swift in Sources */,
 				C847CC9F2A1E443100F0639C /* RecommendViewController.swift in Sources */,
 				C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */,
+				C87A56A12A36A46E00F20448 /* ReviewDetailView.swift in Sources */,
 				C8AE07E82A2E06CA009C1CFD /* HalfSizePresentationController.swift in Sources */,
 				C847CCA82A1E447000F0639C /* RecommendView.swift in Sources */,
 			);

@@ -26,7 +26,6 @@ class PostDetailViewController: UIViewController {
     // MARK: 리로드시 이미지 추가 셀 위치가 변경되어버리는 문제
     // MARK: 컬렉션뷰 리로드에 인덱스를 유지하지 못하는 이 유
     // MARK: didSet이 한번만 호출될 수 있는 조건을 찾아보기
-    var isLoadEnded: Bool = false
     var selectedImages: [UIImage] = [UIImage(systemName: "plus")!]
 
     override func viewDidLoad() {
@@ -82,6 +81,10 @@ extension PostDetailViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(collectionView.tag == 3){
             return selectedImages.count
+        }else if(collectionView.tag == 1){
+            return globalSecureTags.count
+        }else if(collectionView.tag == 2){
+            return globalRecommendedTags.count
         }
         return 6
     }
@@ -93,53 +96,13 @@ extension PostDetailViewController: UICollectionViewDataSource{
         // 서브뷰 인덱싱으로 하면 추후 뷰가 추가될 경우 코드가 꼬임 -> tag속성으로 처리
         if(collectionView.tag == 1){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
-            switch(indexPath.item){
-            case 0:
-                cell.isSecureTag = true
-                cell.tagName = globalSecureTags[indexPath.item]
-            case 1:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 2:
-                cell.tagName = "+3"
-                cell.isGradient = true
-            case 3:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 4:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[2]
-            case 5:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[3]
-            default:
-                break
-            }
+            cell.isSecureTag = true
+            cell.tagName = globalSecureTags[indexPath.item]
             return cell
         }else if(collectionView.tag == 2){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
-            switch(indexPath.item){
-            case 0:
-                cell.isSecureTag = true
-                cell.tagName = globalSecureTags[indexPath.item]
-            case 1:
-                cell.isSecureTag = true
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 2:
-                cell.tagName = "+3"
-                cell.isGradient = true
-            case 3:
-                cell.isSecureTag = true
-                cell.tagName = globalRecommendedTags[indexPath.item]
-            case 4:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[2]
-            case 5:
-                cell.isSecureTag = false
-                cell.tagName = globalRecommendedTags[3]
-            default:
-                break
-            }
+            cell.isSecureTag = false
+            cell.tagName = globalRecommendedTags[indexPath.item]
             return cell
         }else if(collectionView.tag == 3){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Photo", for: indexPath) as! PhotoCollectionViewCell
@@ -166,8 +129,9 @@ extension PostDetailViewController: UICollectionViewDelegateFlowLayout{
         if(collectionView.tag == 3 && indexPath.item == 0){
             setupImagePicker()
         }else if(collectionView.tag == 2 || collectionView.tag == 1){
-            collectionView.visibleCells[indexPath.item].isSelected = !collectionView.visibleCells[indexPath.item].isSelected
-            collectionView.reloadData()
+            let tagCell =  collectionView.visibleCells[indexPath.item] as! TagCollectionViewCell
+            tagCell.isChecked = !tagCell.isChecked
+//            collectionView.reloadData()
         }
             
     }
@@ -198,8 +162,6 @@ extension PostDetailViewController: PHPickerViewControllerDelegate{
         
         let group = DispatchGroup()
         let imageQueue = DispatchQueue(label: "imageQueue", attributes: .concurrent)
-        
-        isLoadEnded = false
         
         // MARK: DispatchGroup으로 모든 작업 끝마친 뒤 리로드 비동기작업 하나만 붙이기
         // MARK: didSet으로 배열에 매번 비동기 실행할 경우 경쟁상황 심함

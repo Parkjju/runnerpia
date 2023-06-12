@@ -241,6 +241,7 @@ final class MyPageView: UIView {
         button.setImage(iconImage, for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 8)
         button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left 
         return button
     }()
     
@@ -326,6 +327,7 @@ extension MyPageView: LayoutProtocol {
         logoutButton.snp.makeConstraints {
             $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-30)
             $0.leading.equalToSuperview().offset(32)
+            $0.trailing.equalToSuperview().offset(-200)
             $0.height.equalTo(50)
         }
         
