@@ -12,12 +12,11 @@ import CoreLocation
 final class MyReviewViewController: UIViewController {
     
     // MARK: - Properties
-    
-    var myReviewView: MyReviewView!
-    
+        
     var routeData: [Route] = []  {
         didSet {
-            self.myReviewView.tableView.reloadData()
+            let myReviewView = self.view as! MyReviewView
+            myReviewView.tableView.reloadData()
         }
     }
     
@@ -26,6 +25,9 @@ final class MyReviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let view = MyReviewView()
+        self.view = view
         
         configureNavigation()
         configureDelegate()
@@ -36,12 +38,7 @@ final class MyReviewViewController: UIViewController {
         configureUI()
 
     }
-    
-    override func loadView() {
-        myReviewView = MyReviewView()
-        view = myReviewView
-        
-    }
+
     
     
     // MARK: - Selectors
@@ -101,6 +98,7 @@ final class MyReviewViewController: UIViewController {
     }
     
     private func configureUI() {
+        let myReviewView = self.view as! MyReviewView
         myReviewView.tableView.register(MyReviewTableViewCell.self, forCellReuseIdentifier: "MyReviewCell")
         myReviewView.tableView.estimatedRowHeight = 167
         myReviewView.tableView.rowHeight = UITableView.automaticDimension
@@ -115,6 +113,7 @@ final class MyReviewViewController: UIViewController {
     }
     
     private func configureDelegate() {
+        let myReviewView = self.view as! MyReviewView
         myReviewView.tableView.delegate = self
         myReviewView.tableView.dataSource = self
     }

@@ -10,7 +10,6 @@ import UIKit
 final class EmptyReviewController: UIViewController {
     
     // MARK: - Properties
-    var emptyReviewView = MyEmptyView()
     
     
     // MARK: - LifeCycle
@@ -18,14 +17,13 @@ final class EmptyReviewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let view = MyEmptyView()
+        self.view = view
+        
         configureNavigation()
         configureDelegate()
         configureUI()
         
-    }
-    
-    override func loadView() {
-        view = emptyReviewView
     }
     
     
@@ -42,6 +40,7 @@ final class EmptyReviewController: UIViewController {
     // MARK: - Helpers
     
     private func configureUI() {
+        let emptyReviewView = self.view as! MyEmptyView
         emptyReviewView.commentLabel.text = "작성한 리뷰가 없어요. \n 나만의 러닝 경로를 추천해볼까요?"
         let attributedTitle = NSAttributedString(string: "추천 경로 보러가기", attributes: [
             NSAttributedString.Key.font: UIFont.semiBold16,

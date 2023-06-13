@@ -12,12 +12,11 @@ import CoreLocation
 final class MyRunningViewController: UIViewController {
     
     // MARK: - Properties
-    
-    var myRunningView: MyRunningView!
-        
+            
     var routeData: [Route] = []  {
         didSet {
-            self.myRunningView.tableView.reloadData()
+            let myRunningView = self.view as! MyRunningView
+            myRunningView.tableView.reloadData()
         }
     }
     
@@ -25,6 +24,9 @@ final class MyRunningViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let view = MyRunningView()
+        self.view = view
         
         configureNavigation()
         configureDelegate()
@@ -36,10 +38,6 @@ final class MyRunningViewController: UIViewController {
 
     }
     
-    override func loadView() {
-        myRunningView = MyRunningView()
-        view = myRunningView
-    }
     
     
     // MARK: - Selectors
@@ -99,6 +97,7 @@ final class MyRunningViewController: UIViewController {
     }
     
     private func configureUI() {
+        let myRunningView = self.view as! MyRunningView
         myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
         myRunningView.tableView.estimatedRowHeight = 167
         myRunningView.tableView.rowHeight = UITableView.automaticDimension
@@ -112,6 +111,7 @@ final class MyRunningViewController: UIViewController {
     }
     
     private func configureDelegate() {
+        let myRunningView = self.view as! MyRunningView
         myRunningView.tableView.delegate = self
         myRunningView.tableView.dataSource = self
     }

@@ -11,23 +11,21 @@ final class EmptyRecommendPageController: UIViewController {
     
     // MARK: - Properties
     
-    var emptyRecommendView = MyEmptyView()
     
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let view = MyEmptyView()
+        self.view = view
+        
         configureNavigation()
         configureDelegate()
         configureUI()
         
     }
-    
-    override func loadView() {
-        view = emptyRecommendView
-    }
-    
+
     
     // MARK: - Selectors
     
@@ -42,6 +40,7 @@ final class EmptyRecommendPageController: UIViewController {
     // MARK: - Helpers
     
     private func configureUI() {
+        let emptyRecommendView = self.view as! MyEmptyView
         emptyRecommendView.commentLabel.text = "등록된 추천 경로가 없어요. \n 나만의 러닝 경로를 추천해볼까요?"
         let attributedTitle = NSAttributedString(string: "러닝 시작하기", attributes: [
             NSAttributedString.Key.font: UIFont.semiBold16,

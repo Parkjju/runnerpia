@@ -18,15 +18,14 @@ final class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let view = MyPageView()
+        self.view = view
+        
         configureNavigation()
         configureDelegate()
         configureUI()
     }
     
-    override func loadView() {
-        let myPageView = MyPageView()
-        view = myPageView
-    }
     
     // MARK: - Selectors
     
