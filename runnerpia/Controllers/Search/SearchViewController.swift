@@ -65,7 +65,6 @@ final class SearchViewController: UIViewController, NMFMapViewTouchDelegate {
     }
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        print(latlng)
     }
     
 }
@@ -140,7 +139,6 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         locationMarker.image = UIImage(named: "tooltip")?.scalePreservingAspectRatio(targetSize: CGSize(width: 120, height: 50))
         locationMarker.contentMode = .scaleAspectFit
         locationMarker.sizeToFit() // 이미지의 원본 크기에 맞게 이미지 뷰의 크기 조정
-        print(locationMarker.frame.width, locationMarker.frame.height)
         let routeNameLabel = UILabel()
         routeNameLabel.text = "경로타이틀최대10자ewjifefowi".count > 10 ? "경로타이틀최대.." : "경로타이틀최대10자"
         routeNameLabel.font = .regular12
@@ -155,7 +153,6 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         locationMarker.addSubview(checkImage)
         
         // MARK: position기반으로 위치가 지정되는 NMFMarker는 오토레이아웃으로 레이아웃 설정이 불가능
-        print("maxY: ",locationMarker.frame.maxY)
         checkImage.frame.origin.y = routeNameLabel.frame.maxY + 5
         checkImage.frame.origin.x = locationMarker.frame.minX + 8
         
@@ -224,7 +221,6 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
 extension SearchViewController: SearchViewDelegate {
     
     func locationButtonTapped(_ searchView: SearchView) {
-        print("locationButtonTapped !! ")
         
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
         cameraUpdate.animation = .easeIn
@@ -238,7 +234,6 @@ extension SearchViewController: SearchViewDelegate {
     }
     
     func rebrowsingButtonTapped(_ searchView: SearchView) {
-        print("현재 지도에서 재 검색")
 
     }
     
