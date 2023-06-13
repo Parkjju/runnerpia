@@ -141,6 +141,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         collectionView.tag = 2
         
         return collectionView
+        
     }()
     
     let secondLineView: UIView = {
@@ -317,17 +318,20 @@ extension MyReviewTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
             
         } else {
             let cell = tagsCollectionView.dequeueReusableCell(withReuseIdentifier: "Tag", for: indexPath) as! TagCollectionViewCell
-            
-            switch(indexPath.item){
+                        
+            switch(indexPath.item) {
             case 0:
                 cell.isSecureTag = true
                 cell.tagName = globalSecureTags[indexPath.item]
+                cell.isChecked = true
             case 1:
                 cell.isSecureTag = false
                 cell.tagName = globalRecommendedTags[indexPath.item]
+                cell.isChecked = true
             case 2:
                 cell.tagName = "+3"
                 cell.isGradient = true
+                cell.isChecked = true
             default:
                 break
             }

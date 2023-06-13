@@ -120,7 +120,7 @@ final class MyRunningViewController: UIViewController {
 
 // MARK: - TableView Delegate
 
-extension MyRunningViewController: UITableViewDataSource, UITableViewDelegate {
+ extension MyRunningViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return routeData.count

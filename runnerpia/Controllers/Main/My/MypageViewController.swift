@@ -37,6 +37,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Helpers
     
     private func configureUI() {
+        view.backgroundColor = .white
     }
     
     private func configureNavigation() {

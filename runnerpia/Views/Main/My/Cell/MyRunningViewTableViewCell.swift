@@ -231,12 +231,15 @@ extension MyRunningViewTableViewCell: UICollectionViewDelegate, UICollectionView
         case 0:
             cell.isSecureTag = true
             cell.tagName = globalSecureTags[indexPath.item]
+            cell.isChecked = true
         case 1:
             cell.isSecureTag = false
             cell.tagName = globalRecommendedTags[indexPath.item]
+            cell.isChecked = true
         case 2:
             cell.tagName = "+3"
             cell.isGradient = true
+            cell.isChecked = true
         default:
             break
         }
