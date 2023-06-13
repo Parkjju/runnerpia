@@ -114,7 +114,6 @@ final class MyRunningViewController: UIViewController {
     private func configureDelegate() {
         myRunningView.tableView.delegate = self
         myRunningView.tableView.dataSource = self
-
     }
     
 }

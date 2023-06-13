@@ -104,6 +104,7 @@ final class MyReviewViewController: UIViewController {
         myReviewView.tableView.register(MyReviewTableViewCell.self, forCellReuseIdentifier: "MyReviewCell")
         myReviewView.tableView.estimatedRowHeight = 167
         myReviewView.tableView.rowHeight = UITableView.automaticDimension
+        myReviewView.tableView.separatorStyle = .none
 
         myReviewView.commentLabel.text = "총 \(routeData.count)개"
     }
@@ -144,7 +145,7 @@ extension MyReviewViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 330
+        return 350
     }
     
     

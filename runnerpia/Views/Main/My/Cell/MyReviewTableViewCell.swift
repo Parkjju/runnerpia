@@ -28,8 +28,13 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         return label
     }()
 
-    
-    let labelsContainerView = UIView()
+    let firstLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .grey100
+        let onePixelHeight = 2 / UIScreen.main.scale
+        view.heightAnchor.constraint(equalToConstant: onePixelHeight).isActive = true
+        return view
+    }()
 
     
 //     ----- 1. 첫번째줄
@@ -106,8 +111,8 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         return collectionView
     }()
     
-    // ----- 3.
     
+    // ----- 3.
     
     
     let introduceTextField: UITextView = {
@@ -138,12 +143,22 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         return collectionView
     }()
     
+    let secondLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .grey100
+        let pixelThickness: CGFloat = 20.0
+        let onePixelHeight = pixelThickness / UIScreen.main.scale
+        view.heightAnchor.constraint(equalToConstant: onePixelHeight).isActive = true
+        return view
+    }()
+    
     
     // MARK: - LifeCycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -161,6 +176,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         setSubViews()
         setLayout()
     }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -203,24 +219,31 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
 extension MyReviewTableViewCell: LayoutProtocol {
     func setSubViews() {
         
-        [ locationLabel, dateStackView, nextButton, photoCollectionView, introduceTextField, tagsCollectionView ]
+        [ locationLabel, firstLineView, dateStackView, nextButton, photoCollectionView, introduceTextField, tagsCollectionView, secondLineView ]
             .forEach { self.addSubview($0) }
     }
     
     func setLayout() {
         
         locationLabel.snp.makeConstraints {
-            $0.top.equalTo(self.contentView.snp.top).offset(10)
+            $0.top.equalTo(self.contentView.snp.top).offset(16)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+        }
+        
+        firstLineView.snp.makeConstraints {
+            $0.top.equalTo(locationLabel.snp.bottom).offset(14)
+            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
+
         }
                 
         dateStackView.snp.makeConstraints {
-            $0.top.equalTo(locationLabel.snp.bottom).offset(10)
+            $0.top.equalTo(firstLineView.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
         }
         
         nextButton.snp.makeConstraints {
-            $0.top.equalTo(locationLabel.snp.bottom).offset(5)
+            $0.top.equalTo(firstLineView.snp.bottom).offset(5)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
         }
         
@@ -244,6 +267,14 @@ extension MyReviewTableViewCell: LayoutProtocol {
             $0.top.equalTo(introduceTextField.snp.bottom).offset(10)
             $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
             $0.height.greaterThanOrEqualTo(80)
+        }
+        
+        secondLineView.snp.makeConstraints {
+            $0.top.equalTo(tagsCollectionView.snp.bottom).offset(22)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(1)
+            $0.height.equalTo(6)
         }
     }
 }
