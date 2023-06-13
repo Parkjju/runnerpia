@@ -5,6 +5,7 @@ target 'runnerpia' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'NMapsMap'
+  pod 'Alamofire'
 
   # Pods for runnerpia
 
