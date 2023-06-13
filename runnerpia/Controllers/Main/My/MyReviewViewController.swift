@@ -13,7 +13,7 @@ final class MyReviewViewController: UIViewController {
     
     // MARK: - Properties
     
-    var myReviewView = MyReviewView()
+    var myReviewView: MyReviewView!
     
     var routeData: [Route] = []  {
         didSet {
@@ -38,7 +38,9 @@ final class MyReviewViewController: UIViewController {
     }
     
     override func loadView() {
+        myReviewView = MyReviewView()
         view = myReviewView
+        
     }
     
     
@@ -142,7 +144,7 @@ extension MyReviewViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 330
     }
     
     

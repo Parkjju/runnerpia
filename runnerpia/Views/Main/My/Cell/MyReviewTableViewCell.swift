@@ -171,6 +171,7 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
     
     // MARK: - Helpers
     
+    // ⭐️ 추후 수정
     func setData() {
         guard let data = cellData else {
             return
@@ -242,6 +243,7 @@ extension MyReviewTableViewCell: LayoutProtocol {
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
             $0.top.equalTo(introduceTextField.snp.bottom).offset(10)
             $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
+            $0.height.greaterThanOrEqualTo(80)
         }
     }
 }

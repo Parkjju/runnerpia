@@ -13,8 +13,8 @@ final class MyRunningViewController: UIViewController {
     
     // MARK: - Properties
     
-    var myRunningView = MyRunningView()
-    
+    var myRunningView: MyRunningView!
+        
     var routeData: [Route] = []  {
         didSet {
             self.myRunningView.tableView.reloadData()
@@ -37,6 +37,7 @@ final class MyRunningViewController: UIViewController {
     }
     
     override func loadView() {
+        myRunningView = MyRunningView()
         view = myRunningView
     }
     

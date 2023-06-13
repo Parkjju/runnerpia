@@ -10,7 +10,6 @@ import UIKit
 final class MyPageViewController: UIViewController {
     
     // MARK: - Properties
-    var myPageView = MyPageView()
     
     
     // MARK: - LifeCycle
@@ -25,6 +24,7 @@ final class MyPageViewController: UIViewController {
     }
     
     override func loadView() {
+        let myPageView = MyPageView()
         view = myPageView
     }
     
@@ -65,7 +65,9 @@ final class MyPageViewController: UIViewController {
     }
     
     private func configureDelegate() {
-        myPageView.delegate = self
+        if let myPageView = view as? MyPageView {
+            myPageView.delegate = self
+        }
     }
     
 }
