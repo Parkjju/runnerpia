@@ -40,10 +40,10 @@
 		C847CCA82A1E447000F0639C /* RecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847CCA62A1E447000F0639C /* RecommendView.swift */; };
 		C847CCAB2A1E44A000F0639C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847CCA92A1E44A000F0639C /* User.swift */; };
 		C847CCAC2A1E44A000F0639C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847CCAA2A1E44A000F0639C /* Route.swift */; };
+		C84D37882A3A835000A47DA8 /* EmptyRecommendPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84D37872A3A835000A47DA8 /* EmptyRecommendPageController.swift */; };
 		C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */; };
 		C850CB932A1CC605002C2FD5 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */; };
 		C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB942A1CD56F002C2FD5 /* PhotoView.swift */; };
-		C86550CD2A306AA800DE2904 /* EmptyRecommendPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550CC2A306AA800DE2904 /* EmptyRecommendPageController.swift */; };
 		C86550CF2A306E2900DE2904 /* MyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550CE2A306E2900DE2904 /* MyEmptyView.swift */; };
 		C86550D12A306F2400DE2904 /* EmptyReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D02A306F2400DE2904 /* EmptyReviewController.swift */; };
 		C86550D42A306F6300DE2904 /* MyRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D32A306F6300DE2904 /* MyRunningViewController.swift */; };
@@ -109,10 +109,10 @@
 		C847CCA62A1E447000F0639C /* RecommendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendView.swift; sourceTree = "<group>"; };
 		C847CCA92A1E44A000F0639C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C847CCAA2A1E44A000F0639C /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		C84D37872A3A835000A47DA8 /* EmptyRecommendPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyRecommendPageController.swift; sourceTree = "<group>"; };
 		C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticularCollectionViewCell.swift; sourceTree = "<group>"; };
 		C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = runnerpia/Controllers/Main/Particular/PhotoViewController.swift; sourceTree = SOURCE_ROOT; };
 		C850CB942A1CD56F002C2FD5 /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
-		C86550CC2A306AA800DE2904 /* EmptyRecommendPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRecommendPageController.swift; sourceTree = "<group>"; };
 		C86550CE2A306E2900DE2904 /* MyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyView.swift; sourceTree = "<group>"; };
 		C86550D02A306F2400DE2904 /* EmptyReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyReviewController.swift; sourceTree = "<group>"; };
 		C86550D32A306F6300DE2904 /* MyRunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningViewController.swift; sourceTree = "<group>"; };
@@ -397,7 +397,7 @@
 		C86550D22A306F2C00DE2904 /* EmptyView */ = {
 			isa = PBXGroup;
 			children = (
-				C86550CC2A306AA800DE2904 /* EmptyRecommendPageController.swift */,
+				C84D37872A3A835000A47DA8 /* EmptyRecommendPageController.swift */,
 				C86550D02A306F2400DE2904 /* EmptyReviewController.swift */,
 			);
 			path = EmptyView;
@@ -638,7 +638,7 @@
 				C86550D92A3089BC00DE2904 /* MyRunningView.swift in Sources */,
 				C86550CF2A306E2900DE2904 /* MyEmptyView.swift in Sources */,
 				C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */,
-				C86550CD2A306AA800DE2904 /* EmptyRecommendPageController.swift in Sources */,
+				C84D37882A3A835000A47DA8 /* EmptyRecommendPageController.swift in Sources */,
 				C8C9A05A2A33645A004B33FF /* MyReviewCollectionViewCell.swift in Sources */,
 				8898D84E2A29586700EBD50E /* Divider.swift in Sources */,
 				C847CCAC2A1E44A000F0639C /* Route.swift in Sources */,

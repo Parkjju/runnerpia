@@ -12,13 +12,20 @@ import CoreLocation
 final class MyRunningViewController: UIViewController {
     
     // MARK: - Properties
-            
+    
+    weak var emptyRecommendView: MyEmptyView?
+
     var routeData: [Route] = []  {
         didSet {
             let myRunningView = self.view as! MyRunningView
             myRunningView.tableView.reloadData()
         }
     }
+    
+    deinit {
+        print("메모리 해제")
+    }
+
     
     // MARK: - LifeCycle
     
@@ -35,7 +42,7 @@ final class MyRunningViewController: UIViewController {
         setUpData()
         
         configureUI()
-
+        
     }
     
     
@@ -47,6 +54,22 @@ final class MyRunningViewController: UIViewController {
     }
     
     // MARK: - Helpers
+    
+    private func configureEmptyView() {
+        let emptyView = MyEmptyView()
+        emptyView.backgroundColor = .white
+        emptyView.commentLabel.text = "등록된 추천 경로가 없어요. \n 나만의 러닝 경로를 추천해볼까요?"
+        let attributedTitle = NSAttributedString(string: "러닝 시작하기", attributes: [
+            NSAttributedString.Key.font: UIFont.semiBold16,
+            NSAttributedString.Key.foregroundColor: UIColor.white
+        ])
+        emptyView.connectButton.setAttributedTitle(attributedTitle, for: .normal)
+        emptyView.connectButton.addTarget(self, action: #selector(leftBarButtonTapped), for: .touchUpInside)
+        
+        emptyRecommendView = emptyView
+        view = emptyView
+
+    }
     
     // ⭐️ 추후 수정
     func setUpData() {
@@ -64,7 +87,7 @@ final class MyRunningViewController: UIViewController {
             recommendedTags: ["1", "2"],
             secureTags: ["1", "2", "3"]
         )
-        
+
         let secondData = Route(
             user: User(userId: "주영", nickname: "Jess"),
             routeName: "송정 뚝방로",
@@ -79,7 +102,7 @@ final class MyRunningViewController: UIViewController {
             recommendedTags: ["1", "2"],
             secureTags: ["1", "2", "3"]
         )
-        
+
         let thirdData = Route(
             user: User(userId: "주영", nickname: "Jess"),
             routeName: "용인시 수지구",
@@ -94,21 +117,33 @@ final class MyRunningViewController: UIViewController {
             recommendedTags: ["1", "2"],
             secureTags: ["1", "2", "3"]
         )
-        
+
         routeData.append(firstData)
         routeData.append(secondData)
         routeData.append(thirdData)
     }
     
     private func configureUI() {
-        let myRunningView = self.view as! MyRunningView
+        
+        if routeData.isEmpty {
+            let myRunningView = self.view as! MyRunningView
+            self.view = emptyRecommendView
+            emptyRecommendView?.isHidden = false
+            myRunningView.isHidden = true
+            configureEmptyView()
+        } else {
+            let myRunningView = self.view as! MyRunningView
+            emptyRecommendView?.isHidden = true
+            myRunningView.isHidden = false
             myRunningView.tableView.reloadData()
             myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
             myRunningView.tableView.estimatedRowHeight = 167
             myRunningView.tableView.rowHeight = UITableView.automaticDimension
             myRunningView.commentLabel.text = "총 \(routeData.count)개"
         }
-        
+
+    }
+    
     
     private func configureNavigation() {
         navigationController?.navigationBar.tintColor = .black
@@ -136,7 +171,7 @@ extension MyRunningViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyRunningCell", for: indexPath) as! MyRunningViewTableViewCell
-
+        
         let rowData = routeData[indexPath.section]
         cell.cellData = rowData
         
