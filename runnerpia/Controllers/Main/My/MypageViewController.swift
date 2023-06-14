@@ -36,7 +36,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Helpers
     
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .grey100
     }
     
     private func configureNavigation() {
@@ -82,13 +82,11 @@ extension MyPageViewController: MyPageViewDelegate {
     }
     
     func runningRecodeButtonTapped(_ myPageView: MyPageView) {
-        print("러닝 기록 내역")
         let myRunningViewController = MyRunningViewController()
         navigationController?.pushViewController(myRunningViewController, animated: true)
     }
     
     func reviewButtonTapped(_ myPageView: MyPageView) {
-        print("작성한 리뷰")
 //        let emptyReviewController = EmptyReviewController()
 //        navigationController?.pushViewController(emptyReviewController, animated: true)
         

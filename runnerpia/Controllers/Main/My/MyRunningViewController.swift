@@ -140,7 +140,7 @@ final class MyRunningViewController: UIViewController {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 167
+        return 170
     }
     
 }

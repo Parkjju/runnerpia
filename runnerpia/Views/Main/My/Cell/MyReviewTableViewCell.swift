@@ -331,7 +331,6 @@ extension MyReviewTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
             case 2:
                 cell.tagName = "+3"
                 cell.isGradient = true
-                cell.isChecked = true
             default:
                 break
             }

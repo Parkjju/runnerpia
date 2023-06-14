@@ -184,32 +184,32 @@ extension MyRunningViewTableViewCell: LayoutProtocol {
     func setLayout() {
 
         map.snp.makeConstraints {
-            $0.top.equalTo(self.contentView.snp.bottom).offset(10)
+            $0.centerY.equalToSuperview()
+            $0.top.equalTo(self.contentView.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
-            $0.bottom.equalTo(self.contentView.snp.top).offset(-10)
             $0.height.equalTo(136)
             $0.width.equalTo(80)
+            $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
         }
 
         firstStackView.snp.makeConstraints {
-            $0.top.equalTo(self.contentView.snp.top).offset(16)
+            $0.top.equalTo(map.snp.top)
             $0.leading.equalTo(map.snp.trailing).offset(10)
         }
 
         secondStackView.snp.makeConstraints {
             $0.top.equalTo(firstStackView.snp.bottom).offset(10)
-            $0.leading.equalTo(map.snp.trailing).offset(10)
+            $0.leading.equalTo(firstStackView.snp.leading)
         }
 
         tagsCollectionView.snp.makeConstraints {
             $0.top.equalTo(secondStackView.snp.bottom).offset(10)
-            $0.leading.equalTo(map.snp.trailing).offset(10)
+            $0.leading.equalTo(secondStackView.snp.leading)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
-            $0.height.greaterThanOrEqualTo(36)
+            $0.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
+            $0.height.equalTo(30)
         }
     }
-    
-    
 }
 
 extension MyRunningViewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
