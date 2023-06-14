@@ -42,6 +42,10 @@ final class MyRunningViewController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc func leftBarButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Helpers
     
     // ⭐️ 추후 수정
@@ -109,6 +113,9 @@ final class MyRunningViewController: UIViewController {
     private func configureNavigation() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "러닝 기록 내역"
+        let image = UIImage(named: "previousButton")
+        let barButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(leftBarButtonTapped))
+        navigationItem.leftBarButtonItem = barButtonItem
     }
     
     private func configureDelegate() {

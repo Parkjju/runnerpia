@@ -49,6 +49,10 @@ final class MyReviewViewController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc func leftBarButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Helpers
     
     // ⭐️ 추후 수정
@@ -116,6 +120,9 @@ final class MyReviewViewController: UIViewController {
     private func configureNavigation() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "나의 리뷰"
+        let image = UIImage(named: "previousButton")
+        let barButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(leftBarButtonTapped))
+        navigationItem.leftBarButtonItem = barButtonItem
     }
     
     private func configureDelegate() {
