@@ -28,12 +28,10 @@ class MyReviewTableViewCell: UITableViewCell, UITextViewDelegate {
         return label
     }()
 
-    let firstLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .grey100
-        let onePixelHeight = 2 / UIScreen.main.scale
-        view.heightAnchor.constraint(equalToConstant: onePixelHeight).isActive = true
-        return view
+    let firstLineView: Divider = {
+        let divider = Divider()
+        divider.backgroundColor = .grey100
+        return divider
     }()
 
     

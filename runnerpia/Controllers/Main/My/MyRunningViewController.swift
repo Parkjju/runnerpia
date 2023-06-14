@@ -98,12 +98,13 @@ final class MyRunningViewController: UIViewController {
     
     private func configureUI() {
         let myRunningView = self.view as! MyRunningView
-        myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
-        myRunningView.tableView.estimatedRowHeight = 167
-        myRunningView.tableView.rowHeight = UITableView.automaticDimension
+            myRunningView.tableView.reloadData()
+            myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
+            myRunningView.tableView.estimatedRowHeight = 167
+            myRunningView.tableView.rowHeight = UITableView.automaticDimension
+            myRunningView.commentLabel.text = "총 \(routeData.count)개"
+        }
         
-        myRunningView.commentLabel.text = "총 \(routeData.count)개"
-    }
     
     private func configureNavigation() {
         navigationController?.navigationBar.tintColor = .black
@@ -140,7 +141,7 @@ final class MyRunningViewController: UIViewController {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 170
+        return 167
     }
     
 }

@@ -20,6 +20,12 @@ final class MyReviewViewController: UIViewController {
         }
     }
     
+    let secondLineView: Divider = {
+        let divider = Divider()
+        divider.backgroundColor = .grey100
+        return divider
+    }()
+    
     
     // MARK: - LifeCycle
     
@@ -149,3 +155,4 @@ extension MyReviewViewController: UITableViewDataSource, UITableViewDelegate {
     
     
 }
+
