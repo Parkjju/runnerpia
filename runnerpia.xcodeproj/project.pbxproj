@@ -45,7 +45,6 @@
 		C850CB932A1CC605002C2FD5 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */; };
 		C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB942A1CD56F002C2FD5 /* PhotoView.swift */; };
 		C86550CF2A306E2900DE2904 /* MyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550CE2A306E2900DE2904 /* MyEmptyView.swift */; };
-		C86550D12A306F2400DE2904 /* EmptyReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D02A306F2400DE2904 /* EmptyReviewController.swift */; };
 		C86550D42A306F6300DE2904 /* MyRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D32A306F6300DE2904 /* MyRunningViewController.swift */; };
 		C86550D62A306F6E00DE2904 /* MyReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */; };
 		C86550D92A3089BC00DE2904 /* MyRunningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D82A3089BC00DE2904 /* MyRunningView.swift */; };
@@ -114,7 +113,6 @@
 		C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = runnerpia/Controllers/Main/Particular/PhotoViewController.swift; sourceTree = SOURCE_ROOT; };
 		C850CB942A1CD56F002C2FD5 /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		C86550CE2A306E2900DE2904 /* MyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyView.swift; sourceTree = "<group>"; };
-		C86550D02A306F2400DE2904 /* EmptyReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyReviewController.swift; sourceTree = "<group>"; };
 		C86550D32A306F6300DE2904 /* MyRunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningViewController.swift; sourceTree = "<group>"; };
 		C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewViewController.swift; sourceTree = "<group>"; };
 		C86550D82A3089BC00DE2904 /* MyRunningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningView.swift; sourceTree = "<group>"; };
@@ -398,7 +396,6 @@
 			isa = PBXGroup;
 			children = (
 				C84D37872A3A835000A47DA8 /* EmptyRecommendPageController.swift */,
-				C86550D02A306F2400DE2904 /* EmptyReviewController.swift */,
 			);
 			path = EmptyView;
 			sourceTree = "<group>";
@@ -656,7 +653,6 @@
 				C8A684512A2A1F4B00698DA9 /* HalfModalView.swift in Sources */,
 				C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */,
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
-				C86550D12A306F2400DE2904 /* EmptyReviewController.swift in Sources */,
 				C87A56A92A36A50B00F20448 /* ReviewDetailViewController.swift in Sources */,
 				C8F833CC2A24B1C600ED146A /* SearchView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
