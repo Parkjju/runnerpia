@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-final class MyRunningViewController: UIViewController {
+final class MyRunningViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
@@ -141,12 +141,11 @@ final class MyRunningViewController: UIViewController {
             myRunningView.tableView.rowHeight = UITableView.automaticDimension
             myRunningView.commentLabel.text = "총 \(routeData.count)개"
         }
-
     }
-    
-    
+
     private func configureNavigation() {
         navigationController?.navigationBar.tintColor = .black
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationItem.title = "러닝 기록 내역"
         let image = UIImage(named: "previousButton")
         let barButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(leftBarButtonTapped))
@@ -157,6 +156,7 @@ final class MyRunningViewController: UIViewController {
         let myRunningView = self.view as! MyRunningView
         myRunningView.tableView.delegate = self
         myRunningView.tableView.dataSource = self
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
 }
@@ -171,7 +171,7 @@ extension MyRunningViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyRunningCell", for: indexPath) as! MyRunningViewTableViewCell
-        
+        cell.selectionStyle = .none
         let rowData = routeData[indexPath.section]
         cell.cellData = rowData
         

@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-final class MyReviewViewController: UIViewController {
+final class MyReviewViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
@@ -147,6 +147,7 @@ final class MyReviewViewController: UIViewController {
     
     private func configureNavigation() {
         navigationController?.navigationBar.tintColor = .black
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationItem.title = "나의 리뷰"
         let image = UIImage(named: "previousButton")
         let barButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(leftBarButtonTapped))
@@ -157,6 +158,7 @@ final class MyReviewViewController: UIViewController {
         let myReviewView = self.view as! MyReviewView
         myReviewView.tableView.delegate = self
         myReviewView.tableView.dataSource = self
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     
@@ -177,7 +179,7 @@ extension MyReviewViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyReviewCell", for: indexPath) as! MyReviewTableViewCell
-        
+        cell.selectionStyle = .none
         let rowData = routeData[indexPath.section]
         cell.cellData = rowData
         
