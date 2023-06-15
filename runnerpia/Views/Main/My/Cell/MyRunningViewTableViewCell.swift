@@ -22,7 +22,7 @@ class MyRunningViewTableViewCell: UITableViewCell {
         let map = NMFMapView()
         map.allowsScrolling = false
         map.layer.cornerRadius = 10
-        map.positionMode = .direction
+        map.positionMode = .disabled
         return map
     }()
     
