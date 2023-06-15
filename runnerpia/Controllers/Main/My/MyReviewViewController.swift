@@ -12,6 +12,8 @@ import CoreLocation
 final class MyReviewViewController: UIViewController {
     
     // MARK: - Properties
+    
+    weak var emptyReviewView: MyEmptyView?
         
     var routeData: [Route] = []  {
         didSet {
@@ -55,6 +57,23 @@ final class MyReviewViewController: UIViewController {
     
     // MARK: - Helpers
     
+    private func configureEmptyView() {
+        let emptyView = MyEmptyView()
+        emptyView.backgroundColor = .white
+        emptyView.commentLabel.text = "작성한 리뷰가 없어요. \n 나만의 러닝 경로를 추천해볼까요?"
+        let attributedTitle = NSAttributedString(string: "추천 경로 보러가기", attributes: [
+            NSAttributedString.Key.font: UIFont.semiBold16,
+            NSAttributedString.Key.foregroundColor: UIColor.white
+        ])
+        emptyView.connectButton.setAttributedTitle(attributedTitle, for: .normal)
+        emptyView.connectButton.addTarget(self, action: #selector(leftBarButtonTapped), for: .touchUpInside)
+        
+        emptyReviewView = emptyView
+        view = emptyView
+
+    }
+    
+    
     // ⭐️ 추후 수정
     func setUpData() {
         let firstData = Route(
@@ -71,7 +90,7 @@ final class MyReviewViewController: UIViewController {
             recommendedTags: ["1", "2"],
             secureTags: ["1", "2", "3"]
         )
-        
+
         let secondData = Route(
             user: User(userId: "주영", nickname: "Jess"),
             routeName: "송정 뚝방로",
@@ -86,7 +105,7 @@ final class MyReviewViewController: UIViewController {
             recommendedTags: ["1", "2"],
             secureTags: ["1", "2", "3"]
         )
-        
+
         let thirdData = Route(
             user: User(userId: "주영", nickname: "Jess"),
             routeName: "용인시 수지구",
@@ -101,20 +120,29 @@ final class MyReviewViewController: UIViewController {
             recommendedTags: ["1", "2"],
             secureTags: ["1", "2", "3"]
         )
-        
+
         routeData.append(firstData)
         routeData.append(secondData)
         routeData.append(thirdData)
     }
     
     private func configureUI() {
-        let myReviewView = self.view as! MyReviewView
-        myReviewView.tableView.register(MyReviewTableViewCell.self, forCellReuseIdentifier: "MyReviewCell")
-        myReviewView.tableView.estimatedRowHeight = 167
-        myReviewView.tableView.rowHeight = UITableView.automaticDimension
-        myReviewView.tableView.separatorStyle = .none
+        
+        if routeData.isEmpty {
+            let myReviewView = self.view as! MyReviewView
+            self.view = emptyReviewView
+            emptyReviewView?.isHidden = false
+            myReviewView.isHidden = true
+            configureEmptyView()
+        } else {
+            let myReviewView = self.view as! MyReviewView
+            myReviewView.tableView.register(MyReviewTableViewCell.self, forCellReuseIdentifier: "MyReviewCell")
+            myReviewView.tableView.estimatedRowHeight = 167
+            myReviewView.tableView.rowHeight = UITableView.automaticDimension
+            myReviewView.tableView.separatorStyle = .none
 
-        myReviewView.commentLabel.text = "총 \(routeData.count)개"
+            myReviewView.commentLabel.text = "총 \(routeData.count)개"
+        }
     }
     
     private func configureNavigation() {

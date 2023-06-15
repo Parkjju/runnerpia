@@ -28,7 +28,6 @@ final class ParticularRouteController: UIViewController {
             }
         }
     }
-
     
     var mergedTags: [[String]] = [[], []]
     
