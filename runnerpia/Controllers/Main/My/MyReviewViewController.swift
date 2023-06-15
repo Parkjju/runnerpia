@@ -11,6 +11,10 @@ import CoreLocation
 
 final class MyReviewViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    deinit {
+        print("메모리 해제")
+    }
+    
     // MARK: - Properties
     
     weak var emptyReviewView: MyEmptyView?

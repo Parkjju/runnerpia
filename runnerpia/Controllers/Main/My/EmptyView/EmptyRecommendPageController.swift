@@ -34,7 +34,11 @@ final class EmptyRecommendPageController: UIViewController {
     }
     
     @objc func connectButtonTapped() {
-        print("러닝 시작하기")
+        let routeViewController = RouteViewController()
+        routeViewController.navigationController?.isNavigationBarHidden = true
+        let navigationController = UINavigationController(rootViewController: routeViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true, completion: nil)
     }
     
     // MARK: - Helpers
