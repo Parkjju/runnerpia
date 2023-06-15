@@ -87,12 +87,8 @@ extension MyPageViewController: MyPageViewDelegate {
     }
     
     func reviewButtonTapped(_ myPageView: MyPageView) {
-//        let emptyReviewController = EmptyReviewController()
-//        navigationController?.pushViewController(emptyReviewController, animated: true)
-        
         let myReviewViewController = MyReviewViewController()
         navigationController?.pushViewController(myReviewViewController, animated: true)
-        
     }
     
     func logoutButtonTapped(_ myPageView: MyPageView) {
