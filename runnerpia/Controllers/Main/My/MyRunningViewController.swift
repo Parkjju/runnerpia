@@ -24,7 +24,11 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
     
     deinit {
         print("메모리 해제")
+        if emptyRecommendView == nil {
+            print("emptyRecommendView 인스턴스가 해제되었습니다.")
+        }
     }
+
 
     
     // MARK: - LifeCycle
