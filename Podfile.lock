@@ -1,20 +1,24 @@
 PODS:
+  - Alamofire (5.7.1)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.16.2):
     - NMapsGeometry
 
 DEPENDENCIES:
+  - Alamofire
   - NMapsMap
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - NMapsGeometry
     - NMapsMap
 
 SPEC CHECKSUMS:
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
 
-PODFILE CHECKSUM: 40b440cf6b857a4e8ef095648f0112e05757dbbf
+PODFILE CHECKSUM: 26a548e4da2a838ba6fbf566886bd7c9c2238fd4
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.12.0
