@@ -79,6 +79,7 @@ enum UserEndPoint: APIConfiguration{
         }
     }
     
+    // MARK: 액세스토큰은 파라미터에 명시적으로 담아 보내지 않음! - 수정 추후 필요
     var parameters: Alamofire.Parameters?{
         switch self{
         case .kakaoLogin:
@@ -134,7 +135,7 @@ enum RouteEndPoint: APIConfiguration{
     case postRoute(accessToken: String, route: Route)
     case getRoute(accessToken: String, id: Int)
     case getReview(accessToken: String, id: Int)
-    case modifyRoute(accessToken: String, id: Int)
+    case modifyRoute(accessToken: String, modifiedRoute: Route, id: Int)
     case deleteRoute(accessToken: String, id: Int)
     case checkIsRun(accessToken: String, id: Int)
     case getAllRoute(accessToken: String)
@@ -180,37 +181,117 @@ enum RouteEndPoint: APIConfiguration{
         switch self{
         case .postRoute:
             return "/running-route"
-        case .getRoute(let accessToken, let id):
+        case .getRoute(_, let id):
             return "/running-route/main/\(id)"
-        case .getReview(let accessToken, let id):
+        case .getReview(_, let id):
             return "/running-route/sub/\(id)"
-        case .modifyRoute(let accessToken, let id):
+        case .modifyRoute(_, _, let id):
             return "/running-route/\(id)"
-        case .deleteRoute(let accessToken, let id):
+        case .deleteRoute(_, let id):
             return "/running-route/\(id)"
-        case .checkIsRun(let accessToken, let id):
+        case .checkIsRun(_, let id):
             return "/running-route/checkRunningExperience/\(id)"
         case .getAllRoute:
             return "/running-route/allMainRoute"
         case .getAllReview:
             return "/running-route/allSubRoute"
-        case .getRouteFromCoordinate(let accessToken, let longitude, let latitude):
+        case .getRouteFromCoordinate(_, let longitude, let latitude):
             return "/running-route/searchLocation?latitude=\(latitude)&longitude=\(longitude)"
-        case .getRouteFromCityName:
-            return .get
-        case .checkRouteNameIsDuplicated:
-            return .get
-        case .getRecommendedRouteFromCoordinate:
-            return .get
+        case .getRouteFromCityName(_, let city, let state):
+            return "/running-route/searchCity?city=\(city)&state=\(state)"
+        case .checkRouteNameIsDuplicated(_, let routeName):
+            return "/running-route/checkRouteName?routeName=\(routeName)"
+        case .getRecommendedRouteFromCoordinate(_, let longitude, let latitude):
+            return "/running-route/recommendedRoute?latitude=\(latitude)&longitude=\(longitude)"
         case .getPopularTags:
-            return .get
+            return "/running-route/popularTags"
         }
     }
     
-    var parameters: Alamofire.Parameters?
+    // MARK: URL 파라미터도 parameters에 필요한가? - 직접 써보고 수정해보기
+    // MARK: 일단은 제외
+    var parameters: Alamofire.Parameters? {
+        switch self{
+        case .postRoute(_, let route):
+            return [K.APIParameterKey.arrayOfPos: route.arrayOfPos ?? [],
+                    K.APIParameterKey.routeName: route.routeName ?? "",
+                    K.APIParameterKey.runningTime: route.runningTime ?? "",
+                    K.APIParameterKey.review: route.review ?? "",
+                    K.APIParameterKey.runningDate: route.runningDate ?? "",
+                    K.APIParameterKey.distance: route.distance ?? "",
+                    // routeImage속성은 삭제
+                    K.APIParameterKey.files: route.files ?? [],
+                    K.APIParameterKey.firstLocation: route.location ?? "",
+                    K.APIParameterKey.secondLocation: route.location ?? "",
+                    K.APIParameterKey.thirdLocation: route.location ?? "",
+                    K.APIParameterKey.recommendedTags: route.recommendedTags ?? [],
+                    K.APIParameterKey.secureTags: route.secureTags ?? [],
+//                    K.APIParameterKey.mainRoute: route.routeName
+                    
+            ]
+        case .getRoute:
+            return [:]
+        case .getReview:
+            return [:]
+        // MARK: 수정 대상 데이터만 선택해서 저장 - Loopable 프로토콜 채택
+        // MARK: try - catch 잘 이루어지는지 확인 필요
+        case .modifyRoute(_, let modifiedRoute, _):
+            guard let props = try? modifiedRoute.allProperties() else {return nil}
+            return props
+        case .deleteRoute:
+            return [:]
+        case .checkIsRun:
+            return [:]
+        case .getAllRoute:
+            return [:]
+        case .getAllReview:
+            return [:]
+        case .getRouteFromCoordinate(_,let longitude, let latitude):
+            return [
+                K.APIParameterKey.longitude: longitude,
+                K.APIParameterKey.latitude: latitude
+            ]
+        case .getRouteFromCityName(_, let city, let state):
+            return [
+                K.APIParameterKey.city: city,
+                K.APIParameterKey.state: state
+            ]
+        case .checkRouteNameIsDuplicated(_, let routeName):
+            return [
+                K.APIParameterKey.routeName: routeName
+            ]
+        case .getRecommendedRouteFromCoordinate(_ , let longitude, let  latitude):
+            return [
+                K.APIParameterKey.longitude: longitude,
+                K.APIParameterKey.latitude: latitude
+            ]
+        case .getPopularTags:
+            return [:]
+        }
+    }
     
     func asURLRequest() throws -> URLRequest {
-        <#code#>
+        let url = try K.ProductionServer.baseURL.asURL()
+        
+        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+        
+        // HTTP Method
+        urlRequest.httpMethod = method.rawValue
+        
+        // Common Headers
+        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.acceptType.rawValue)
+        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
+ 
+        // Parameters
+        if let parameters = parameters {
+            do {
+                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            } catch {
+                throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
+            }
+        }
+        
+        return urlRequest
     }
     
     
