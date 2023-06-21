@@ -38,7 +38,7 @@ struct K {
         static let review = "review"
         static let runningDate = "runningDate"
         static let distance = "distance"
-        static let routeImage = "routeImage"
+//        static let routeImage = "routeImage"
         static let files = "files"
         static let firstLocation = "firstLocation" // MARK: Location 하나로 통합 예정
         static let secondLocation = "secondLocation" // MARK: Location 하나로 통합 예정
