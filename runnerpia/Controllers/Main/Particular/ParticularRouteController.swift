@@ -28,7 +28,6 @@ final class ParticularRouteController: UIViewController {
             }
         }
     }
-
     
     var mergedTags: [[String]] = [[], []]
     
@@ -63,6 +62,26 @@ final class ParticularRouteController: UIViewController {
     // MARK: - Selectors
     
     // MARK: - Helpers
+    
+    func setupData() -> Route {
+           let firstData = Route(
+               user: User(userId: "주영", nickname: "주영"),
+               routeName: "송정 뚝방길",
+               distance: 20,
+               arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),
+                            CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),
+                            CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)],
+               location: "ㅁ",
+               runningTime: "",
+               review: "성동구에서 가장 안전한 루트를 소개합니다~!",
+               runningDate: "",
+               recommendedTags: ["1", "2"],
+               secureTags: ["1", "2", "3"],
+               files: [#imageLiteral(resourceName: "random6"), #imageLiteral(resourceName: "random4"), #imageLiteral(resourceName: "random5"), #imageLiteral(resourceName: "random1")]
+           )
+           
+           return firstData
+       }
     
     private func configureUI() {
         particularView.collectionView.tag = 1

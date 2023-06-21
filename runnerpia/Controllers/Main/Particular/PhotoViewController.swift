@@ -17,7 +17,7 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
     
     //  ⚠️ 추후 수정
     var data: Route?
-
+    
                   
     // MARK: - LifeCycle
     

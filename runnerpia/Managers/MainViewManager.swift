@@ -30,9 +30,7 @@ class MainViewManager {
         
         setTapBarController()
         
-//        rootViewController = SearchViewController()
-//        rootViewController = ParticularRouteController()
-        
+  
         // 로그인메서드 추가
     }
 
@@ -54,13 +52,13 @@ class MainViewManager {
         tabBarViewController.tabBar.tintColor = .black
         
         guard let items = tabBarViewController.tabBar.items else { return }
-        items[0].image = UIImage(named: "Route")
-        items[0].selectedImage = UIImage(named: "Route")
+        items[0].image = UIImage(named: "route")
+        items[0].selectedImage = UIImage(named: "route")?.withRenderingMode(.alwaysOriginal)
         items[0].title = "경로 따라가기"
         items[1].image = UIImage(named: "homeButton")
-        items[1].selectedImage = UIImage(named: "homeButton")
-        items[2].image = UIImage(named: "Mypage")
-        items[2].selectedImage = UIImage(named: "Mypage")
+        items[1].selectedImage = UIImage(named: "homeButton")?.withRenderingMode(.alwaysOriginal)
+        items[2].image = UIImage(named: "myPage")
+        items[2].selectedImage = UIImage(named: "myPage")?.withRenderingMode(.alwaysOriginal)
         items[2].title = "마이"
         
         

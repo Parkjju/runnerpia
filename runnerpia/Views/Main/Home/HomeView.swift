@@ -15,10 +15,10 @@ class HomeView: UIView {
     // ------ mainImage
     private lazy var mainImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "mainImage")
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
+        imageView.backgroundColor = .white
         return imageView
     }()
     
@@ -220,7 +220,7 @@ extension HomeView: LayoutProtocol {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(335)
             $0.height.equalTo(109)
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(35)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
@@ -238,7 +238,7 @@ extension HomeView: LayoutProtocol {
             $0.height.equalTo(364)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(mainImage.snp.bottom).offset(10)
+            $0.top.equalTo(mainImage.snp.bottom).offset(20)
         }
 
         

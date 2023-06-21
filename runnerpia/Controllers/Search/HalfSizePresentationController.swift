@@ -13,7 +13,6 @@ class HalfSizePresentationController: UIPresentationController {
     // MARK: - Properties
     
     let blurEffectView = UIView()
-
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     var check: Bool = false
     
@@ -21,14 +20,22 @@ class HalfSizePresentationController: UIPresentationController {
     
     @objc func dismissController() {
         self.presentedViewController.dismiss(animated: true) {
-            let tabBar = self.presentingViewController as! UITabBarController
-            let homeNavigationVC = tabBar.viewControllers?[1] as! UINavigationController
-            let searchVC = homeNavigationVC.viewControllers[1] as! SearchViewController
             
-            searchVC.pathOverlay.color = .clear
-            searchVC.locationManager.startUpdatingLocation()
-            searchVC.searchView.map.positionMode = .direction
+            // ⭐️ 수정
             
+            if let searchViewController = self.presentingViewController as? SearchViewController {
+                searchViewController.pathOverlay.color = .clear
+                searchViewController.locationManager.startUpdatingLocation()
+                searchViewController.searchView.map.positionMode = .direction
+            } else {
+
+            }
+
+//            let searchViewController = self.presentingViewController as! SearchViewController
+//            searchViewController.pathOverlay.color = .clear
+//            searchViewController.locationManager.startUpdatingLocation()
+//            searchViewController.searchView.map.positionMode = .direction
+
         }
     }
     
@@ -59,11 +66,17 @@ class HalfSizePresentationController: UIPresentationController {
         self.containerView!.addSubview(blurEffectView)
         self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in self.blurEffectView.alpha = 0.1 }, completion: nil)
         
-        let tabBar = self.presentingViewController as! UITabBarController
-        let homeNavigationVC = tabBar.viewControllers?[1] as! UINavigationController
-        let searchVC = homeNavigationVC.viewControllers[1] as! SearchViewController
-        
-        searchVC.pathOverlay.color = .blue400
+        // ⭐️ 수정
+        //                var presentingVC = presentingViewController as! HalfModalPresentationController
+//        var searchVC = self.presentingViewController as! SearchViewController
+        if let searchVC = self.presentingViewController as? SearchViewController {
+            searchVC.pathOverlay.color = .blue400
+
+        } else {
+ 
+        }
+
+
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {

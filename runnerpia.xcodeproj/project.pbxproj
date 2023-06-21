@@ -13,8 +13,6 @@
 		88566E312A2DE6FF000833A1 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E302A2DE6FF000833A1 /* TabBarController.swift */; };
 		88566E352A2F2D56000833A1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E332A2F2D56000833A1 /* PostViewController.swift */; };
 		88566E362A2F2D56000833A1 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E342A2F2D56000833A1 /* PostDetailViewController.swift */; };
-		88566E462A30CBED000833A1 /* ReviewMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E452A30CBED000833A1 /* ReviewMainViewController.swift */; };
-		88566E482A30CC00000833A1 /* ReviewMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88566E472A30CC00000833A1 /* ReviewMainView.swift */; };
 		8898D84D2A29586700EBD50E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84B2A29586700EBD50E /* TagCollectionViewCell.swift */; };
 		8898D84E2A29586700EBD50E /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84C2A29586700EBD50E /* Divider.swift */; };
 		8898D8502A29587900EBD50E /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D84F2A29587900EBD50E /* PhotoCollectionViewCell.swift */; };
@@ -24,8 +22,6 @@
 		8898D85B2A29591300EBD50E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D8592A29591300EBD50E /* PostViewController.swift */; };
 		8898D85D2A29594200EBD50E /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898D85C2A29594200EBD50E /* UITextField.swift */; };
 		88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A603032A119DF100CBB6B8 /* RouteRecordView.swift */; };
-		88B7560A2A31E22000B701C6 /* ReviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B756092A31E22000B701C6 /* ReviewDetailViewController.swift */; };
-		88B7560C2A31E22E00B701C6 /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B7560B2A31E22E00B701C6 /* ReviewDetailView.swift */; };
 		88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DB2A02985900A240BD /* AppDelegate.swift */; };
 		88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DD2A02985A00A240BD /* SceneDelegate.swift */; };
 		88C189E02A02985A00A240BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189DF2A02985A00A240BD /* ViewController.swift */; };
@@ -44,25 +40,37 @@
 		C847CCA82A1E447000F0639C /* RecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847CCA62A1E447000F0639C /* RecommendView.swift */; };
 		C847CCAB2A1E44A000F0639C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847CCA92A1E44A000F0639C /* User.swift */; };
 		C847CCAC2A1E44A000F0639C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847CCAA2A1E44A000F0639C /* Route.swift */; };
+		C84D37882A3A835000A47DA8 /* EmptyRecommendPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84D37872A3A835000A47DA8 /* EmptyRecommendPageController.swift */; };
 		C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */; };
 		C850CB932A1CC605002C2FD5 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */; };
 		C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850CB942A1CD56F002C2FD5 /* PhotoView.swift */; };
+		C86550CF2A306E2900DE2904 /* MyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550CE2A306E2900DE2904 /* MyEmptyView.swift */; };
+		C86550D42A306F6300DE2904 /* MyRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D32A306F6300DE2904 /* MyRunningViewController.swift */; };
+		C86550D62A306F6E00DE2904 /* MyReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */; };
+		C86550D92A3089BC00DE2904 /* MyRunningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550D82A3089BC00DE2904 /* MyRunningView.swift */; };
+		C86550DB2A308F8C00DE2904 /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550DA2A308F8C00DE2904 /* MyReviewView.swift */; };
+		C86550DE2A30917100DE2904 /* MyRunningViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86550DD2A30917100DE2904 /* MyRunningViewTableViewCell.swift */; };
 		C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B42A10BBB100A4E12A /* HomeViewController.swift */; };
 		C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B62A10BBB900A4E12A /* HomeView.swift */; };
 		C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */; };
 		C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */; };
 		C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */; };
 		C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */; };
+		C87A56A02A36A46E00F20448 /* ReviewMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A569E2A36A46E00F20448 /* ReviewMainView.swift */; };
+		C87A56A12A36A46E00F20448 /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A569F2A36A46E00F20448 /* ReviewDetailView.swift */; };
+		C87A56A82A36A50B00F20448 /* ReviewMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A56A62A36A50B00F20448 /* ReviewMainViewController.swift */; };
+		C87A56A92A36A50B00F20448 /* ReviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87A56A72A36A50B00F20448 /* ReviewDetailViewController.swift */; };
 		C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */; };
 		C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886B9112A1B8933006BE2CD /* ParticularView.swift */; };
 		C89A26F72A249570006FD929 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89A26F62A249570006FD929 /* UIFont.swift */; };
 		C8A6844F2A2A17C400698DA9 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A6844E2A2A17C400698DA9 /* HalfModalPresentationController.swift */; };
 		C8A684512A2A1F4B00698DA9 /* HalfModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A684502A2A1F4B00698DA9 /* HalfModalView.swift */; };
 		C8AE07E82A2E06CA009C1CFD /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AE07E72A2E06CA009C1CFD /* HalfSizePresentationController.swift */; };
+		C8C704202A2F69A2004D3A26 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C7041F2A2F69A2004D3A26 /* MyPageView.swift */; };
+		C8C9A0572A31F261004B33FF /* MyReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A0562A31F261004B33FF /* MyReviewTableViewCell.swift */; };
+		C8C9A05A2A33645A004B33FF /* MyReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A0592A33645A004B33FF /* MyReviewCollectionViewCell.swift */; };
 		C8F833C92A24B17500ED146A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F833C82A24B17500ED146A /* SearchViewController.swift */; };
 		C8F833CC2A24B1C600ED146A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F833CB2A24B1C600ED146A /* SearchView.swift */; };
-		C95C30682A381A2000724002 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95C30672A381A2000724002 /* APIRouter.swift */; };
-		C95C306A2A381FED00724002 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95C30692A381FED00724002 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,8 +81,6 @@
 		88566E302A2DE6FF000833A1 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		88566E332A2F2D56000833A1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Post/PostViewController.swift; sourceTree = "<group>"; };
 		88566E342A2F2D56000833A1 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Post/PostDetailViewController.swift; sourceTree = "<group>"; };
-		88566E452A30CBED000833A1 /* ReviewMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMainViewController.swift; sourceTree = "<group>"; };
-		88566E472A30CC00000833A1 /* ReviewMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMainView.swift; sourceTree = "<group>"; };
 		8898D84B2A29586700EBD50E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		8898D84C2A29586700EBD50E /* Divider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		8898D84F2A29587900EBD50E /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -84,8 +90,6 @@
 		8898D8592A29591300EBD50E /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Main/Post/PostViewController.swift; sourceTree = "<group>"; };
 		8898D85C2A29594200EBD50E /* UITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		88A603032A119DF100CBB6B8 /* RouteRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteRecordView.swift; sourceTree = "<group>"; };
-		88B756092A31E22000B701C6 /* ReviewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewController.swift; sourceTree = "<group>"; };
-		88B7560B2A31E22E00B701C6 /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		88C189D82A02985900A240BD /* runnerpia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = runnerpia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88C189DB2A02985900A240BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88C189DD2A02985A00A240BD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,25 +108,37 @@
 		C847CCA62A1E447000F0639C /* RecommendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendView.swift; sourceTree = "<group>"; };
 		C847CCA92A1E44A000F0639C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C847CCAA2A1E44A000F0639C /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		C84D37872A3A835000A47DA8 /* EmptyRecommendPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyRecommendPageController.swift; sourceTree = "<group>"; };
 		C850CB902A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticularCollectionViewCell.swift; sourceTree = "<group>"; };
 		C850CB922A1CC605002C2FD5 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = runnerpia/Controllers/Main/Particular/PhotoViewController.swift; sourceTree = SOURCE_ROOT; };
 		C850CB942A1CD56F002C2FD5 /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
+		C86550CE2A306E2900DE2904 /* MyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyView.swift; sourceTree = "<group>"; };
+		C86550D32A306F6300DE2904 /* MyRunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningViewController.swift; sourceTree = "<group>"; };
+		C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewViewController.swift; sourceTree = "<group>"; };
+		C86550D82A3089BC00DE2904 /* MyRunningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningView.swift; sourceTree = "<group>"; };
+		C86550DA2A308F8C00DE2904 /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
+		C86550DD2A30917100DE2904 /* MyRunningViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRunningViewTableViewCell.swift; sourceTree = "<group>"; };
 		C86646B42A10BBB100A4E12A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = runnerpia/Controllers/Main/Home/HomeViewController.swift; sourceTree = SOURCE_ROOT; };
 		C86646B62A10BBB900A4E12A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = runnerpia/Views/Main/Home/HomeView.swift; sourceTree = SOURCE_ROOT; };
 		C86646B82A10BBEC00A4E12A /* LayoutProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutProtocols.swift; sourceTree = "<group>"; };
 		C86646BB2A10BD0A00A4E12A /* MainViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewManager.swift; sourceTree = "<group>"; };
 		C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MypageViewController.swift; path = runnerpia/Controllers/Main/My/MypageViewController.swift; sourceTree = SOURCE_ROOT; };
 		C86646BF2A10BDEC00A4E12A /* RouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RouteViewController.swift; path = runnerpia/Controllers/Main/RouteViewController.swift; sourceTree = SOURCE_ROOT; };
+		C87A569E2A36A46E00F20448 /* ReviewMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewMainView.swift; path = Review/ReviewMainView.swift; sourceTree = "<group>"; };
+		C87A569F2A36A46E00F20448 /* ReviewDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewDetailView.swift; path = Review/ReviewDetailView.swift; sourceTree = "<group>"; };
+		C87A56A62A36A50B00F20448 /* ReviewMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewMainViewController.swift; path = Review/ReviewMainViewController.swift; sourceTree = "<group>"; };
+		C87A56A72A36A50B00F20448 /* ReviewDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewDetailViewController.swift; path = Review/ReviewDetailViewController.swift; sourceTree = "<group>"; };
 		C886B90F2A1B8906006BE2CD /* ParticularRouteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ParticularRouteController.swift; path = runnerpia/Controllers/Main/Particular/ParticularRouteController.swift; sourceTree = SOURCE_ROOT; };
 		C886B9112A1B8933006BE2CD /* ParticularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticularView.swift; sourceTree = "<group>"; };
 		C89A26F62A249570006FD929 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		C8A6844E2A2A17C400698DA9 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
 		C8A684502A2A1F4B00698DA9 /* HalfModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfModalView.swift; sourceTree = "<group>"; };
 		C8AE07E72A2E06CA009C1CFD /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
+		C8C7041F2A2F69A2004D3A26 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		C8C9A0562A31F261004B33FF /* MyReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewTableViewCell.swift; sourceTree = "<group>"; };
+		C8C9A0592A33645A004B33FF /* MyReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		C8F833C82A24B17500ED146A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C8F833CB2A24B1C600ED146A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		C95C30672A381A2000724002 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
-		C95C30692A381FED00724002 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FD26A4388A2F477280BCBFA7 /* Pods_runnerpia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_runnerpia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC1BDC7FCC4682C38EED567 /* Pods-runnerpia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnerpia.release.xcconfig"; path = "Target Support Files/Pods-runnerpia/Pods-runnerpia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,24 +172,6 @@
 				88566E332A2F2D56000833A1 /* PostViewController.swift */,
 			);
 			name = Post;
-			sourceTree = "<group>";
-		};
-		88566E432A30CBBD000833A1 /* Review */ = {
-			isa = PBXGroup;
-			children = (
-				88566E452A30CBED000833A1 /* ReviewMainViewController.swift */,
-				88B756092A31E22000B701C6 /* ReviewDetailViewController.swift */,
-			);
-			path = Review;
-			sourceTree = "<group>";
-		};
-		88566E442A30CBC5000833A1 /* Review */ = {
-			isa = PBXGroup;
-			children = (
-				88566E472A30CC00000833A1 /* ReviewMainView.swift */,
-				88B7560B2A31E22E00B701C6 /* ReviewDetailView.swift */,
-			);
-			path = Review;
 			sourceTree = "<group>";
 		};
 		8898D8522A2958C000EBD50E /* Post */ = {
@@ -225,7 +223,6 @@
 			children = (
 				88C189DB2A02985900A240BD /* AppDelegate.swift */,
 				88C189DD2A02985A00A240BD /* SceneDelegate.swift */,
-				C95C30662A381A0D00724002 /* Network */,
 				C847CC932A1E43CD00F0639C /* Util */,
 				88C189F12A0298EC00A240BD /* Models */,
 				88C189F02A0298E500A240BD /* Views */,
@@ -302,7 +299,6 @@
 				C847CC942A1E43CD00F0639C /* Constraints.swift */,
 				C847CC952A1E43CD00F0639C /* LeftAlignedCollectionViewFlowLayout.swift */,
 				C847CC962A1E43CD00F0639C /* Tags.swift */,
-				C95C30692A381FED00724002 /* Constants.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -380,6 +376,9 @@
 			isa = PBXGroup;
 			children = (
 				C86646BD2A10BD8C00A4E12A /* MypageViewController.swift */,
+				C86550D32A306F6300DE2904 /* MyRunningViewController.swift */,
+				C86550D52A306F6E00DE2904 /* MyReviewViewController.swift */,
+				C86550D22A306F2C00DE2904 /* EmptyView */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -393,6 +392,24 @@
 			path = Particular;
 			sourceTree = "<group>";
 		};
+		C86550D22A306F2C00DE2904 /* EmptyView */ = {
+			isa = PBXGroup;
+			children = (
+				C84D37872A3A835000A47DA8 /* EmptyRecommendPageController.swift */,
+			);
+			path = EmptyView;
+			sourceTree = "<group>";
+		};
+		C86550DC2A30916500DE2904 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C86550DD2A30917100DE2904 /* MyRunningViewTableViewCell.swift */,
+				C8C9A0562A31F261004B33FF /* MyReviewTableViewCell.swift */,
+				C8C9A0592A33645A004B33FF /* MyReviewCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		C86646BA2A10BCFC00A4E12A /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,6 +417,36 @@
 				88566E2A2A2A1953000833A1 /* UserLocationManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		C87A56942A36A36E00F20448 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				C87A569F2A36A46E00F20448 /* ReviewDetailView.swift */,
+				C87A569E2A36A46E00F20448 /* ReviewMainView.swift */,
+			);
+			name = Review;
+			sourceTree = "<group>";
+		};
+		C87A56992A36A3A000F20448 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				C87A56A72A36A50B00F20448 /* ReviewDetailViewController.swift */,
+				C87A56A62A36A50B00F20448 /* ReviewMainViewController.swift */,
+			);
+			name = Review;
+			sourceTree = "<group>";
+		};
+		C8C7041E2A2F6994004D3A26 /* My */ = {
+			isa = PBXGroup;
+			children = (
+				C86550DC2A30916500DE2904 /* Cell */,
+				C8C7041F2A2F69A2004D3A26 /* MyPageView.swift */,
+				C86550CE2A306E2900DE2904 /* MyEmptyView.swift */,
+				C86550D82A3089BC00DE2904 /* MyRunningView.swift */,
+				C86550DA2A308F8C00DE2904 /* MyReviewView.swift */,
+			);
+			path = My;
 			sourceTree = "<group>";
 		};
 		C8F833C72A24B16100ED146A /* Search */ = {
@@ -421,18 +468,10 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
-		C95C30662A381A0D00724002 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				C95C30672A381A2000724002 /* APIRouter.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		C9AD727D2A10675E005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				88566E432A30CBBD000833A1 /* Review */,
+				C87A56992A36A3A000F20448 /* Review */,
 				88566E322A2F2D4A000833A1 /* Post */,
 				8898D85F2A295C9D00EBD50E /* Route */,
 				C847CCAF2A1E4F5D00F0639C /* Home */,
@@ -445,7 +484,8 @@
 		C9AD727F2A106769005B9B5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				88566E442A30CBC5000833A1 /* Review */,
+				C87A56942A36A36E00F20448 /* Review */,
+				C8C7041E2A2F6994004D3A26 /* My */,
 				8898D8522A2958C000EBD50E /* Post */,
 				C847CCAD2A1E4F2B00F0639C /* Home */,
 				C9AD72802A10676D005B9B5B /* Route */,
@@ -585,15 +625,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8F833C92A24B17500ED146A /* SearchViewController.swift in Sources */,
-				C95C30682A381A2000724002 /* APIRouter.swift in Sources */,
+				C86550D62A306F6E00DE2904 /* MyReviewViewController.swift in Sources */,
 				88566E362A2F2D56000833A1 /* PostDetailViewController.swift in Sources */,
 				C86646BE2A10BD8C00A4E12A /* MypageViewController.swift in Sources */,
 				C86646B52A10BBB100A4E12A /* HomeViewController.swift in Sources */,
 				C847CC992A1E43CD00F0639C /* Tags.swift in Sources */,
 				88C189E02A02985A00A240BD /* ViewController.swift in Sources */,
 				88566E352A2F2D56000833A1 /* PostViewController.swift in Sources */,
+				C86550D92A3089BC00DE2904 /* MyRunningView.swift in Sources */,
+				C86550CF2A306E2900DE2904 /* MyEmptyView.swift in Sources */,
 				C850CB952A1CD56F002C2FD5 /* PhotoView.swift in Sources */,
-				88B7560C2A31E22E00B701C6 /* ReviewDetailView.swift in Sources */,
+				C84D37882A3A835000A47DA8 /* EmptyRecommendPageController.swift in Sources */,
+				C8C9A05A2A33645A004B33FF /* MyReviewCollectionViewCell.swift in Sources */,
 				8898D84E2A29586700EBD50E /* Divider.swift in Sources */,
 				C847CCAC2A1E44A000F0639C /* Route.swift in Sources */,
 				C8A6844F2A2A17C400698DA9 /* HalfModalPresentationController.swift in Sources */,
@@ -603,12 +646,14 @@
 				8898D8562A2958CD00EBD50E /* PostDetailView.swift in Sources */,
 				8898D85B2A29591300EBD50E /* PostViewController.swift in Sources */,
 				C86646BC2A10BD0A00A4E12A /* MainViewManager.swift in Sources */,
+				C86550DB2A308F8C00DE2904 /* MyReviewView.swift in Sources */,
+				C86550DE2A30917100DE2904 /* MyRunningViewTableViewCell.swift in Sources */,
 				8898D85A2A29591300EBD50E /* PostDetailViewController.swift in Sources */,
 				C86646B72A10BBB900A4E12A /* HomeView.swift in Sources */,
 				C8A684512A2A1F4B00698DA9 /* HalfModalView.swift in Sources */,
 				C850CB912A1BA9C2002C2FD5 /* ParticularCollectionViewCell.swift in Sources */,
 				88A603042A119DF100CBB6B8 /* RouteRecordView.swift in Sources */,
-				88566E482A30CC00000833A1 /* ReviewMainView.swift in Sources */,
+				C87A56A92A36A50B00F20448 /* ReviewDetailViewController.swift in Sources */,
 				C8F833CC2A24B1C600ED146A /* SearchView.swift in Sources */,
 				88C189DC2A02985900A240BD /* AppDelegate.swift in Sources */,
 				88566E2B2A2A1953000833A1 /* UserLocationManager.swift in Sources */,
@@ -616,23 +661,26 @@
 				C847CC972A1E43CD00F0639C /* Constraints.swift in Sources */,
 				C847CCA72A1E447000F0639C /* RecommendTableViewCell.swift in Sources */,
 				8898D8502A29587900EBD50E /* PhotoCollectionViewCell.swift in Sources */,
-				88B7560A2A31E22000B701C6 /* ReviewDetailViewController.swift in Sources */,
+				C86550D42A306F6300DE2904 /* MyRunningViewController.swift in Sources */,
 				88C189DE2A02985A00A240BD /* SceneDelegate.swift in Sources */,
 				C847CC922A1E43BF00F0639C /* UIView.swift in Sources */,
-				C95C306A2A381FED00724002 /* Constants.swift in Sources */,
 				C886B9122A1B8933006BE2CD /* ParticularView.swift in Sources */,
+				C8C9A0572A31F261004B33FF /* MyReviewTableViewCell.swift in Sources */,
+				C87A56A02A36A46E00F20448 /* ReviewMainView.swift in Sources */,
 				884F6DEE2A120A6E007B7F73 /* UIImage.swift in Sources */,
+				C8C704202A2F69A2004D3A26 /* MyPageView.swift in Sources */,
 				C847CC982A1E43CD00F0639C /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
+				C87A56A82A36A50B00F20448 /* ReviewMainViewController.swift in Sources */,
 				8898D85D2A29594200EBD50E /* UITextField.swift in Sources */,
 				8898D8552A2958CD00EBD50E /* PostView.swift in Sources */,
 				8898D84D2A29586700EBD50E /* TagCollectionViewCell.swift in Sources */,
-				88566E462A30CBED000833A1 /* ReviewMainViewController.swift in Sources */,
 				88566E312A2DE6FF000833A1 /* TabBarController.swift in Sources */,
 				C886B9102A1B8906006BE2CD /* ParticularRouteController.swift in Sources */,
 				C86646C02A10BDEC00A4E12A /* RouteViewController.swift in Sources */,
 				C89A26F72A249570006FD929 /* UIFont.swift in Sources */,
 				C847CC9F2A1E443100F0639C /* RecommendViewController.swift in Sources */,
 				C86646B92A10BBEC00A4E12A /* LayoutProtocols.swift in Sources */,
+				C87A56A12A36A46E00F20448 /* ReviewDetailView.swift in Sources */,
 				C8AE07E82A2E06CA009C1CFD /* HalfSizePresentationController.swift in Sources */,
 				C847CCA82A1E447000F0639C /* RecommendView.swift in Sources */,
 			);
@@ -782,7 +830,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5JQS3FU5R6;
+				DEVELOPMENT_TEAM = C52UTF3KCV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = runnerpia/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -815,7 +863,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5JQS3FU5R6;
+				DEVELOPMENT_TEAM = C52UTF3KCV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = runnerpia/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
