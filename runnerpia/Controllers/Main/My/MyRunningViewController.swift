@@ -60,7 +60,9 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
     // MARK: - Helpers
     
     private func configureEmptyView() {
+        
         let emptyView = MyEmptyView()
+
         emptyView.backgroundColor = .white
         emptyView.commentLabel.text = "등록된 추천 경로가 없어요. \n 나만의 러닝 경로를 추천해볼까요?"
         let attributedTitle = NSAttributedString(string: "러닝 시작하기", attributes: [
@@ -72,6 +74,7 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         
         emptyRecommendView = emptyView
         view = emptyView
+
 
     }
     

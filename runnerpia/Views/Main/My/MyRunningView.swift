@@ -70,7 +70,7 @@ extension MyRunningView: LayoutProtocol {
         
         tableView.snp.makeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom).offset(14)
-            $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
+            $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
             $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-14)
             
