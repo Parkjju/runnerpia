@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 import UIKit
 
-struct Route{
+struct Route: Loopable{
     let user: User?
     let routeName: String?
     let distance: Double?
