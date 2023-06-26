@@ -6,11 +6,11 @@
 //
 
 import Foundation
-//HTTP : http://pien.kr:3000
-//HTTPS: https://server.pien.kr:3000
+//HTTP : http://pien.kr:4500
+//HTTPS: https://server.pien.kr:4500
 struct K {
     struct ProductionServer {
-        static let baseURL = "https://server.pien.kr:3000"
+        static let baseURL = "https://server.pien.kr:4500"
     }
     
     struct APIParameterKey {
@@ -40,9 +40,7 @@ struct K {
         static let distance = "distance"
 //        static let routeImage = "routeImage"
         static let files = "files"
-        static let firstLocation = "firstLocation" // MARK: Location 하나로 통합 예정
-        static let secondLocation = "secondLocation" // MARK: Location 하나로 통합 예정
-        static let thirdLocation = "thirdLocation" // MARK: Location 하나로 통합 예정
+        static let location = "location"
         static let mainRoute = "mainRoute"
         static let id = "id"
         static let user = "user"
