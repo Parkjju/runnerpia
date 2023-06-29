@@ -285,9 +285,7 @@ enum RouteEndPoint: APIConfiguration{
         // Parameters
         if let parameters = parameters {
             do {
-                print(parameters)
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-                print(String(data: urlRequest.httpBody!, encoding: .utf8))
             } catch {
                 throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
             } 

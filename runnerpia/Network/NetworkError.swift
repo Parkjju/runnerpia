@@ -9,13 +9,12 @@ import Foundation
 
 struct NetworkError: Codable, Error{
     let statusCode: Int
-    let message: String
-//    let error: String
+    let message: [String]
+    let error: String
+    
+    enum CodingKeys: String, CodingKey{
+        case statusCode = "statusCode"
+        case message = "message"
+        case error = "error"
+    }
 }
-//{
-//    "statusCode": 403,
-//    "message": [
-//        "Already Existed routeName"
-//    ],
-//    "error": "Forbidden"
-//}

@@ -243,7 +243,7 @@ extension PostDetailViewController: PostDetailViewEventDelegate{
             Coordinate(latitude: "37.33128013", longitude: "-122.03073774"),
             Coordinate(latitude: "37.33128013", longitude: "-122.03073774")
             ],
-        routeName: "송정뚝방길22222",
+        routeName: "송정뚝방길ewfoijioj",
         runningTime: "01:01:01",
         review: "testReview",
         runningDate: "2022-01-01",
@@ -262,8 +262,15 @@ extension PostDetailViewController: PostDetailViewEventDelegate{
             switch result{
             case .success(let data):
                 print(data)
-            case .failure(let error):
-                print(error)
+            case .failure:
+                APIClient.retryAPIRequest(routeData: routeForServer, retryEndPoint: .postRoute(accessToken: "", route: routeForServer)) { result in
+                    switch result{
+                    case .success(let error):
+                        print(error)
+                    case .failure(let fatalError):
+                        print(fatalError)
+                    }
+                }
             }
         }
         

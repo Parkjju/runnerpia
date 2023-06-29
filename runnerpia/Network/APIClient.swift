@@ -21,4 +21,10 @@ class APIClient {
     static func postRoute(routeData: RouteForServer, completion: @escaping (Result<RouteId, AFError>) -> Void){
         performRequest(route: .postRoute(accessToken: "", route: routeData), completion: completion)
     }
+    
+    static func retryAPIRequest(routeData: RouteForServer, retryEndPoint: RouteEndPoint, completion: @escaping (Result<NetworkError, AFError>) -> Void){
+        performRequest(route: retryEndPoint, completion: completion)
+    }
+    
+    
 }
