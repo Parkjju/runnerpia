@@ -21,4 +21,8 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 26a548e4da2a838ba6fbf566886bd7c9c2238fd4
 
+<<<<<<< HEAD
 COCOAPODS: 1.12.1
+=======
+COCOAPODS: 1.11.3
+>>>>>>> feat/network
