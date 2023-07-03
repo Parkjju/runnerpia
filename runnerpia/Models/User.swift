@@ -7,7 +7,14 @@
 
 import Foundation
 
-struct User{
-    let userId: String?
-    let nickname: String?
+struct User: Codable{
+    let userId: String
+    let nickname: String
+}
+
+extension User{
+    enum CodingKeys: String, CodingKey{
+        case userId = "userId"
+        case nickname = "nickname"
+    }
 }

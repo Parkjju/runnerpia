@@ -10,8 +10,8 @@ import NMapsMap
 
 class PostDetailView: UIView {
     
-    
     // MARK: properties
+    var eventDelegate: PostDetailViewEventDelegate?
     
     // MARK: 경로 생성시 RouteView로부터 새롭게 생성되어 바인딩되는 데이터
     var bindingData: (Date, (TimeInterval, TimeInterval), (Int, Int), [NMGLatLng])?{
@@ -293,6 +293,18 @@ class PostDetailView: UIView {
         return cv
     }()
     
+    let registerButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("작성 완료", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = .semiBold18
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 30
+        btn.backgroundColor = .blue400
+        btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        return btn
+    }()
+    
     // MARK: LifeCycles
     override func didMoveToSuperview() {
         setSubViews()
@@ -300,6 +312,38 @@ class PostDetailView: UIView {
         setupController()
         updateCollectionViewHeight()
         setupScrollViewTapGesture()
+    }
+    
+    // MARK: Selectors
+    @objc func registerButtonTapped(){
+        guard let bindingData = bindingData else {return}
+        let (date, elapsedTime, distance, coordinates) = bindingData
+        let startLocationLabel = self.locationView.subviews[1] as! UILabel
+        let timeLabel = timeView.subviews[1] as! UILabel
+        let dateLabel = dateView.subviews.last as! UILabel
+        
+        // MARK: 일반태그 선택된 인덱스들 얻어내기
+        var selectedNormalTags: [String] = []
+        normalTagCollectionView.visibleCells.enumerated().forEach { (index, cell) in
+            let cell = cell as! TagCollectionViewCell
+            if(cell.isChecked){
+                selectedNormalTags.append(String(index))
+            }
+        }
+        
+        var selectedSecureTags: [String] = []
+        secureTagCollectionView.visibleCells.enumerated().forEach { (index, cell) in
+            let cell = cell as! TagCollectionViewCell
+            if(cell.isChecked){
+                selectedSecureTags.append(String(index))
+            }
+        }
+        
+        let routeData = Route(user: nil, routeName:  pathSectionLabel.text, distance: Double(distance.0 + distance.1 / 100) , arrayOfPos: coordinates.map({ coord in
+            CLLocationCoordinate2D(latitude: coord.lat, longitude: coord.lng)
+        }), location: startLocationLabel.text, runningTime: timeLabel.text, review: introduceTextField.text, runningDate: dateLabel.text, recommendedTags: selectedNormalTags, secureTags: selectedSecureTags)
+    
+        eventDelegate?.registerButtonTapped(route: routeData)
     }
     
     // MARK: Helpers
@@ -425,6 +469,8 @@ class PostDetailView: UIView {
         
         photoCollectionView.delegate = self.parentViewController as! PostDetailViewController
         photoCollectionView.dataSource = self.parentViewController as! PostDetailViewController
+        
+        eventDelegate = self.parentViewController as! PostDetailViewController
     }
     
     // MARK: 컬렉션뷰들이 수퍼뷰에 부착된 후 사이즈 재계산 진행
@@ -473,7 +519,7 @@ class PostDetailView: UIView {
 extension PostDetailView: LayoutProtocol{
     func setSubViews() {
         self.addSubview(scrollView)
-        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField, numberOfTextInput, photoSectionLabel, photoCollectionView].forEach { scrollView.subviews.first!.addSubview($0) }
+        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField, numberOfTextInput, photoSectionLabel, photoCollectionView, registerButton].forEach { scrollView.subviews.first!.addSubview($0) }
     }
     func setLayout() {
         scrollView.snp.makeConstraints {
@@ -604,7 +650,18 @@ extension PostDetailView: LayoutProtocol{
             $0.leading.equalTo(map.snp.leading)
             $0.trailing.equalTo(map.snp.trailing)
             $0.height.equalTo(60)
+        }
+        
+        registerButton.snp.makeConstraints {
+            $0.top.equalTo(photoCollectionView.snp.bottom).offset(50)
+            $0.leading.equalTo(photoCollectionView.snp.leading)
+            $0.trailing.equalTo(photoCollectionView.snp.trailing)
+            $0.height.equalTo(56)
             $0.bottom.equalTo(scrollView.snp.bottom).offset(-20)
         }
     }
+}
+
+protocol PostDetailViewEventDelegate{
+    func registerButtonTapped(route: Route)
 }
