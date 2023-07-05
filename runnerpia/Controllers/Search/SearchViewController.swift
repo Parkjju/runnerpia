@@ -18,7 +18,6 @@ final class SearchViewController: UIViewController, NMFMapViewTouchDelegate {
     var locationManager = CLLocationManager()
     var halfModalView = HalfModalView()
     let marker = NMFMarker()
-    let data = Route(user: User(userId: "경준", nickname: "경준"),routeName: "동백 호수공원",distance: 200,arrayOfPos: [CLLocationCoordinate2D(latitude: 37.2785, longitude: 127.1452),CLLocationCoordinate2D(latitude: 37.2779, longitude: 127.1452),CLLocationCoordinate2D(latitude: 37.2767, longitude: 127.1444)], location:"기흥구 언동로" , runningTime: "200분", review: "나무가 풍성한 동백 호수공원을 달려보아요", runningDate: "12월 30일 일요일 오후 2~3시", recommendedTags: ["0","1","2"], secureTags: ["0","1", "2", "3", "4"], files:[UIImage(named: "test1")!, UIImage(named:"test2")!, UIImage(named:"test3")!, UIImage(named:"test4")!])
 
     let pathOverlay = NMFPath()
 
@@ -31,7 +30,7 @@ final class SearchViewController: UIViewController, NMFMapViewTouchDelegate {
         configureNavigation()
         configureDelegate()
         requestLocationPermissionAuthorization()
-        configureMap()
+        
     }
     
     override func loadView() {
@@ -64,9 +63,6 @@ final class SearchViewController: UIViewController, NMFMapViewTouchDelegate {
         searchView.map.touchDelegate = self
     }
     
-    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-    }
-    
 }
 
 
@@ -87,53 +83,33 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
         cameraUpdate.animation = .easeIn
         searchView.map.moveCamera(cameraUpdate)
-        
-        // MARK: 좌표바인딩 및 데이터 변환
-        let nmgCoordinates = data.arrayOfPos!.map { coordinate in
-            NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
-        }
-        
-        
-        // 2. 경로 오버레이 표시
-        pathOverlay.path = NMGLineString(points: nmgCoordinates)
-        pathOverlay.color = .clear
-        pathOverlay.outlineColor = .clear
-        pathOverlay.width = 10
-        pathOverlay.mapView = searchView.map
-        
-        let locationOverlay = searchView.map.locationOverlay
-        locationOverlay.icon = NMFOverlayImage(name: "myLocation")
-        
-    }
-    
-    private func configureMap() {
-        addMarker()
     }
 
-    
-    func addMarker() {
-        marker.position = NMGLatLng(lat: data.arrayOfPos!.first!.latitude, lng: data.arrayOfPos!.first!.longitude)
-        marker.mapView = searchView.map
-        
-        let viewMarker = createViewMarker()
-        marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
 
-        // 마커 터치핸들러
-        marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
-            presentHalfModal()
-            locationManager.stopUpdatingLocation()
-            searchView.map.positionMode = .disabled
-            overlay.globalZIndex = 10
-            pathOverlay.color = .white
-            pathOverlay.mapView = searchView.map
-            
-            return true
-        }
-    }
+    
+//    func addMarker() {
+////        marker.position = NMGLatLng(lat: data.arrayOfPos!.first!.latitude, lng: data.arrayOfPos!.first!.longitude)
+//        marker.mapView = searchView.map
+//
+//        let viewMarker = createViewMarker()
+//        marker.iconImage = NMFOverlayImage(image: viewMarker.asImage())
+//
+//        // 마커 터치핸들러
+//        marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
+//            presentHalfModal()
+//            locationManager.stopUpdatingLocation()
+//            searchView.map.positionMode = .disabled
+//            overlay.globalZIndex = 10
+//            pathOverlay.color = .white
+//            pathOverlay.mapView = searchView.map
+//
+//            return true
+//        }
+//    }
     
     func createViewMarker() -> UIImageView {
         let leftLabelText = "2"
-        let rightLabelText = data.distance
+//        let rightLabelText = data.distance
         
         let locationMarker = UIImageView() // 최소 사이즈 설정
         locationMarker.image = UIImage(named: "tooltip")?.scalePreservingAspectRatio(targetSize: CGSize(width: 120, height: 50))
@@ -176,11 +152,11 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         
         
         let rightLabel = UILabel()
-        if let unwrappedDistance = rightLabelText {
-            rightLabel.text = "\(unwrappedDistance)km"
-        } else {
-            rightLabel.text = ""
-        }
+//        if let unwrappedDistance = rightLabelText {
+//            rightLabel.text = "\(unwrappedDistance)km"
+//        } else {
+//            rightLabel.text = ""
+//        }
         
         rightLabel.textColor = .white
         rightLabel.font = .regular12
@@ -205,14 +181,13 @@ extension SearchViewController: CLLocationManagerDelegate, UIViewControllerTrans
         let halfModalViewController = HalfModalPresentationController()
         halfModalViewController.modalPresentationStyle = .custom
         halfModalViewController.halfModalView.layer.cornerRadius = 40
-        halfModalViewController.transitioningDelegate = self
+//        halfModalViewController.transitioningDelegate = self
         
         // MARK: 데이터 바인딩
-        halfModalViewController.data = self.data
+//        halfModalViewController.data = self.data
         
-        present(halfModalViewController, animated: true, completion: nil)
+//        present(halfModalViewController, animated: true, completion: nil)
     }
-
 }
 
 

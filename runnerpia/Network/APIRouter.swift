@@ -132,7 +132,7 @@ enum UserEndPoint: APIConfiguration{
 
 // MARK: RouteEndpoint
 enum RouteEndPoint: APIConfiguration{
-    case postRoute(accessToken: String, route: RouteForServer)
+    case postRoute(accessToken: String, route: Route)
     case getRoute(accessToken: String, id: Int)
     case getReview(accessToken: String, id: Int)
     case modifyRoute(accessToken: String, modifiedRoute: Route, id: Int)
@@ -213,10 +213,8 @@ enum RouteEndPoint: APIConfiguration{
     var parameters: Alamofire.Parameters? {
         switch self{
         case .postRoute(_, let route):
-            let array = route.arrayOfPos.map({ coor in
-                ["latitude": coor.latitude, "longitude": coor.longitude]})
             return [
-                K.APIParameterKey.arrayOfPos: array,
+                K.APIParameterKey.arrayOfPos: route.arrayOfPos,
                 K.APIParameterKey.routeName: route.routeName ,
                 K.APIParameterKey.runningTime: route.runningTime ,
                 K.APIParameterKey.review: route.review,
@@ -226,7 +224,7 @@ enum RouteEndPoint: APIConfiguration{
                 K.APIParameterKey.location: route.location,
                 K.APIParameterKey.recommendedTags: route.recommendedTags,
                 K.APIParameterKey.secureTags: route.secureTags,
-//                K.APIParameterKey.mainRoute: route.mainRoute
+                K.APIParameterKey.mainRoute: route.mainRoute
             ]
         case .getRoute:
             return [:]

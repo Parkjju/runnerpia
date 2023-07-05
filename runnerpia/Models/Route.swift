@@ -12,77 +12,89 @@ import UIKit
 // MARK: 커스텀타입을 전달하려면 해당 타입도 Codable을 채택해야함.
 // MARK: CLLocationCoordinate2D에 대한 새로운 타입 정의 필요
 
-struct Route: Loopable{
-    let user: User?
-    let routeName: String?
-    let distance: Double?
+struct Route: Loopable, Codable{
     let arrayOfPos: [CLLocationCoordinate2D]?
-    let location: String?
+    let routeName: String?
     let runningTime: String?
     let review: String?
     let runningDate: String?
+    let distance: Double?
+    let files: [String]?
+    let location: String?
     let recommendedTags: [String]?
     let secureTags: [String]?
-    var files: [UIImage]?
+    let mainRoute: Int?
+    
+    enum CodingKeys: String, CodingKey{
+        case arrayOfPos
+        case routeName
+        case runningTime
+        case review
+        case runningDate
+        case distance
+        case files
+        case location
+        case recommendedTags
+        case secureTags
+        case mainRoute
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        arrayOfPos = try decoder.singleValueContainer().decode([CLLocationCoordinate2D].self)
+        routeName = try values.decode(String.self, forKey: .routeName)
+        runningTime = try values.decode(String.self, forKey: .runningTime)
+        review = try values.decode(String.self, forKey: .review)
+        runningDate = try values.decode(String.self, forKey: .runningDate)
+        distance = try values.decode(Double.self, forKey: .distance)
+        
+        // MARK: String 배열
+        files = try decoder.singleValueContainer().decode([String].self)
+        
+        location = try values.decode(String.self, forKey: .location)
+        
+        // MARK: String 배열
+        recommendedTags = try decoder.singleValueContainer().decode([String].self)
+        secureTags = try decoder.singleValueContainer().decode([String].self)
+        
+        mainRoute = try values.decode(Int.self, forKey: .mainRoute)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(arrayOfPos, forKey: .arrayOfPos)
+        try container.encode(routeName, forKey: .routeName)
+        try container.encode(runningTime, forKey: .runningTime)
+        try container.encode(review, forKey: .review)
+        try container.encode(runningDate, forKey: .runningDate)
+        try container.encode(distance, forKey: .distance)
+        try container.encode(files, forKey: .files)
+        try container.encode(location, forKey: .location)
+        try container.encode(recommendedTags, forKey: .recommendedTags)
+        try container.encode(secureTags, forKey: .secureTags)
+        try container.encode(mainRoute, forKey: .mainRoute)
+    }
 }
 
-
-// MARK: Codable용 타입과 별개로 UI에서 사용될 타입을 정의해야되나?
-struct Coordinate: Codable{
-    // MARK: 커스텀 인스턴스를 직렬화
-    // MARK: Codable을 해치지는 않지만 Serialize가 되는지
-    let latitude: String
-    let longitude: String
-}
+extension CLLocationCoordinate2D: Codable {
+     public func encode(to encoder: Encoder) throws {
+         var container = encoder.unkeyedContainer()
+         try container.encode(longitude)
+         try container.encode(latitude)
+     }
+      
+     public init(from decoder: Decoder) throws {
+         var container = try decoder.unkeyedContainer()
+         let longitude = try container.decode(CLLocationDegrees.self)
+         let latitude = try container.decode(CLLocationDegrees.self)
+         self.init(latitude: latitude, longitude: longitude)
+     }
+ }
 
 struct RouteId: Codable{
     let routeId: Int
     
     enum CodingKeys: String, CodingKey{
         case routeId = "routeId"
-    }
-}
-
-struct RouteForServer: Codable{
-    let arrayOfPos: [Coordinate]
-    let routeName: String
-    let runningTime: String
-    let review: String
-    let runningDate: String
-    let distance: String
-    let files: [String]
-    let location: String
-    let recommendedTags: [String]
-    let secureTags: [String]
-    
-    enum CodingKeys: String, CodingKey{
-        case arrayOfPos = "arrayOfPos"
-        case routeName = "routeName"
-        case runningTime = "runningTime"
-        case review = "review"
-        case runningDate = "runningDate"
-        case distance = "distance"
-        case files = "files"
-        case location = "location"
-        case recommendedTags = "recommendedTags"
-        case secureTags = "secureTags"
-    }
-}
-
-struct Image: Codable{
-    public let photo: String
-    
-    public init(photo: UIImage){
-        guard let imageData = photo.pngData() else {
-            self.photo = ""
-            return
-        }
-        self.photo = imageData.base64EncodedString(options: .lineLength64Characters)
-    }
-}
-
-extension Image{
-    enum CodingKeys: String, CodingKey{
-        case photo
     }
 }

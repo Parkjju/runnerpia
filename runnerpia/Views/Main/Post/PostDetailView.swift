@@ -339,11 +339,8 @@ class PostDetailView: UIView {
             }
         }
         
-        let routeData = Route(user: nil, routeName:  pathSectionLabel.text, distance: Double(distance.0 + distance.1 / 100) , arrayOfPos: coordinates.map({ coord in
-            CLLocationCoordinate2D(latitude: coord.lat, longitude: coord.lng)
-        }), location: startLocationLabel.text, runningTime: timeLabel.text, review: introduceTextField.text, runningDate: dateLabel.text, recommendedTags: selectedNormalTags, secureTags: selectedSecureTags)
     
-        eventDelegate?.registerButtonTapped(route: routeData)
+//        eventDelegate?.registerButtonTapped(route: routeData)
     }
     
     // MARK: Helpers

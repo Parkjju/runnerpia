@@ -238,41 +238,7 @@ extension PostDetailViewController: PhotoCollectionViewCellEventDelegate{
 
 extension PostDetailViewController: PostDetailViewEventDelegate{
     func registerButtonTapped(route: Route) {
-        let routeForServer = RouteForServer(
-        arrayOfPos: [
-            Coordinate(latitude: "37.33128013", longitude: "-122.03073774"),
-            Coordinate(latitude: "37.33128013", longitude: "-122.03073774")
-            ],
-        routeName: "송정뚝방길ewfoijioj",
-        runningTime: "01:01:01",
-        review: "testReview",
-        runningDate: "2022-01-01",
-        distance: "3.7",
-        files : [],
-        location: "ㄹ케",
-        recommendedTags: ["1","2","3"],
-        secureTags: ["1","2","3"]
-        )
-//        print("서버 저장용..")
-        print(routeForServer)
         
-        // MARK: routeForServer 인스턴스가 직렬화 되지 않음
-        
-        APIClient.postRoute(routeData: routeForServer) { result in
-            switch result{
-            case .success(let data):
-                print(data)
-            case .failure:
-                APIClient.retryAPIRequest(routeData: routeForServer, retryEndPoint: .postRoute(accessToken: "", route: routeForServer)) { result in
-                    switch result{
-                    case .success(let error):
-                        print(error)
-                    case .failure(let fatalError):
-                        print(fatalError)
-                    }
-                }
-            }
-        }
         
     }
 }
