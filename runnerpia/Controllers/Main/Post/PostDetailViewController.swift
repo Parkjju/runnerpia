@@ -237,8 +237,15 @@ extension PostDetailViewController: PhotoCollectionViewCellEventDelegate{
 }
 
 extension PostDetailViewController: PostDetailViewEventDelegate{
-    func registerButtonTapped(route: Route) {
+    func registerButtonTapped(arrayOfPos: [NMGLatLng], routeName: String, runningTime: String, review: String, runningDate: Date, distance: String, files: [String], location: String, recommendedTags: [String], secureTags: [String]) {
+        // MARK: arrayOfPos -> NMGLatLng에서 CLLocationCoordiate2D로 변경
+        // MARK: runningDate -> 현지시각으로 타임존 변경하고 string으로 푸시
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
+        dateFormatter.timeZone = TimeZone(identifier: TimeZone.current.identifier)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         
+//        print(arrayOfPos, routeName, runningTime, review,runningDate, distance, files, location, recommendedTags, secureTags)
     }
 }

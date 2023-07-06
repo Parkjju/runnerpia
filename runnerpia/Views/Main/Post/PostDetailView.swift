@@ -15,15 +15,9 @@ class PostDetailView: UIView {
     
     // MARK: 경로 생성시 RouteView로부터 새롭게 생성되어 바인딩되는 데이터
     var bindingData: (Date, (TimeInterval, TimeInterval), (Int, Int), [NMGLatLng])?{
+        
         didSet{
             updateUI()
-        }
-    }
-    
-    // MARK: 경로 따라가기에서 생성되어 바인딩되는 데이터
-    var followRouteData: Route?{
-        didSet{
-            updateWithFollowingData()
         }
     }
     
@@ -339,8 +333,14 @@ class PostDetailView: UIView {
             }
         }
         
+        var distanceString = "\(distance.0)."
+        let distanceM = distance.1 / 10 > 0 ? "\(distance.1)" : "0\(distance.1)"
+        distanceString += distanceM
+        
+        // MARK: 이미지 to string 작업 필요
+        
     
-//        eventDelegate?.registerButtonTapped(route: routeData)
+        eventDelegate?.registerButtonTapped(arrayOfPos: coordinates, routeName: pathNameTextField.text!, runningTime: timeLabel.text!, review: introduceTextField.text, runningDate: date, distance: distanceString, files: [], location: startLocationLabel.text!, recommendedTags: selectedNormalTags, secureTags: selectedSecureTags)
     }
     
     // MARK: Helpers
@@ -448,10 +448,6 @@ class PostDetailView: UIView {
         let (km, meter) = distance
         let distanceLabel = distanceView.subviews.last as! UILabel
         distanceLabel.text = meter / 10 > 0 ? "\(km).\(meter)km" : "\(km).0\(meter)km"
-    }
-    
-    func updateWithFollowingData(){
-        
     }
     
     // MARK: 텍스트뷰 notification 추가 후, 텍스트뷰 editing 진입에 따라 뷰 조정해줘야함
@@ -660,5 +656,5 @@ extension PostDetailView: LayoutProtocol{
 }
 
 protocol PostDetailViewEventDelegate{
-    func registerButtonTapped(route: Route)
+    func registerButtonTapped(arrayOfPos: [NMGLatLng], routeName: String, runningTime: String, review:String, runningDate: Date, distance: String, files: [String], location: String, recommendedTags: [String], secureTags: [String])
 }
