@@ -262,12 +262,23 @@ extension PostDetailViewController: PostDetailViewEventDelegate{
             mainRoute: 1
         )
         let encoder = JSONEncoder()
+        
         do{
             let jsondata = try encoder.encode(data)
             let json = String(data: jsondata, encoding: .utf8)
             print(json)
         }catch {
             print("error..")
+        }
+        
+        do{
+            let decoder = JSONDecoder()
+            let jsondata = try encoder.encode(data)
+            let data2 = try decoder.decode(Route.self, from: jsondata)
+            print(data2)
+        }catch {
+            print(error)
+            print("decode error..")
         }
         
     }

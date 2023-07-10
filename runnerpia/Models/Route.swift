@@ -41,7 +41,15 @@ struct Route: Loopable, Codable{
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        arrayOfPos = try decoder.singleValueContainer().decode([CLLocationCoordinate2D].self)
+        // 에러아님
+        let posArray = try values.decode([[String:Double]].self, forKey: .arrayOfPos)
+        let posData = posArray.map { dict in
+            let latitude = dict["latitude"] ?? 0.0
+            let longitude = dict["longitude"] ?? 0.0
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        arrayOfPos = posData
+        
         routeName = try values.decode(String.self, forKey: .routeName)
         runningTime = try values.decode(String.self, forKey: .runningTime)
         review = try values.decode(String.self, forKey: .review)
@@ -49,13 +57,16 @@ struct Route: Loopable, Codable{
         distance = try values.decode(Double.self, forKey: .distance)
         
         // MARK: String 배열
-        files = try decoder.singleValueContainer().decode([String].self)
+        print("files?")
+        files = try values.decode([String].self, forKey: .files)
         
         location = try values.decode(String.self, forKey: .location)
         
         // MARK: String 배열
-        recommendedTags = try decoder.singleValueContainer().decode([String].self)
-        secureTags = try decoder.singleValueContainer().decode([String].self)
+        
+        print("recommended?")
+        recommendedTags = try values.decode([String].self, forKey: .recommendedTags)
+        secureTags = try values.decode([String].self, forKey: .secureTags)
         
         mainRoute = try values.decode(Int.self, forKey: .mainRoute)
     }
