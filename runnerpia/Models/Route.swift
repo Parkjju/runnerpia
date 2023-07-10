@@ -60,6 +60,20 @@ struct Route: Loopable, Codable{
         mainRoute = try values.decode(Int.self, forKey: .mainRoute)
     }
     
+    init(arrayOfPos: [CLLocationCoordinate2D], routeName: String,runningTime: String, review: String, runningDate: String, distance: Double, files: [String], location: String, recommendedTags: [String], secureTags: [String], mainRoute: Int){
+        self.arrayOfPos = arrayOfPos
+        self.routeName = routeName
+        self.runningTime = runningTime
+        self.review = review
+        self.runningDate = runningDate
+        self.distance = distance
+        self.files = files
+        self.location = location
+        self.recommendedTags = recommendedTags
+        self.secureTags = secureTags
+        self.mainRoute = mainRoute
+    }
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(arrayOfPos, forKey: .arrayOfPos)
@@ -76,11 +90,12 @@ struct Route: Loopable, Codable{
     }
 }
 
+
 extension CLLocationCoordinate2D: Codable {
      public func encode(to encoder: Encoder) throws {
-         var container = encoder.unkeyedContainer()
-         try container.encode(longitude)
-         try container.encode(latitude)
+         var container = encoder.container(keyedBy: CodingKeys.self)
+         try container.encode(longitude, forKey: .longitude)
+         try container.encode(latitude, forKey: .latitude)
      }
       
      public init(from decoder: Decoder) throws {
@@ -89,6 +104,11 @@ extension CLLocationCoordinate2D: Codable {
          let latitude = try container.decode(CLLocationDegrees.self)
          self.init(latitude: latitude, longitude: longitude)
      }
+    
+    enum CodingKeys: String, CodingKey{
+        case latitude
+        case longitude
+    }
  }
 
 struct RouteId: Codable{

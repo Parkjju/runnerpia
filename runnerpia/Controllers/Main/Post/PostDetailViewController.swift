@@ -246,6 +246,29 @@ extension PostDetailViewController: PostDetailViewEventDelegate{
         dateFormatter.timeZone = TimeZone(identifier: TimeZone.current.identifier)
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-//        print(arrayOfPos, routeName, runningTime, review,runningDate, distance, files, location, recommendedTags, secureTags)
+        
+        let data = Route(
+            arrayOfPos: arrayOfPos.map({ coord in
+                CLLocationCoordinate2D(latitude: coord.lat, longitude: coord.lng)}),
+            routeName: routeName,
+            runningTime: runningTime,
+            review: review,
+            runningDate: dateFormatter.string(from: runningDate),
+            distance: Double(distance)!,
+            files: files,
+            location: location,
+            recommendedTags: recommendedTags,
+            secureTags: secureTags,
+            mainRoute: 1
+        )
+        let encoder = JSONEncoder()
+        do{
+            let jsondata = try encoder.encode(data)
+            let json = String(data: jsondata, encoding: .utf8)
+            print(json)
+        }catch {
+            print("error..")
+        }
+        
     }
 }
