@@ -261,25 +261,21 @@ extension PostDetailViewController: PostDetailViewEventDelegate{
             secureTags: secureTags,
             mainRoute: 1
         )
-        let encoder = JSONEncoder()
         
-        do{
-            let jsondata = try encoder.encode(data)
-            let json = String(data: jsondata, encoding: .utf8)
-            print(json)
-        }catch {
-            print("error..")
+        APIClient.postRoute(routeData: data) { result in
+            switch(result){
+            case .success(let id):
+                print(id)
+            case .failure(let error):
+                APIClient.retryAPIRequest(routeData: data, retryEndPoint: .postRoute(accessToken: "", route: data)) { result in
+                    switch(result){
+                    case .success(let error):
+                        print("error: ", error)
+                    case .failure(let fatalError):
+                        print("fatal error:" , fatalError)
+                    }
+                }
+            }
         }
-        
-        do{
-            let decoder = JSONDecoder()
-            let jsondata = try encoder.encode(data)
-            let data2 = try decoder.decode(Route.self, from: jsondata)
-            print(data2)
-        }catch {
-            print(error)
-            print("decode error..")
-        }
-        
     }
 }

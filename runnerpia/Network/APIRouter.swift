@@ -214,17 +214,22 @@ enum RouteEndPoint: APIConfiguration{
         switch self{
         case .postRoute(_, let route):
             return [
-                K.APIParameterKey.arrayOfPos: route.arrayOfPos,
-                K.APIParameterKey.routeName: route.routeName ,
-                K.APIParameterKey.runningTime: route.runningTime ,
-                K.APIParameterKey.review: route.review,
-                K.APIParameterKey.runningDate: route.runningDate ,
-                K.APIParameterKey.distance: route.distance,
-                K.APIParameterKey.files: route.files,
-                K.APIParameterKey.location: route.location,
-                K.APIParameterKey.recommendedTags: route.recommendedTags,
-                K.APIParameterKey.secureTags: route.secureTags,
-                K.APIParameterKey.mainRoute: route.mainRoute
+                K.APIParameterKey.arrayOfPos: route.arrayOfPos!.map({ coord in
+                    return [
+                        "latitude": coord.latitude,
+                        "longitude": coord.longitude
+                    ]
+                }),
+                K.APIParameterKey.routeName: route.routeName! ,
+                K.APIParameterKey.runningTime: route.runningTime! ,
+                K.APIParameterKey.review: route.review!,
+                K.APIParameterKey.runningDate: route.runningDate! ,
+                K.APIParameterKey.distance: String(route.distance!),
+                K.APIParameterKey.files: route.files!,
+                K.APIParameterKey.location: route.location!,
+                K.APIParameterKey.recommendedTags: route.recommendedTags!,
+                K.APIParameterKey.secureTags: route.secureTags!,
+                K.APIParameterKey.mainRoute: route.mainRoute!
             ]
         case .getRoute:
             return [:]
@@ -283,6 +288,7 @@ enum RouteEndPoint: APIConfiguration{
         // Parameters
         if let parameters = parameters {
             do {
+                print(parameters)
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
             } catch {
                 throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))

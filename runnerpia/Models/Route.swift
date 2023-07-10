@@ -57,14 +57,11 @@ struct Route: Loopable, Codable{
         distance = try values.decode(Double.self, forKey: .distance)
         
         // MARK: String 배열
-        print("files?")
         files = try values.decode([String].self, forKey: .files)
         
         location = try values.decode(String.self, forKey: .location)
         
         // MARK: String 배열
-        
-        print("recommended?")
         recommendedTags = try values.decode([String].self, forKey: .recommendedTags)
         secureTags = try values.decode([String].self, forKey: .secureTags)
         
