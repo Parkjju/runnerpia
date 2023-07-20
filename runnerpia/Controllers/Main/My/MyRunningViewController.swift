@@ -14,13 +14,23 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
     // MARK: - Properties
     
     weak var emptyRecommendView: MyEmptyView?
-
-    var routeData: [Route] = []  {
+    
+    //    var routeData: [Route] = []  {
+    //        didSet {
+    //            let myRunningView = self.view as! MyRunningView
+    //            myRunningView.tableView.reloadData()
+    //        }
+    //    }
+    
+    
+    var routeData: [RouteData] = []  {
         didSet {
             let myRunningView = self.view as! MyRunningView
             myRunningView.tableView.reloadData()
         }
     }
+    
+
     
     deinit {
         print("메모리 해제")
@@ -28,8 +38,8 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
             print("emptyRecommendView 인스턴스가 해제되었습니다.")
         }
     }
-
-
+    
+    
     
     // MARK: - LifeCycle
     
@@ -42,8 +52,10 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         configureNavigation()
         configureDelegate()
         
+        
         // ⭐️ 추후 수정
         setUpData()
+        
         
         configureUI()
         
@@ -62,7 +74,7 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
     private func configureEmptyView() {
         
         let emptyView = MyEmptyView()
-
+        
         emptyView.backgroundColor = .white
         emptyView.commentLabel.text = "등록된 추천 경로가 없어요. \n 나만의 러닝 경로를 추천해볼까요?"
         let attributedTitle = NSAttributedString(string: "러닝 시작하기", attributes: [
@@ -74,34 +86,51 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         
         emptyRecommendView = emptyView
         view = emptyView
-
-
+        
+        
     }
     
     // ⭐️ 추후 수정
     func setUpData() {
+
+        
     }
+    
+    
     
     private func configureUI() {
         
-        if routeData.isEmpty {
-            let myRunningView = self.view as! MyRunningView
-            self.view = emptyRecommendView
-            emptyRecommendView?.isHidden = false
-            myRunningView.isHidden = true
-            configureEmptyView()
-        } else {
-            let myRunningView = self.view as! MyRunningView
-            emptyRecommendView?.isHidden = true
-            myRunningView.isHidden = false
-            myRunningView.tableView.reloadData()
-            myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
-            myRunningView.tableView.estimatedRowHeight = 167
-            myRunningView.tableView.rowHeight = UITableView.automaticDimension
-            myRunningView.commentLabel.text = "총 \(routeData.count)개"
-        }
+        let myRunningView = self.view as! MyRunningView
+        emptyRecommendView?.isHidden = true
+        myRunningView.isHidden = false
+        myRunningView.tableView.reloadData()
+        myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
+        myRunningView.tableView.estimatedRowHeight = 167
+        myRunningView.tableView.rowHeight = UITableView.automaticDimension
+        myRunningView.commentLabel.text = "총 \(routeData.count)개"
+        
     }
-
+    
+    
+    //    private func configureUI() {
+    //        if routeData.isEmpty {
+    //            let myRunningView = self.view as! MyRunningView
+    //            self.view = emptyRecommendView
+    //            emptyRecommendView?.isHidden = false
+    //            myRunningView.isHidden = true
+    //            configureEmptyView()
+    //        } else {
+    //            let myRunningView = self.view as! MyRunningView
+    //            emptyRecommendView?.isHidden = true
+    //            myRunningView.isHidden = false
+    //            myRunningView.tableView.reloadData()
+    //            myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
+    //            myRunningView.tableView.estimatedRowHeight = 167
+    //            myRunningView.tableView.rowHeight = UITableView.automaticDimension
+    //            myRunningView.commentLabel.text = "총 \(routeData.count)개"
+    //        }
+    //    }
+    
     private func configureNavigation() {
         navigationController?.navigationBar.tintColor = .black
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -131,8 +160,17 @@ extension MyRunningViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyRunningCell", for: indexPath) as! MyRunningViewTableViewCell
         cell.selectionStyle = .none
-        let rowData = routeData[indexPath.section]
-        cell.cellData = rowData
+        let routeData = routeData[indexPath.row]
+        cell.routeLabel.text = routeData.routeName
+        cell.dateLabel.text = routeData.runningDate
+        cell.locationLabel.text = routeData.location
+        if let distance = routeData.distance {
+            cell.distanceLabel.text = String(distance)
+        } else {
+            cell.distanceLabel.text = "" 
+        }
+        cell.timeLabel.text = routeData.runningTime
+        
         
         return cell
     }
@@ -140,5 +178,6 @@ extension MyRunningViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 167
     }
+    
     
 }

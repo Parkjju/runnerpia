@@ -59,7 +59,7 @@ class MyRunningViewTableViewCell: UITableViewCell {
     }()
     
     // ---- 2-1. 가로스택뷰
-    let distanceLabel: UILabel = {
+    var distanceLabel: UILabel = {
         let label = UILabel()
         label.font = .regular14
         label.textColor = .grey700
