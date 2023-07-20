@@ -258,6 +258,7 @@ enum RouteEndPoint: APIConfiguration{
                 K.APIParameterKey.city: city,
                 K.APIParameterKey.state: state
             ]
+
         case .checkRouteNameIsDuplicated(_, let routeName):
             return [
                 K.APIParameterKey.routeName: routeName

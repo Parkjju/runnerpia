@@ -10,7 +10,7 @@ import CoreLocation
 import UIKit
 
 struct RouteData: Codable {
-    let id: Int
+    let id: Int?
     let arrayOfPos: [CLLocationCoordinate2D]?
     let routeName: String?
     let runningDate: String?
@@ -19,7 +19,7 @@ struct RouteData: Codable {
     let runningTime: String?
     let recommendedTags: [String]?
 
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case id
         case arrayOfPos
         case routeName
@@ -32,8 +32,7 @@ struct RouteData: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(Int.self, forKey: .id) // id 프로퍼티를 디코딩
-        // 기존의 디코딩 작업들은 그대로 유지합니다.
+        id = try values.decodeIfPresent(Int.self, forKey: .id) 
         arrayOfPos = try values.decodeIfPresent([CLLocationCoordinate2D].self, forKey: .arrayOfPos)
         routeName = try values.decodeIfPresent(String.self, forKey: .routeName)
         runningDate = try values.decodeIfPresent(String.self, forKey: .runningDate)

@@ -29,8 +29,8 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
             myRunningView.tableView.reloadData()
         }
     }
+        
     
-
     
     deinit {
         print("메모리 해제")
@@ -55,8 +55,6 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         
         // ⭐️ 추후 수정
         setUpData()
-        
-        
         configureUI()
         
     }
@@ -87,14 +85,24 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         emptyRecommendView = emptyView
         view = emptyView
         
-        
     }
     
     // ⭐️ 추후 수정
     func setUpData() {
-
-        
+        let routeId = 52
+        APIClient.getRoute(routeId: routeId) { result in
+            switch result {
+            case .success(let routeData):
+                self.routeData = [routeData]
+                print("Received routeData:", routeData)
+                
+            case .failure(let error):
+                print("Error:", error)
+            }
+        }
     }
+    
+    
     
     
     
@@ -167,7 +175,7 @@ extension MyRunningViewController: UITableViewDataSource, UITableViewDelegate {
         if let distance = routeData.distance {
             cell.distanceLabel.text = String(distance)
         } else {
-            cell.distanceLabel.text = "" 
+            cell.distanceLabel.text = ""
         }
         cell.timeLabel.text = routeData.runningTime
         
