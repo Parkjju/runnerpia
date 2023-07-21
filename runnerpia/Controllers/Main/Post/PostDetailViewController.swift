@@ -224,6 +224,7 @@ extension PostDetailViewController: UITextViewDelegate{
 
 extension PostDetailViewController: PhotoCollectionViewCellEventDelegate{
     func removeButtonTapped(_ selected: PhotoCollectionViewCell){
+        print(selectedImages[1].jpegData(compressionQuality: 0)?.base64EncodedString())
         guard let removeIndex = selectedImages.firstIndex(of: selected.selectedImage!) else {return}
         selectedImages.remove(at: removeIndex)
         
@@ -237,42 +238,70 @@ extension PostDetailViewController: PhotoCollectionViewCellEventDelegate{
 }
 
 extension PostDetailViewController: PostDetailViewEventDelegate{
-    func registerButtonTapped(route: Route) {
-        let routeForServer = RouteForServer(
-        arrayOfPos: [
-            Coordinate(latitude: "37.33128013", longitude: "-122.03073774"),
-            Coordinate(latitude: "37.33128013", longitude: "-122.03073774")
-            ],
-        routeName: "송정뚝방길ewfoijioj",
-        runningTime: "01:01:01",
-        review: "testReview",
-        runningDate: "2022-01-01",
-        distance: "3.7",
-        files : [],
-        location: "ㄹ케",
-        recommendedTags: ["1","2","3"],
-        secureTags: ["1","2","3"]
+    func registerButtonTapped(arrayOfPos: [NMGLatLng], routeName: String, runningTime: String, review: String, runningDate: Date, distance: String, files: [String], location: String, recommendedTags: [String], secureTags: [String]) {
+        // MARK: arrayOfPos -> NMGLatLng에서 CLLocationCoordiate2D로 변경
+        // MARK: runningDate -> 현지시각으로 타임존 변경하고 string으로 푸시
+        let view = self.view as! PostDetailView
+        view.indicatorView.startAnimating()
+        view.registerButton.isHidden = true
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
+        dateFormatter.timeZone = TimeZone(identifier: TimeZone.current.identifier)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let images = selectedImages.count > 0 ? Array(selectedImages[1..<selectedImages.count]) : []
+        let imagesString = images.map { imgData in
+            let compressed = imgData.scalePreservingAspectRatio(targetSize: CGSize(width: 20, height: 20))
+            return "data:image/jpeg;base64,\(compressed.pngData()!.base64EncodedString())"
+        }
+        
+        
+        let data = Route(
+            arrayOfPos: arrayOfPos.map({ coord in
+                CLLocationCoordinate2D(latitude: coord.lat, longitude: coord.lng)}),
+            routeName: routeName,
+            runningTime: runningTime,
+            review: review,
+            runningDate: dateFormatter.string(from: runningDate),
+            distance: Double(distance)!,
+            files: imagesString,
+            location: location,
+            recommendedTags: recommendedTags,
+            secureTags: secureTags,
+            mainRoute: 1
         )
-//        print("서버 저장용..")
-        print(routeForServer)
         
-        // MARK: routeForServer 인스턴스가 직렬화 되지 않음
-        
-        APIClient.postRoute(routeData: routeForServer) { result in
-            switch result{
-            case .success(let data):
-                print(data)
-            case .failure:
-                APIClient.retryAPIRequest(routeData: routeForServer, retryEndPoint: .postRoute(accessToken: "", route: routeForServer)) { result in
-                    switch result{
-                    case .success(let error):
-                        print(error)
-                    case .failure(let fatalError):
-                        print(fatalError)
+        APIClient.postRoute(routeData: data) { result in
+            switch(result){
+            case .success(let id):
+                print(id)
+                view.indicatorView.stopAnimating()
+                view.registerButton.isHidden = false
+                self.dismiss(animated: true)
+            case .failure(_):
+                APIClient.retryAPIRequestWithEntitiyError(routeData: data, retryEndPoint: .postRoute(accessToken: "", route: data)) { result in
+                    switch(result){
+                    case .success(let entityError):
+                        print(entityError)
+                        view.indicatorView.stopAnimating()
+                        view.registerButton.isHidden = false
+                    case .failure(_):
+                        APIClient.retryAPIRequest(routeData: data, retryEndPoint: .postRoute(accessToken: "", route: data)) { result in
+                            switch(result){
+                            case .success(let networkError):
+                                print(networkError)
+                                view.indicatorView.stopAnimating()
+                                view.registerButton.isHidden = false
+                            case .failure(let fatalError):
+                                print(fatalError)
+                                view.indicatorView.stopAnimating()
+                                view.registerButton.isHidden = false
+                            }
+                        }
                     }
                 }
             }
         }
-        
     }
 }

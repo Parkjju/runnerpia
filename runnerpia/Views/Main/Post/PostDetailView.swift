@@ -20,12 +20,11 @@ class PostDetailView: UIView {
         }
     }
     
-    // MARK: 경로 따라가기에서 생성되어 바인딩되는 데이터
-    var followRouteData: Route?{
-        didSet{
-            updateWithFollowingData()
-        }
-    }
+    let indicatorView: UIActivityIndicatorView = {
+        let iv = UIActivityIndicatorView()
+        iv.hidesWhenStopped = true
+        return iv
+    }()
     
     let scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -339,11 +338,14 @@ class PostDetailView: UIView {
             }
         }
         
-        let routeData = Route(user: nil, routeName:  pathSectionLabel.text, distance: Double(distance.0 + distance.1 / 100) , arrayOfPos: coordinates.map({ coord in
-            CLLocationCoordinate2D(latitude: coord.lat, longitude: coord.lng)
-        }), location: startLocationLabel.text, runningTime: timeLabel.text, review: introduceTextField.text, runningDate: dateLabel.text, recommendedTags: selectedNormalTags, secureTags: selectedSecureTags)
+        var distanceString = "\(distance.0)."
+        let distanceM = distance.1 / 10 > 0 ? "\(distance.1)" : "0\(distance.1)"
+        distanceString += distanceM
+        
+        // MARK: 이미지 to string 작업 필요
+        
     
-        eventDelegate?.registerButtonTapped(route: routeData)
+        eventDelegate?.registerButtonTapped(arrayOfPos: coordinates, routeName: pathNameTextField.text!, runningTime: timeLabel.text!, review: introduceTextField.text, runningDate: date, distance: distanceString, files: [], location: startLocationLabel.text!, recommendedTags: selectedNormalTags, secureTags: selectedSecureTags)
     }
     
     // MARK: Helpers
@@ -453,10 +455,6 @@ class PostDetailView: UIView {
         distanceLabel.text = meter / 10 > 0 ? "\(km).\(meter)km" : "\(km).0\(meter)km"
     }
     
-    func updateWithFollowingData(){
-        
-    }
-    
     // MARK: 텍스트뷰 notification 추가 후, 텍스트뷰 editing 진입에 따라 뷰 조정해줘야함
     func setupController(){
         secureTagCollectionView.delegate = self.parentViewController as! PostDetailViewController
@@ -519,7 +517,7 @@ class PostDetailView: UIView {
 extension PostDetailView: LayoutProtocol{
     func setSubViews() {
         self.addSubview(scrollView)
-        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField, numberOfTextInput, photoSectionLabel, photoCollectionView, registerButton].forEach { scrollView.subviews.first!.addSubview($0) }
+        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField, numberOfTextInput, photoSectionLabel, photoCollectionView, registerButton, indicatorView].forEach { scrollView.subviews.first!.addSubview($0) }
     }
     func setLayout() {
         scrollView.snp.makeConstraints {
@@ -659,9 +657,14 @@ extension PostDetailView: LayoutProtocol{
             $0.height.equalTo(56)
             $0.bottom.equalTo(scrollView.snp.bottom).offset(-20)
         }
+        
+        indicatorView.snp.makeConstraints {
+            $0.top.equalTo(photoCollectionView.snp.bottom).offset(50)
+            $0.centerX.equalTo(self.snp.centerX)
+        }
     }
 }
 
 protocol PostDetailViewEventDelegate{
-    func registerButtonTapped(route: Route)
+    func registerButtonTapped(arrayOfPos: [NMGLatLng], routeName: String, runningTime: String, review:String, runningDate: Date, distance: String, files: [String], location: String, recommendedTags: [String], secureTags: [String])
 }

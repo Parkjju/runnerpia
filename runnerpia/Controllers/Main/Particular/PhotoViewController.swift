@@ -83,7 +83,7 @@ final class PhotoViewController: UIViewController, UIScrollViewDelegate {
             imageView.contentMode = .scaleAspectFit
             let xPos = photoView.scrollView.frame.width * CGFloat(i)
             imageView.frame = CGRect(x: xPos, y: 0, width: photoView.scrollView.frame.width, height: photoView.scrollView.frame.height)
-            imageView.image = files[i]
+//            imageView.image = files[i]
             photoView.scrollView.addSubview(imageView)
             photoView.scrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
         }

@@ -132,7 +132,7 @@ enum UserEndPoint: APIConfiguration{
 
 // MARK: RouteEndpoint
 enum RouteEndPoint: APIConfiguration{
-    case postRoute(accessToken: String, route: RouteForServer)
+    case postRoute(accessToken: String, route: Route)
     case getRoute(accessToken: String, id: Int)
     case getReview(accessToken: String, id: Int)
     case modifyRoute(accessToken: String, modifiedRoute: Route, id: Int)
@@ -213,23 +213,26 @@ enum RouteEndPoint: APIConfiguration{
     var parameters: Alamofire.Parameters? {
         switch self{
         case .postRoute(_, let route):
-            let array = route.arrayOfPos.map({ coor in
-                ["latitude": coor.latitude, "longitude": coor.longitude]})
             return [
-                K.APIParameterKey.arrayOfPos: array,
-                K.APIParameterKey.routeName: route.routeName ,
-                K.APIParameterKey.runningTime: route.runningTime ,
-                K.APIParameterKey.review: route.review,
-                K.APIParameterKey.runningDate: route.runningDate ,
-                K.APIParameterKey.distance: route.distance,
-                K.APIParameterKey.files: route.files,
-                K.APIParameterKey.location: route.location,
-                K.APIParameterKey.recommendedTags: route.recommendedTags,
-                K.APIParameterKey.secureTags: route.secureTags,
-//                K.APIParameterKey.mainRoute: route.mainRoute
+                K.APIParameterKey.arrayOfPos: route.arrayOfPos!.map({ coord in
+                    return [
+                        "latitude": coord.latitude,
+                        "longitude": coord.longitude
+                    ]
+                }),
+                K.APIParameterKey.routeName: route.routeName! ,
+                K.APIParameterKey.runningTime: route.runningTime! ,
+                K.APIParameterKey.review: route.review!,
+                K.APIParameterKey.runningDate: route.runningDate! ,
+                K.APIParameterKey.distance: String(route.distance!),
+                K.APIParameterKey.files: route.files!,
+                K.APIParameterKey.location: route.location!,
+                K.APIParameterKey.recommendedTags: route.recommendedTags!,
+                K.APIParameterKey.secureTags: route.secureTags!,
+                K.APIParameterKey.mainRoute: route.mainRoute!
             ]
         case .getRoute:
-            return [:]
+            return nil
         case .getReview:
             return [:]
         // MARK: 수정 대상 데이터만 선택해서 저장 - Loopable 프로토콜 채택
@@ -285,6 +288,7 @@ enum RouteEndPoint: APIConfiguration{
         // Parameters
         if let parameters = parameters {
             do {
+                print(parameters)
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
             } catch {
                 throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
