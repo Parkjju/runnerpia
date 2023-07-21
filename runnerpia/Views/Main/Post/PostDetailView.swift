@@ -15,11 +15,16 @@ class PostDetailView: UIView {
     
     // MARK: 경로 생성시 RouteView로부터 새롭게 생성되어 바인딩되는 데이터
     var bindingData: (Date, (TimeInterval, TimeInterval), (Int, Int), [NMGLatLng])?{
-        
         didSet{
             updateUI()
         }
     }
+    
+    let indicatorView: UIActivityIndicatorView = {
+        let iv = UIActivityIndicatorView()
+        iv.hidesWhenStopped = true
+        return iv
+    }()
     
     let scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -512,7 +517,7 @@ class PostDetailView: UIView {
 extension PostDetailView: LayoutProtocol{
     func setSubViews() {
         self.addSubview(scrollView)
-        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField, numberOfTextInput, photoSectionLabel, photoCollectionView, registerButton].forEach { scrollView.subviews.first!.addSubview($0) }
+        [map, pathSectionLabel, pathNameTextField, pathInformationSectionLabel, locationView, dateView, timeView, distanceView, divider, rateSectionLabel, secureTagSectionLabel, secureTagCollectionView, normalTagSectionLabel, normalTagCollectionView, dividerAfterTag, introduceSectionLabel, introduceTextField, numberOfTextInput, photoSectionLabel, photoCollectionView, registerButton, indicatorView].forEach { scrollView.subviews.first!.addSubview($0) }
     }
     func setLayout() {
         scrollView.snp.makeConstraints {
@@ -651,6 +656,11 @@ extension PostDetailView: LayoutProtocol{
             $0.trailing.equalTo(photoCollectionView.snp.trailing)
             $0.height.equalTo(56)
             $0.bottom.equalTo(scrollView.snp.bottom).offset(-20)
+        }
+        
+        indicatorView.snp.makeConstraints {
+            $0.top.equalTo(photoCollectionView.snp.bottom).offset(50)
+            $0.centerX.equalTo(self.snp.centerX)
         }
     }
 }
