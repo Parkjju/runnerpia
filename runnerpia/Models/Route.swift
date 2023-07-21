@@ -98,6 +98,83 @@ struct Route: Loopable, Codable{
     }
 }
 
+struct MainRoute: Codable{
+    let id: Int
+    let routeName: String
+    let startLatitude: String
+    let startLongitude: String
+    let runningTime: String
+    let review: String
+    let distance: Int
+    let runningDate: String
+    let location: String
+    let mainRouteId: Int?
+    let user: [String: String]
+    let routeRecommendedTags: [[String: Int]]
+    let routeSecureTags: [[String: Int]]
+    let images: [[String: String]]
+    let subRoute: [SubRoute]
+    let recommendedTags: [String: Int]
+    let secureTags: [String: Int]
+    
+    enum CodingKeys: String, CodingKey{
+        case id
+        case routeName
+        case startLatitude
+        case startLongitude
+        case runningTime
+        case review
+        case distance
+        case runningDate
+        case location
+        case mainRouteId
+        case user
+        case routeRecommendedTags
+        case routeSecureTags
+        case images
+        case subRoute
+        case recommendedTags
+        case secureTags
+    }
+}
+
+struct SubRoute: Codable{
+    let id: Int
+    let routeName: String
+    let startLatitude: String
+    let startLongitude: String
+    let runningTime: String
+    let review: String
+    let distance: Int
+    let runningDate: String
+    let location: String
+    let mainRouteId: Int
+    let user: [String: String]
+    let routeRecommendedTags: [[String: Int]]
+    let routeSecureTags: [[String: Int]]
+    let images: [[String: String]]
+    let subRoute: [[String: String]]
+    let runningRoutePaths: [[String: String]]
+    
+    enum CodingKeys: String, CodingKey{
+        case id
+        case routeName
+        case startLatitude
+        case startLongitude
+        case runningTime
+        case review
+        case distance
+        case runningDate
+        case location
+        case mainRouteId
+        case user
+        case routeRecommendedTags
+        case routeSecureTags
+        case images
+        case subRoute
+        case runningRoutePaths
+    }
+}
 
 extension CLLocationCoordinate2D: Codable {
      public func encode(to encoder: Encoder) throws {
