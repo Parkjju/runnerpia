@@ -13,6 +13,13 @@ class RecommendView: UIView {
     let imageCache = NSCache<NSString, UIImage>()
     var imageHashArray: [String] = []
     
+    let indicatorView: UIActivityIndicatorView = {
+        let iv = UIActivityIndicatorView()
+        iv.hidesWhenStopped = false
+        iv.startAnimating()
+        return iv
+    }()
+    
     let mainLabel: UILabel = {
         let label = UILabel()
         let paragraphStyle = NSMutableParagraphStyle()
@@ -73,7 +80,7 @@ class RecommendView: UIView {
 // MARK: - Layouts
 extension RecommendView: LayoutProtocol{
     func setSubViews() {
-        [mainLabel, tableView].forEach { self.addSubview($0) }
+        [mainLabel, tableView, indicatorView].forEach { self.addSubview($0) }
     }
     
     func setLayout() {
@@ -87,6 +94,11 @@ extension RecommendView: LayoutProtocol{
             $0.leading.equalToSuperview().offset(Constraints.paddingLeftAndRight)
             $0.trailing.equalToSuperview().offset(-Constraints.paddingLeftAndRight)
             $0.bottom.equalToSuperview().offset(-100)
+        }
+        
+        indicatorView.snp.makeConstraints {
+            $0.centerY.equalTo(self.snp.centerY)
+            $0.centerX.equalTo(self.snp.centerX)
         }
     }
 }
