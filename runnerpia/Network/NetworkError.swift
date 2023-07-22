@@ -18,3 +18,13 @@ struct NetworkError: Codable, Error{
         case error = "error"
     }
 }
+
+struct NetworkErrorWithEntitiyLarge:Codable{
+    let statusCode: Int
+    let message: String
+    
+    enum CodingKeys: String, CodingKey{
+        case statusCode
+        case message
+    }
+}

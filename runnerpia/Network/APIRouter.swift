@@ -232,7 +232,7 @@ enum RouteEndPoint: APIConfiguration{
                 K.APIParameterKey.mainRoute: route.mainRoute!
             ]
         case .getRoute:
-            return [:]
+            return nil
         case .getReview:
             return [:]
         // MARK: 수정 대상 데이터만 선택해서 저장 - Loopable 프로토콜 채택

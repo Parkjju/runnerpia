@@ -58,4 +58,8 @@ extension UIImage{
             return scaledImage
         }
     }
+    
+    public var base64: String {
+        return self.jpegData(compressionQuality: 0)!.base64EncodedString()
+    }
 }

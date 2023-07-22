@@ -28,9 +28,16 @@ class APIClient {
         performRequest(route: .postRoute(accessToken: "", route: routeData), completion: completion)
     }
     
+    static func getRoute(routeId: Int, completion: @escaping (Result<MainRoute, AFError>) -> Void){
+        performRequest(route: .getRoute(accessToken: "", id: routeId), completion: completion)
+    }
+    
     static func retryAPIRequest(routeData: Route, retryEndPoint: RouteEndPoint, completion: @escaping (Result<NetworkError, AFError>) -> Void){
         performRequest(route: retryEndPoint, completion: completion)
     }
     
-    
+    // 임시 - 에러타입 통일 후 삭제예정
+    static func retryAPIRequestWithEntitiyError(routeData: Route, retryEndPoint: RouteEndPoint, completion: @escaping (Result<NetworkErrorWithEntitiyLarge, AFError>) -> Void){
+        performRequest(route: retryEndPoint, completion: completion)
+    }
 }
