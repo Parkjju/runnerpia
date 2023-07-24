@@ -17,6 +17,11 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
     
     var routeData: [RouteData] = []
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.color = .gray
+        return indicator
+    }()
     
     deinit {
         print("메모리 해제")
@@ -24,6 +29,7 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
             print("emptyRecommendView 인스턴스가 해제되었습니다.")
         }
     }
+
     
     
     
@@ -37,6 +43,13 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         
         configureNavigation()
         configureDelegate()
+        
+        view.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        activityIndicator.startAnimating()
         
         
         // ⭐️ 추후 수정
@@ -90,6 +103,7 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
                     myRunningView.tableView.estimatedRowHeight = 167
                     myRunningView.tableView.rowHeight = UITableView.automaticDimension
                     myRunningView.commentLabel.text = "총 \(self.routeData.count)개"
+                    self.activityIndicator.stopAnimating()
                 }
                 
             case .failure(let error):
@@ -101,6 +115,7 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
                     self.emptyRecommendView?.isHidden = false
                     myRunningView.isHidden = true
                     self.configureEmptyView()
+                    self.activityIndicator.stopAnimating() // 데이터 받아오기가 실패해도 비활성화
                 }
                 
             }

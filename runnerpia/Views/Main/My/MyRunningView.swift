@@ -25,12 +25,7 @@ final class MyRunningView: UIView {
         let tableView = UITableView()
         return tableView
     }()
-    
-    let indicatorView: UIActivityIndicatorView = {
-        let iv = UIActivityIndicatorView()
-        iv.hidesWhenStopped = true
-        return iv
-    }()
+
     
     
     // MARK: - LifeCycles
@@ -62,7 +57,7 @@ extension MyRunningView: LayoutProtocol {
     
     func setSubViews() {
 
-        [ commentLabel, tableView, indicatorView ]
+        [ commentLabel, tableView ]
             .forEach { self.addSubview($0) }
 
     }
@@ -82,10 +77,7 @@ extension MyRunningView: LayoutProtocol {
             
         }
         
-        indicatorView.snp.makeConstraints {
-            $0.top.equalTo(tableView.snp.bottom).offset(50)
-            $0.centerX.equalTo(self.snp.centerX)
-        }
+
         
     }
     
