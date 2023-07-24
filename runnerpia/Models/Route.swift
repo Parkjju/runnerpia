@@ -17,7 +17,7 @@ struct RouteData: Codable {
     let location: String?
     let distance: Double?
     let runningTime: String?
-    let recommendedTags: [String]?
+    let recommendedTags: [String: Int]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -39,7 +39,7 @@ struct RouteData: Codable {
         location = try values.decodeIfPresent(String.self, forKey: .location)
         distance = try values.decodeIfPresent(Double.self, forKey: .distance)
         runningTime = try values.decodeIfPresent(String.self, forKey: .runningTime)
-        recommendedTags = try values.decodeIfPresent([String].self, forKey: .recommendedTags)
+        recommendedTags = try values.decodeIfPresent([String: Int].self, forKey: .recommendedTags)
     }
 
 }

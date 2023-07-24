@@ -87,10 +87,11 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         
     }
     
+    
     // ⭐️ 추후 수정
     func setUpData() {
         let routeId = 52
-        APIClient.getRoute(routeId: routeId) { result in
+        APIClient.getRouteData(routeId: routeId) { result in
             switch result {
             case .success(let routeData):
                 self.routeData = [routeData]

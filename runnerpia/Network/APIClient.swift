@@ -18,10 +18,9 @@ class APIClient {
         }
     }
 
-    static func getRoute(routeId: Int, completion: @escaping (Result<RouteData, AFError>) -> Void) {
+    static func getRouteData(routeId: Int, completion: @escaping (Result<RouteData, AFError>) -> Void) {
         performRequest(route: .getRoute(accessToken: "", id: routeId), completion: completion)
     }
-
 
 
     static func postRoute(routeData: Route, completion: @escaping (Result<RouteId, AFError>) -> Void){
