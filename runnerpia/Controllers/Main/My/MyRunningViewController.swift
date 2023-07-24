@@ -15,21 +15,7 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
     
     weak var emptyRecommendView: MyEmptyView?
     
-    //    var routeData: [Route] = []  {
-    //        didSet {
-    //            let myRunningView = self.view as! MyRunningView
-    //            myRunningView.tableView.reloadData()
-    //        }
-    //    }
-    
-    
-    var routeData: [RouteData] = []  {
-        didSet {
-            let myRunningView = self.view as! MyRunningView
-            myRunningView.tableView.reloadData()
-        }
-    }
-        
+    var routeData: [RouteData] = []
     
     
     deinit {
@@ -55,8 +41,6 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         
         // ⭐️ 추후 수정
         setUpData()
-        configureUI()
-        
     }
     
     
@@ -97,48 +81,32 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
                 self.routeData = [routeData]
                 print("Received routeData:", routeData)
                 
+                DispatchQueue.main.async {
+                    let myRunningView = self.view as! MyRunningView
+                    self.emptyRecommendView?.isHidden = true
+                    myRunningView.isHidden = false
+                    myRunningView.tableView.reloadData()
+                    myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
+                    myRunningView.tableView.estimatedRowHeight = 167
+                    myRunningView.tableView.rowHeight = UITableView.automaticDimension
+                    myRunningView.commentLabel.text = "총 \(self.routeData.count)개"
+                }
+                
             case .failure(let error):
                 print("Error:", error)
+                
+                DispatchQueue.main.async {
+                    let myRunningView = self.view as! MyRunningView
+                    self.view = self.emptyRecommendView
+                    self.emptyRecommendView?.isHidden = false
+                    myRunningView.isHidden = true
+                    self.configureEmptyView()
+                }
+                
             }
         }
     }
     
-    
-    
-    
-    
-    private func configureUI() {
-        
-        let myRunningView = self.view as! MyRunningView
-        emptyRecommendView?.isHidden = true
-        myRunningView.isHidden = false
-        myRunningView.tableView.reloadData()
-        myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
-        myRunningView.tableView.estimatedRowHeight = 167
-        myRunningView.tableView.rowHeight = UITableView.automaticDimension
-        myRunningView.commentLabel.text = "총 \(routeData.count)개"
-        
-    }
-    
-    
-    //    private func configureUI() {
-    //        if routeData.isEmpty {
-    //            let myRunningView = self.view as! MyRunningView
-    //            self.view = emptyRecommendView
-    //            emptyRecommendView?.isHidden = false
-    //            myRunningView.isHidden = true
-    //            configureEmptyView()
-    //        } else {
-    //            let myRunningView = self.view as! MyRunningView
-    //            emptyRecommendView?.isHidden = true
-    //            myRunningView.isHidden = false
-    //            myRunningView.tableView.reloadData()
-    //            myRunningView.tableView.register(MyRunningViewTableViewCell.self, forCellReuseIdentifier: "MyRunningCell")
-    //            myRunningView.tableView.estimatedRowHeight = 167
-    //            myRunningView.tableView.rowHeight = UITableView.automaticDimension
-    //            myRunningView.commentLabel.text = "총 \(routeData.count)개"
-    //        }
-    //    }
     
     private func configureNavigation() {
         navigationController?.navigationBar.tintColor = .black
@@ -156,6 +124,30 @@ final class MyRunningViewController: UIViewController, UIGestureRecognizerDelega
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
+    private func formateRunningDate(_ dateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "MM월 dd일 EEEE"
+            return dateFormatter.string(from: date)
+        } else {
+            return ""
+        }
+    }
+    
+    private func formateRunningTime(_ timeString: String) -> String {
+        let timeComponents = timeString.split(separator: ":")
+        if timeComponents.count == 3 {
+            if let hours = Int(timeComponents[0]), let minutes = Int(timeComponents[1]), let seconds = Int(timeComponents[2]) {
+                let totalSeconds = hours * 3600 + minutes * 60 + seconds
+                let totalMinutes = Int(round(Double(totalSeconds) / 60.0))
+                return "\(totalMinutes)분"
+            }
+        }
+        return ""
+    }
+    
 }
 
 // MARK: - TableView Delegate
@@ -170,17 +162,28 @@ extension MyRunningViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyRunningCell", for: indexPath) as! MyRunningViewTableViewCell
         cell.selectionStyle = .none
         let routeData = routeData[indexPath.row]
+        
         cell.routeLabel.text = routeData.routeName
-        cell.dateLabel.text = routeData.runningDate
+        
+        if let runningDate = routeData.runningDate {
+            cell.dateLabel.text = formateRunningDate(runningDate)
+        } else {
+            cell.dateLabel.text = ""
+        }
+        
         cell.locationLabel.text = routeData.location
         if let distance = routeData.distance {
-            cell.distanceLabel.text = String(distance)
+            cell.distanceLabel.text = String(distance) + "km"
         } else {
             cell.distanceLabel.text = ""
         }
-        cell.timeLabel.text = routeData.runningTime
+        cell.timeLabel.text = "\(routeData.runningTime)분"
         
-        
+        if let runningTime = routeData.runningTime {
+            cell.timeLabel.text = formateRunningTime(runningTime)
+        } else {
+            cell.timeLabel.text = ""
+        }
         return cell
     }
     
