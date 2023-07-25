@@ -353,18 +353,45 @@ class ReviewMainView: UIView {
             }
         }
     }
-    func bindingEndLocation(_ coordinates: [NMGLatLng]){
+    
+//    func bindingEndLocation(_ coordinates: [NMGLatLng]) {
+//        let endLocation = CLLocation(latitude: coordinates.last?.lat ?? 0, longitude: coordinates.last?.lng ?? 0)
+//
+//        let geocoder = CLGeocoder()
+//        let locale = Locale(identifier: "ko")
+//
+//        geocoder.reverseGeocodeLocation(endLocation, preferredLocale: locale) { placemarks, _ in
+//            guard let placemarks = placemarks, let address = placemarks.last else {
+//                return
+//            }
+//            // MARK: address.locality - 군/구
+//            // MARK: address.subLocality - 동
+//
+//            let endLocationLabel = self.locationView.subviews.last as! UILabel
+//
+//            DispatchQueue.main.async {
+//                endLocationLabel.text = "\(address.locality ?? "") \(address.subLocality ?? "")"
+//            }
+//        }
+//    }
+    
+    func bindingEndLocation(_ coordinates: [NMGLatLng]) {
         let endLocation = CLLocation(latitude: coordinates.last?.lat ?? 0, longitude: coordinates.last?.lng ?? 0)
         
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "ko")
         
-        geocoder.reverseGeocodeLocation(endLocation, preferredLocale: locale) { placemarks, _ in
+        geocoder.reverseGeocodeLocation(endLocation, preferredLocale: locale) { placemarks, error in
+            if let error = error {
+                return
+            }
+            
             guard let placemarks = placemarks, let address = placemarks.last else {
                 return
             }
-            // MARK: address.locality - 군/구
-            // MARK: address.subLocality - 동
+            
+            let locality = address.locality ?? ""
+            let subLocality = address.subLocality ?? ""
             
             let endLocationLabel = self.locationView.subviews.last as! UILabel
             
@@ -373,6 +400,7 @@ class ReviewMainView: UIView {
             }
         }
     }
+    
     func bindingTime(_ date: Date){
         let label = dateView.subviews.last as! UILabel
         
